@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import styles from './app.module.css';
+import Header from './components/header/Header';
+import Footer from './components/footer/Footer';
+import Login from './components/login/Login';
+import Main from './components/main/Main';
+const App = () => {
+  const [isLogin, setLogin] = useState(true);
+  const onLogin = (bool) => {
+    setLogin(bool);
+  }
 
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className={`${isLogin ? '' : styles.main}`}>
+        <div className={`${isLogin ? '' : styles.loginwrapper}`}>
+          <Header isLogin={isLogin} onLogin={onLogin}/>
+          <Switch>
+            <Route path='/' exact={true}>
+              <Login onLogin={onLogin} isLogin={isLogin}/>
+            </Route>
+            <Route path="/main" exact={true}>
+              <Main isLogin={isLogin}/>
+            </Route>
+          </Switch>
+          <Footer />
+        </div>
+      </div>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

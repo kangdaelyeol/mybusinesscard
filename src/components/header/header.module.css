@@ -1,0 +1,12 @@
+.head{
+  background-color: #203340;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.title{
+  color:white;
+  font-size:1rem;
+}
