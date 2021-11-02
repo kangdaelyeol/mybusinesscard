@@ -1,0 +1,67 @@
+.main{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+}
+
+.savebtn{
+  all:unset;
+  cursor:pointer;
+  font-size: 1rem;
+  color:#505050; 
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* transition: all .2s ease; */
+}
+
+.savebtn:hover{
+  color:white;
+  background-color: #808050;
+}
+
+.form {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+}
+
+.line {
+  display: flex;
+  width: 100%;
+}
+
+.line input,
+.line select,
+.filelabel,
+.savebtn{
+  flex: 1 1 0;
+}
+.description{
+  width: 100%;
+  resize: none;
+}
+
+.fileinput{
+  display: none;
+}
+
+.filelabel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #505050;
+  color:white;
+  font-size:1rem;
+  cursor: pointer;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  outline: none;
+  /* border: none; */
+}
