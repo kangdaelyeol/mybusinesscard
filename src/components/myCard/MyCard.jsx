@@ -3,7 +3,6 @@ import styles from './myCard.module.css';
 
 const MyCard = ({ cardInfo }) => {
   const { name, color, description, id, imgPath } = cardInfo;
-  console.log(color);
   let formStyle = null;
   const path = imgPath ? imgPath :  '../../img/favicon.ico';
   switch (color) {

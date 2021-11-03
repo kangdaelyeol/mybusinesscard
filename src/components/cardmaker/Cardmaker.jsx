@@ -1,25 +1,26 @@
 import React, { useRef } from 'react';
 import styles from './cardmaker.module.css';
 
-const Cardmaker = ({ onSave }) => {
+const Cardmaker = ({ onSave, cloudinary }) => {
   const avatarRef = useRef();
   const nameRef = useRef();
   const colorRef = useRef();
   const desRef = useRef();
 
-  const onFileChange = (e) => {
-    console.log(e.target.files[0].name);
-    console.log(avatarRef.current.files);
+  const onFileChange = async (e) => {
+    const files = avatarRef.current.files;
+    console.log(files);
+    cloudinary.uploadFile(files);
   };
+  
   const onSubmit = (e) => {
     e.preventDefault();
-
+    
     const name = nameRef.current.value;
     const color = colorRef.current.value;
     const des = desRef.current.value;
     nameRef.current.value = '';
     desRef.current.value = '';
-
     // name color des
     onSave(name, color, des);
   };
@@ -54,14 +55,14 @@ const Cardmaker = ({ onSave }) => {
           ></textarea>
         </div>
         <div className={styles.line}>
-          <label className={styles.filelabel} htmlFor='avatar'>
+          <label className={styles.filelabel} htmlFor='Myavatar'>
             No File
           </label>
           <input
             onChange={onFileChange}
             ref={avatarRef}
             className={styles.fileinput}
-            id='avatar'
+            id='Myavatar'
             type='file'
             accept='image/*'
           />

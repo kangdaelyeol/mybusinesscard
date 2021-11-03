@@ -5,7 +5,7 @@ import styles from './main.module.css';
 import MyCard from '../myCard/MyCard';
 import CardEditor from '../cardeditor/CardEditor';
 
-const Main = (isLogin) => {
+const Main = ({isLogin, cloudinary}) => {
   const [cards, setCards] = useState({
     1 : {
       id:1,
@@ -58,7 +58,7 @@ const Main = (isLogin) => {
       {Object.keys(cards).map((v, index) => {
           return <CardEditor onChangeCard={onChangeCard} cardInfo={cards[index + 1]} key={cards[index + 1].id}/>;
         })}
-        <Cardmaker onSave={addCard} />
+        <Cardmaker cloudinary={cloudinary} onSave={addCard} />
       </div>
       <div className={styles.right}>
         {Object.keys(cards).map((v, index) => {
