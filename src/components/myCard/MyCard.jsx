@@ -2,9 +2,9 @@ import React from 'react';
 import styles from './myCard.module.css';
 
 const MyCard = ({ cardInfo }) => {
-  const { name, color, description, id, imgPath } = cardInfo;
+  const { name, color, description, id, fileUrl } = cardInfo;
   let formStyle = null;
-  const path = imgPath ? imgPath :  '../../img/favicon.ico';
+  const path = fileUrl ? fileUrl :  '../../img/favicon.ico';
   switch (color) {
     case 'black':
       formStyle = styles.form__style__black;

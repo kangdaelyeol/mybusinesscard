@@ -33,6 +33,7 @@ const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
 export class cloudinaryService {
   uploadFile = async (files) => {
     const formdata = new FormData();
+
     for(let i = 0; i<files.length; i++){
       let file = files[i];
       console.log(file);
@@ -47,6 +48,6 @@ export class cloudinaryService {
     });
     // const res = await fileRes.json();
 
-    console.log(fileRes.data);
+    return fileRes.data;
   }
 }

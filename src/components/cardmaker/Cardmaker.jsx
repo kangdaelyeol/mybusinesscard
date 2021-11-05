@@ -1,16 +1,21 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import styles from './cardmaker.module.css';
 
-const Cardmaker = ({ onSave, cloudinary }) => {
-  const avatarRef = useRef();
+const Cardmaker = ({ AvatarComp, onSave, cloudinary }) => {
   const nameRef = useRef();
   const colorRef = useRef();
   const desRef = useRef();
+  const [fileName, setFileName] = useState(null);
+  const [fileUrl, setFileUrl] = useState(null);
 
-  const onFileChange = async (e) => {
-    const files = avatarRef.current.files;
-    console.log(files);
-    cloudinary.uploadFile(files);
+
+  const onFileChange = async (files) => {
+    const fileInfo = await cloudinary.uploadFile(files);
+    const f_name = fileInfo.original_filename;
+    const f_url = fileInfo.url;
+    setFileName(f_name);
+    setFileUrl(f_url);
   };
   
   const onSubmit = (e) => {
@@ -19,10 +24,15 @@ const Cardmaker = ({ onSave, cloudinary }) => {
     const name = nameRef.current.value;
     const color = colorRef.current.value;
     const des = desRef.current.value;
+    const saveFileName = fileName ? fileName : "";
+    const saveFileUrl = fileUrl ? fileUrl : "";
+
     nameRef.current.value = '';
     desRef.current.value = '';
     // name color des
-    onSave(name, color, des);
+    onSave(name, color, des, saveFileName, saveFileUrl);
+    setFileName(null);
+    setFileUrl(null);
   };
   return (
     <div className={styles.main}>
@@ -55,17 +65,7 @@ const Cardmaker = ({ onSave, cloudinary }) => {
           ></textarea>
         </div>
         <div className={styles.line}>
-          <label className={styles.filelabel} htmlFor='Myavatar'>
-            No File
-          </label>
-          <input
-            onChange={onFileChange}
-            ref={avatarRef}
-            className={styles.fileinput}
-            id='Myavatar'
-            type='file'
-            accept='image/*'
-          />
+          {AvatarComp({ fileName, onFileChange })}
           <button className={styles.savebtn}>Save!</button>
         </div>
       </form>

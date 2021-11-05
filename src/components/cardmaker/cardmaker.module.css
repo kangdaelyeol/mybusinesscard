@@ -36,32 +36,20 @@
 
 .line input,
 .line select,
-.filelabel,
 .savebtn{
   flex: 1 1 0;
+}
+.savebtn{
+  height: 1.5rem;
 }
 .description{
   width: 100%;
   resize: none;
 }
 
-.fileinput{
-  display: none;
-}
-
-.filelabel{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #505050;
-  color:white;
-  font-size:1rem;
-  cursor: pointer;
-}
-
 input:focus,
 select:focus,
 textarea:focus{
   outline: none;
-  /* border: none; */
+  border: none;
 }

@@ -5,19 +5,21 @@ import styles from './main.module.css';
 import MyCard from '../myCard/MyCard';
 import CardEditor from '../cardeditor/CardEditor';
 
-const Main = ({isLogin, cloudinary}) => {
+const Main = ({isLogin, cloudinary, AvatarComp}) => {
   const [cards, setCards] = useState({
     1 : {
       id:1,
       name:"nameSample",
       description: "description",
-      color:"black"
+      color:"black",
+      fileName:"",
+      fileUrl: ""
     }
   });
 
-  const onChangeCard = (name, color, description, id) => {
+  const onChangeCard = (name, color, description, id, fileName, fileUrl) => {
     const newCards = {};
-    const newCard = {name, color, description, id}
+    const newCard = {name, color, description, id, fileName, fileUrl}
     Object.keys(cards).forEach((v, index) => {
       if(index + 1 !== id){
         newCards[index + 1] = {...cards[index + 1]};
@@ -28,13 +30,15 @@ const Main = ({isLogin, cloudinary}) => {
     setCards(newCards);
   }
 
-  const addCard = (name, color, description) => {
+  const addCard = (name, color, description, fileName, fileUrl) => {
     const id = Object.keys(cards).length + 1;
     const newCard = {
       name,
       color,
       description,
       id,
+      fileName,
+      fileUrl
     };
 
     const newCards = {};
@@ -56,9 +60,9 @@ const Main = ({isLogin, cloudinary}) => {
     <div className={styles.main}>
       <div className={styles.left}>
       {Object.keys(cards).map((v, index) => {
-          return <CardEditor onChangeCard={onChangeCard} cardInfo={cards[index + 1]} key={cards[index + 1].id}/>;
+          return <CardEditor cloudinary={cloudinary} AvatarComp={AvatarComp} onChangeCard={onChangeCard} cardInfo={cards[index + 1]} key={cards[index + 1].id}/>;
         })}
-        <Cardmaker cloudinary={cloudinary} onSave={addCard} />
+        <Cardmaker AvatarComp={AvatarComp} cloudinary={cloudinary} onSave={addCard} />
       </div>
       <div className={styles.right}>
         {Object.keys(cards).map((v, index) => {
