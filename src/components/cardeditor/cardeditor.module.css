@@ -1,4 +1,4 @@
-.main{
+.main {
   width: 100%;
   display: flex;
   justify-content: center;
@@ -6,11 +6,21 @@
   height: 40vh;
 }
 
-.savebtn{
-  all:unset;
-  cursor:pointer;
+input,
+select,
+textarea,
+input:focus,
+select:focus,
+textarea:focus {
+  background-color: white;
+  border: .5px solid grey;
+}
+
+.savebtn {
+  all: unset;
+  cursor: pointer;
   font-size: 1rem;
-  color:#505050; 
+  color: #505050;
   background-color: white;
   display: flex;
   justify-content: center;
@@ -18,14 +28,15 @@
   /* transition: all .2s ease; */
 }
 
-.savebtn:hover{
-  color:white;
+.savebtn:hover {
+  color: white;
   background-color: #808050;
 }
 
 .form {
   display: flex;
-  width: 80%;
+  width: 90%;
+  height: 70%;
   flex-direction: column;
 }
 
@@ -34,34 +45,55 @@
   width: 100%;
 }
 
-.line input,
-.line select,
-.filelabel,
-.savebtn{
+.textarea__line{
   flex: 1 1 0;
 }
-.description{
+
+.line input,
+.line select,
+.line .deleteBtn,
+.savebtn {
+  flex: 1 1 0;
+}
+
+.deleteBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #344a57;
+  cursor: pointer;
+  user-select: none;
+  /* transition: all .25s ease; */
+}
+
+.deleteBtn:hover {
+  background-color: #545a77;
+}
+
+.description {
+  border: none;
   width: 100%;
+  height: 100%;
   resize: none;
 }
 
-.fileinput{
+.description:focus{
+  outline: none;
+  border:none;
+}
+
+.fileinput {
   display: none;
 }
 
-.filelabel{
+.filelabel {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #505050;
-  color:white;
-  font-size:1rem;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
-  outline: none;
-  /* border: none; */
-}

@@ -8,6 +8,7 @@
 
 .avatar__button{
   all: unset;
+  cursor: pointer;
   background-color: #DEE4EA;
   font-size: 1rem;
   color:#203340;

@@ -3,8 +3,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 30vh;
 }
+
+.form {
+  display: flex;
+  width: 90%;
+  flex-direction: column;
+}
+
+.title{
+  all: unset;
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #404040;
+  font-size: 1.2rem;
+}
+
+/* main -> focus 상태시 title 추가 */
+
 
 .savebtn{
   all:unset;
@@ -23,11 +43,6 @@
   background-color: #808050;
 }
 
-.form {
-  display: flex;
-  width: 80%;
-  flex-direction: column;
-}
 
 .line {
   display: flex;
@@ -42,14 +57,22 @@
 .savebtn{
   height: 1.5rem;
 }
-.description{
+.description,
+.description:focus{
   width: 100%;
   resize: none;
+  outline: none;
+  border:none;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
+.input:focus,
+.input
+{
   outline: none;
-  border: none;
+  border: .5px solid grey;
+}
+
+.main:focus-within .title
+.main:focus .title{
+  color:black;
 }

@@ -1,40 +1,36 @@
 import React, { useRef, useState } from 'react';
-import styles from "./cardEditor.module.css";
+import styles from './cardEditor.module.css';
 
-const CardEditor = ({cloudinary, AvatarComp, onChangeCard, cardInfo}) => {
-  const { id, name, description, color } = cardInfo;
+const CardEditor = ({ onDeleteCard, cloudinary, AvatarComp, onChangeCard, cardInfo }) => {
+  const { id, name, description, color, fileName, fileUrl } = cardInfo;
   const nameRef = useRef();
   const colorRef = useRef();
   const desRef = useRef();
-  const [fileName, setFileName] = useState(cardInfo.fileName);
-  const [fileUrl, setFileUrl] = useState(cardInfo.fileUrl);
 
   const onInput = () => {
     const newName = nameRef.current.value;
     const newColor = colorRef.current.value;
     const newDes = desRef.current.value;
     onChangeCard(newName, newColor, newDes, id, fileName, fileUrl);
-  }
+  };
 
   const onFileChange = async (files) => {
     const fileInfo = await cloudinary.uploadFile(files);
-    const f_name = fileInfo.original_filename;
-    const f_url = fileInfo.url;
-    setFileName(f_name); // setState -> async request
-    setFileUrl(f_url);  // setState -> async request
+    const newFileName = fileInfo.original_filename;
+    const newFileUrl = fileInfo.url;
     const newName = nameRef.current.value;
     const newColor = colorRef.current.value;
     const newDes = desRef.current.value;
-    onChangeCard(newName, newColor, newDes, id, f_name, f_url);
+    onChangeCard(newName, newColor, newDes, id, newFileName, newFileUrl);
   };
 
+  const onDeletebtnClick = () => {
+    onDeleteCard({id});
+  }
 
   return (
     <div className={styles.main}>
-      <form
-        className={styles.form}
-        encType='multiple/data-form'
-      >
+      <form className={styles.form} encType='multiple/data-form'>
         <div className={styles.line}>
           <input
             ref={nameRef}
@@ -45,12 +41,18 @@ const CardEditor = ({cloudinary, AvatarComp, onChangeCard, cardInfo}) => {
             onChange={onInput}
             value={name}
           />
-          <select value={color} ref={colorRef} name='color' id='color' onChange={onInput}>
+          <select
+            value={color}
+            ref={colorRef}
+            name='color'
+            id='color'
+            onChange={onInput}
+          >
             <option value='black'>black</option>
             <option value='pink'>pink</option>
           </select>
         </div>
-        <div className={styles.line}>
+        <div className={`${styles.line} ${styles.textarea__line}`}>
           <textarea
             ref={desRef}
             className={styles.description}
@@ -59,15 +61,19 @@ const CardEditor = ({cloudinary, AvatarComp, onChangeCard, cardInfo}) => {
             rows='3'
             placeholder='description'
             onChange={onInput}
-          >{description}</textarea>
+            value={description}
+          >
+          </textarea>
         </div>
         <div className={styles.line}>
           {AvatarComp({ cloudinary, onFileChange, fileName })}
+          <div className={styles.deleteBtn} onClick={onDeletebtnClick}>
+            delete
+          </div>
         </div>
       </form>
     </div>
   );
-}
-
+};
 
 export default CardEditor;

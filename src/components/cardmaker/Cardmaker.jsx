@@ -1,14 +1,15 @@
 import React, { useRef, useState } from 'react';
-import { flushSync } from 'react-dom';
 import styles from './cardmaker.module.css';
 
 const Cardmaker = ({ AvatarComp, onSave, cloudinary }) => {
   const nameRef = useRef();
   const colorRef = useRef();
   const desRef = useRef();
+  const mainRef = useRef();
+
+
   const [fileName, setFileName] = useState(null);
   const [fileUrl, setFileUrl] = useState(null);
-
 
   const onFileChange = async (files) => {
     const fileInfo = await cloudinary.uploadFile(files);
@@ -17,15 +18,15 @@ const Cardmaker = ({ AvatarComp, onSave, cloudinary }) => {
     setFileName(f_name);
     setFileUrl(f_url);
   };
-  
+
   const onSubmit = (e) => {
     e.preventDefault();
-    
+
     const name = nameRef.current.value;
     const color = colorRef.current.value;
     const des = desRef.current.value;
-    const saveFileName = fileName ? fileName : "";
-    const saveFileUrl = fileUrl ? fileUrl : "";
+    const saveFileName = fileName ? fileName : '';
+    const saveFileUrl = fileUrl ? fileUrl : '';
 
     nameRef.current.value = '';
     desRef.current.value = '';
@@ -35,7 +36,8 @@ const Cardmaker = ({ AvatarComp, onSave, cloudinary }) => {
     setFileUrl(null);
   };
   return (
-    <div className={styles.main}>
+    <div className={styles.main} ref={mainRef}>
+      <h1 className={styles.title}>Card form!</h1>
       <form
         className={styles.form}
         onSubmit={onSubmit}
@@ -43,13 +45,19 @@ const Cardmaker = ({ AvatarComp, onSave, cloudinary }) => {
       >
         <div className={styles.line}>
           <input
+            className={styles.input}
             ref={nameRef}
             type='text'
             name='name'
             id='name'
             placeholder='Name'
           />
-          <select ref={colorRef} name='color' id='color'>
+          <select
+            className={styles.input}
+            ref={colorRef}
+            name='color'
+            id='color'
+          >
             <option value='black'>black</option>
             <option value='pink'>pink</option>
           </select>
@@ -66,7 +74,7 @@ const Cardmaker = ({ AvatarComp, onSave, cloudinary }) => {
         </div>
         <div className={styles.line}>
           {AvatarComp({ fileName, onFileChange })}
-          <button className={styles.savebtn}>Save!</button>
+          <button  className={styles.savebtn}>Save!</button>
         </div>
       </form>
     </div>
