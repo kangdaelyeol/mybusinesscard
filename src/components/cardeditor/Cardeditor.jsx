@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styles from './cardEditor.module.css';
 
 const CardEditor = ({ onDeleteCard, cloudinary, AvatarComp, onChangeCard, cardInfo }) => {

@@ -1,10 +1,11 @@
 import React from 'react';
 import styles from './myCard.module.css';
+import defaultImg from "../../img/favicon.ico";
 
 const MyCard = ({ cardInfo }) => {
-  const { name, color, description, id, fileUrl } = cardInfo;
+  const { name, color, description, fileUrl } = cardInfo;
   let formStyle = null;
-  const path = fileUrl ? fileUrl :  '../../img/favicon.ico';
+  const path = fileUrl ? fileUrl : false;
   switch (color) {
     case 'black':
       formStyle = styles.form__style__black;
@@ -19,7 +20,7 @@ const MyCard = ({ cardInfo }) => {
     <div className={styles.main}>
       <div className={`${styles.form} ${formStyle}`}>
         <div className={styles.form__left}>
-          <img alt="avatar" src={path} className={styles.avatar} />
+          <img alt="avatar" src={path ? path : defaultImg} className={styles.avatar} />
         </div>
         <div className={styles.form__right}>
           <span className={styles.name}>{name}</span>

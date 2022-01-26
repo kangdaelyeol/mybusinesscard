@@ -5,8 +5,8 @@ import Header from './components/header/Header';
 import Footer from './components/footer/Footer';
 import Login from './components/login/Login';
 import Main from './components/main/Main';
-const App = ({ cloudinary, AvatarComp }) => {
-  const [isLogin, setLogin] = useState(true);
+const App = ({ cloudinary, firebase, AvatarComp }) => {
+  const [isLogin, setLogin] = useState(false);
   const onLogin = (bool) => {
     setLogin(bool);
   }
@@ -18,7 +18,7 @@ const App = ({ cloudinary, AvatarComp }) => {
           <Header isLogin={isLogin} onLogin={onLogin}/>
           <Switch>
             <Route path='/' exact={true}>
-              <Login onLogin={onLogin} isLogin={isLogin}/>
+              <Login onLogin={onLogin} firebase={firebase} isLogin={isLogin}/>
             </Route>
             <Route path="/main" exact={true}>
               <Main AvatarComp={AvatarComp} cloudinary={cloudinary} isLogin={isLogin}/>
