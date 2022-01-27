@@ -74,8 +74,8 @@ const Main = ({isLogin, cloudinary, AvatarComp}) => {
 
   const history = useHistory();
   useEffect(() => {
-    if (!isLogin) history.push('/');
-  }, []);
+    if (!isLogin.state) history.push('/');
+  }, [isLogin]);
 
   return (
     <div className={styles.main}>

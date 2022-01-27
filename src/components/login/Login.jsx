@@ -6,18 +6,29 @@ const Login = ({onLogin, isLogin, firebase}) => {
   const history = useHistory();
   
   useEffect(()=>{
-    if(isLogin)
+    if(isLogin.state)
     history.push("/main");
   })
 
-  const onGithubLogin = () => {
-    onLogin(true);
-    history.push("/main");
+  const onGithubLogin = async () => {
+    const loginResult = await firebase.githubLogin();
+    // history.push("/main");
+    console.log(loginResult);
   }
 
   const onGoogleLogin = async () => {
     const loginResult = await firebase.googleLogin();
     console.log(loginResult);
+    if(loginResult.type === "success"){
+      const { displayName, email, photoURL, uid } = loginResult.user
+      onLogin({
+        state:true,
+        info: {
+          displayName, email, photoURL, uid
+        }
+      });
+      history.push("/main");
+    }
   }
 
   return (

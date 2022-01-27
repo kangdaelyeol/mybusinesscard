@@ -6,16 +6,19 @@ import Footer from './components/footer/Footer';
 import Login from './components/login/Login';
 import Main from './components/main/Main';
 const App = ({ cloudinary, firebase, AvatarComp }) => {
-  const [isLogin, setLogin] = useState(false);
-  const onLogin = (bool) => {
-    setLogin(bool);
+  const [isLogin, setLogin] = useState({
+    state: false
+  });
+  const loginState = isLogin.state;
+  const onLogin = (data) => {
+    setLogin(data);
   }
 
   return (
     <BrowserRouter>
-      <div className={`${isLogin ? '' : styles.main}`}>
-        <div className={`${isLogin ? '' : styles.loginwrapper}`}>
-          <Header isLogin={isLogin} onLogin={onLogin}/>
+      <div className={`${loginState ? '' : styles.main}`}>
+        <div className={`${loginState ? '' : styles.loginwrapper}`}>
+          <Header firebase={firebase}isLogin={isLogin} onLogin={onLogin}/>
           <Switch>
             <Route path='/' exact={true}>
               <Login onLogin={onLogin} firebase={firebase} isLogin={isLogin}/>

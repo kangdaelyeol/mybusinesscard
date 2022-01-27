@@ -1,16 +1,16 @@
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
-import { getAnalytics } from 'firebase/analytics';
 import {
   GoogleAuthProvider,
+  GithubAuthProvider,
   signInWithPopup,
   signOut,
   getAuth,
 } from 'firebase/auth';
 
 const ENV_params = {
-  firebaseAPI_KEY: process.env.REACT_APP_FIREBASEAPIKEY
-}
+  firebaseAPI_KEY: process.env.REACT_APP_FIREBASEAPIKEY,
+};
 
 const PROJECT_ID = 'business-card-maker-21a3d';
 // TODO: Replace the following with your app's Firebase project configuration
@@ -28,12 +28,12 @@ const firebaseConfig = {
   appId: '2:637908496727:web:a4284b4c99e329d5',
 };
 const app = initializeApp(firebaseConfig);
-const provider = new GoogleAuthProvider();
 
 export class firebaseServices {
   googleLogin = async () => {
     const auth = getAuth();
     try {
+      const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
       // This gives you a Google Access Token. You can use it to access the Google API.
       const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -63,13 +63,50 @@ export class firebaseServices {
     }
   };
 
+  githubLogin = async () => {
+    const auth = getAuth();
+    const provider = new GithubAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+      const credential = GithubAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+
+      // The signed-in user info.
+      const user = result.user;
+      // ...
+      return {
+        type: 'success',
+        token,
+        user,
+      };
+    } catch (error) {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GithubAuthProvider.credentialFromError(error);
+      // ...
+      return {
+        type: 'error',
+        errorCode,
+        errorMessage,
+        email,
+        credential,
+      };
+    }
+  };
+
   signOut = async () => {
     const auth = getAuth();
     try {
       await signOut(auth);
-    } catch (error) { 
-       console.log(error);
-     }
+      return true;
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 
