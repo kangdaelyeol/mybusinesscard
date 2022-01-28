@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, set, onValue } from 'firebase/database';
 import {
   GoogleAuthProvider,
   GithubAuthProvider,
@@ -22,10 +23,11 @@ const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
 const firebaseConfig = {
   apiKey: ENV_params.firebaseAPI_KEY,
   authDomain: `${PROJECT_ID}.firebaseapp.com`,
-  databaseURL: `https://${PROJECT_ID}.firebaseio.com`,
+  databaseURL: `https://${PROJECT_ID}-default-rtdb.firebaseio.com/`,
   projectId: PROJECT_ID,
   messagingSenderId: '637908496727',
   appId: '2:637908496727:web:a4284b4c99e329d5',
+  // storageBucket: `${PROJECT_ID}.appspot.com/`,
 };
 const app = initializeApp(firebaseConfig);
 
@@ -108,8 +110,39 @@ export class firebaseServices {
       console.log(error);
     }
   };
+
+  // database function
+  createUser = async (uid, username, email, avatarURL) => {
+    const db = getDatabase();
+    const setResult = await set(ref(db, 'users/' + uid), {
+      username,
+      email,
+      avatarURL,
+      cards: null
+    });
+    const refResult = ref(db, "users/" + uid);
+    console.log("setResult", setResult);
+    console.log("refResult", refResult);
+    const userRef = ref(db, "users/");
+    onValue(userRef, (snapshot) => {
+      const data = snapshot.val();
+      console.log("snapshotVal: ", data);
+    })
+  };
 }
 
+
+export class firebaseDB{
+  setMyCards = (uid, cardID, cardInfo) => {
+    const db = getDatabase();
+    set(ref(db, 'users/' + uid + '/' + cardID), cardInfo);
+  }
+
+  removeMyCards = (uid, cardID) => {
+    // TO DO -> remove card Logic
+    return;
+  }
+}
 // form.addEventListener("submit", (e) => {
 //   e.preventDefault();
 

@@ -27,6 +27,8 @@ const Login = ({onLogin, isLogin, firebase}) => {
           displayName, email, photoURL, uid
         }
       });
+      // await firebase.createUser(uid, displayName, email, photoURL);
+
       history.push("/main");
     }
   }
