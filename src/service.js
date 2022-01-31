@@ -133,9 +133,18 @@ export class firebaseServices {
 
 
 export class firebaseDB{
-  setMyCards = (uid, cardID, cardInfo) => {
+  setMyCards = async (uid, cardID, cardInfo) => {
     const db = getDatabase();
-    set(ref(db, 'users/' + uid + '/' + cardID), cardInfo);
+    await set(ref(db, 'users/' + uid + '/' + cardID), cardInfo);
+  }
+
+  onVal = (uid, cardID) => {
+    const db = getDatabase();
+    const userRef = ref(db, 'users/', + uid + '/', cardID);
+    onValue(userRef, (snapshot) => {
+      const snapValue = snapshot.val();
+      console.log("snapval: ",snapValue);
+    })
   }
 
   removeMyCards = (uid, cardID) => {

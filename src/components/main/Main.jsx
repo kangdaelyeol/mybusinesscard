@@ -27,7 +27,7 @@ const Main = ({isLogin, cloudinary, AvatarComp, cardsDB}) => {
     if (!isLogin.state) history.push('/');
   }, [isLogin]);
 
-  const onChangeCard = (name, color, description, id, fileName, fileUrl) => {
+  const onChangeCard = async (name, color, description, id, fileName, fileUrl) => {
     const newCards = {};
     const newCard = {name, color, description, id, fileName, fileUrl}
     Object.keys(cards).forEach((key, index) => {
@@ -38,7 +38,8 @@ const Main = ({isLogin, cloudinary, AvatarComp, cardsDB}) => {
       }
     })
     setCards(newCards);
-    cardsDB.setMyCards(isLogin.info.uid, id, newCard);
+    await cardsDB.setMyCards(isLogin.info.uid, id, newCard);
+    cardsDB.onVal(isLogin.info.uid, id);
   }
 
   const onDeleteCard = (props) => {
