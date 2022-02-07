@@ -9,23 +9,21 @@ import CardEditor from '../cardeditor/CardEditor';
 // cards id -> Date.now();
 
 const Main = ({isLogin, cloudinary, AvatarComp, cardsDB}) => {
-  const [cards, setCards] = useState({
-    1 : {
-      id:1,
-      name:"nameSample",
-      description: "description",
-      color:"black",
-      fileName:"",
-      fileUrl: ""
-    }
-  });
-
+  const [cards, setCards] = useState({});
+  
+  const history = useHistory();
   // isLogin: state, info
   // info: displayName, email, photoURL, uid
 
   useEffect(() => {
-    if (!isLogin.state) history.push('/');
-  }, [isLogin]);
+    if (!isLogin.state) return history.push('/');
+    console.log(isLogin);
+    const onValueListener = cardsDB.onVal(setCards);
+    // onValueListener -> ref off 메서드
+    return () => {
+      onValueListener();
+    }
+  },[isLogin, cardsDB]);
 
   const onChangeCard = async (name, color, description, id, fileName, fileUrl) => {
     const newCards = {};
@@ -39,7 +37,6 @@ const Main = ({isLogin, cloudinary, AvatarComp, cardsDB}) => {
     })
     setCards(newCards);
     await cardsDB.setMyCards(isLogin.info.uid, id, newCard);
-    cardsDB.onVal(isLogin.info.uid, id);
   }
 
   const onDeleteCard = (props) => {
@@ -74,8 +71,7 @@ const Main = ({isLogin, cloudinary, AvatarComp, cardsDB}) => {
     console.log(newCards);
   };
 
-  const history = useHistory();
-
+  
   return (
     <div className={styles.main}>
       <div className={styles.left}>

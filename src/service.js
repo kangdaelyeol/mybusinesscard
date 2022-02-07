@@ -8,6 +8,7 @@ import {
   signOut,
   getAuth,
 } from 'firebase/auth';
+import { useRef } from 'react';
 
 const ENV_params = {
   firebaseAPI_KEY: process.env.REACT_APP_FIREBASEAPIKEY,
@@ -121,8 +122,6 @@ export class firebaseServices {
       cards: null
     });
     const refResult = ref(db, "users/" + uid);
-    console.log("setResult", setResult);
-    console.log("refResult", refResult);
     const userRef = ref(db, "users/");
     onValue(userRef, (snapshot) => {
       const data = snapshot.val();
@@ -138,13 +137,25 @@ export class firebaseDB{
     await set(ref(db, 'users/' + uid + '/' + cardID), cardInfo);
   }
 
-  onVal = (uid, cardID) => {
+  onVal = (onUpdateCard) => {
+    const myAuth = getAuth();
     const db = getDatabase();
-    const userRef = ref(db, 'users/', + uid + '/', cardID);
+
+    const userId = myAuth.currentUser.uid;
+    const userRef = ref(db, 'users/' + userId);
     onValue(userRef, (snapshot) => {
       const snapValue = snapshot.val();
-      console.log("snapval: ",snapValue);
-    })
+      snapValue && onUpdateCard(snapValue);
+    });
+
+    return () => userRef.off();
+  }
+
+  getMyCards  = () => {
+    const myAuth = getAuth();
+    const db = getDatabase();
+    const uid = myAuth.currentUser.uid;
+    const ref = ref(db, 'users/' + uid + '/');
   }
 
   removeMyCards = (uid, cardID) => {

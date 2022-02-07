@@ -14,6 +14,18 @@ const Login = ({onLogin, isLogin, firebase}) => {
     const loginResult = await firebase.githubLogin();
     // history.push("/main");
     console.log(loginResult);
+    if(loginResult.type === "success"){
+      const { displayName, email, photoURL, uid } = loginResult.user
+      onLogin({
+        state:true,
+        info: {
+          displayName, email, photoURL, uid
+        }
+      });
+      // await firebase.createUser(uid, displayName, email, photoURL);
+
+      history.push("/main");
+    }
   }
 
   const onGoogleLogin = async () => {
