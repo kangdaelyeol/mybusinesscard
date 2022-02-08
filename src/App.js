@@ -18,7 +18,7 @@ const App = ({ cloudinary, firebase, AvatarComp, cardsDB }) => {
     <BrowserRouter>
       <div className={`${loginState ? '' : styles.main}`}>
         <div className={`${loginState ? '' : styles.loginwrapper}`}>
-          <Header firebase={firebase}isLogin={isLogin} onLogin={onLogin}/>
+          <Header firebase={firebase} isLogin={isLogin} onLogin={onLogin}/>
           <Switch>
             <Route path='/' exact={true}>
               <Login onLogin={onLogin} firebase={firebase} isLogin={isLogin}/>

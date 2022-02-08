@@ -3,21 +3,21 @@ import styles from "./header.module.css";
 
 
 const Header = ({ isLogin, onLogin, firebase }) => {
-  console.log(isLogin);
-  const onLogout = async () => {
+
+  const onLogout = () => {
     if(!isLogin.state) return;
-    const result = await firebase.signOut();
-    if(result){
+    return firebase.signOut().then(() => {
       onLogin({
         state:false
-      });
-
-    }
-    else{
-      console.log(result);
-      throw new Error("Logout Error!")
-    }
+      })
+      console.log("Logout success")
+    }).catch(e => {
+      console.log(e);
+      throw new Error("logout Error");
+    });
   }
+
+
   return (<header className={styles.head}>
     <span className={`${styles.left} ${styles.title}`}>{
       isLogin.state 

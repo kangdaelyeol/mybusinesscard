@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, set, onValue } from 'firebase/database';
+import { getDatabase, ref, set, onValue, remove, off } from 'firebase/database';
 import {
   GoogleAuthProvider,
   GithubAuthProvider,
   signInWithPopup,
   signOut,
   getAuth,
+  onAuthStateChanged
 } from 'firebase/auth';
-import { useRef } from 'react';
 
 const ENV_params = {
   firebaseAPI_KEY: process.env.REACT_APP_FIREBASEAPIKEY,
@@ -33,6 +33,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export class firebaseServices {
+  checkLoginState = (setLoginState) => {
+    const myAuth = getAuth();
+    onAuthStateChanged(myAuth, (user) => {
+      console.log("check Login");
+      if(user) setLoginState(user);
+    })
+  }
+
   googleLogin = async () => {
     const auth = getAuth();
     try {
@@ -111,30 +119,15 @@ export class firebaseServices {
       console.log(error);
     }
   };
-
-  // database function
-  createUser = async (uid, username, email, avatarURL) => {
-    const db = getDatabase();
-    const setResult = await set(ref(db, 'users/' + uid), {
-      username,
-      email,
-      avatarURL,
-      cards: null
-    });
-    const refResult = ref(db, "users/" + uid);
-    const userRef = ref(db, "users/");
-    onValue(userRef, (snapshot) => {
-      const data = snapshot.val();
-      console.log("snapshotVal: ", data);
-    })
-  };
 }
 
 
 export class firebaseDB{
-  setMyCards = async (uid, cardID, cardInfo) => {
+  setMyCards = (cardID, cardInfo) => {
     const db = getDatabase();
-    await set(ref(db, 'users/' + uid + '/' + cardID), cardInfo);
+    const myAuth = getAuth();
+    const myUid = myAuth.currentUser.uid;
+    set(ref(db, 'users/' + myUid + '/' + cardID), cardInfo);
   }
 
   onVal = (onUpdateCard) => {
@@ -145,22 +138,19 @@ export class firebaseDB{
     const userRef = ref(db, 'users/' + userId);
     onValue(userRef, (snapshot) => {
       const snapValue = snapshot.val();
-      snapValue && onUpdateCard(snapValue);
+      onUpdateCard(snapValue || {});
     });
 
-    return () => userRef.off();
+    return () => off(userRef)
   }
 
-  getMyCards  = () => {
-    const myAuth = getAuth();
-    const db = getDatabase();
-    const uid = myAuth.currentUser.uid;
-    const ref = ref(db, 'users/' + uid + '/');
-  }
-
-  removeMyCards = (uid, cardID) => {
+  removeMyCard = (cardID) => {
     // TO DO -> remove card Logic
-    return;
+    const myAuth = getAuth();
+    const myUid = myAuth.currentUser.uid;
+    const db = getDatabase();
+    const dbRef = ref(db, 'users/' + myUid + '/' + cardID);
+    return remove(dbRef);
   }
 }
 // form.addEventListener("submit", (e) => {
@@ -172,7 +162,7 @@ export class firebaseDB{
 //   for (let i = 0; i < files.length; i++) {
 //     let file = files[i];
 //     formData.append("file", file);
-//     formData.append("upload_preset", "docs_upload_example_us_preset");
+//     formData.append(dbRef"upload_preset", "docs_upload_example_us_preset");
 
 //     fetch(cloudinaryUrl, {
 //       method: "POST",
