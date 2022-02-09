@@ -3,7 +3,7 @@ import styles from "./header.module.css";
 
 
 const Header = ({ isLogin, onLogin, firebase }) => {
-
+  console.log('Header Render');
   const onLogout = () => {
     if(!isLogin.state) return;
     return firebase.signOut().then(() => {
@@ -22,7 +22,7 @@ const Header = ({ isLogin, onLogin, firebase }) => {
     <span className={`${styles.left} ${styles.title}`}>{
       isLogin.state 
       ? <div className={styles.userInfo}>
-        <img className={styles.userAvatar} src={isLogin.info.photoURL}></img> 
+        <img alt="profile" className={styles.userAvatar} src={isLogin.info.photoURL}></img> 
       </div>
       : ''
     } </span>

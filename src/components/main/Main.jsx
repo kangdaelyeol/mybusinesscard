@@ -15,21 +15,21 @@ const Main = ({ isLogin, cloudinary, AvatarComp, cardsDB }) => {
   // info: displayName, email, photoURL, uid
 
   useEffect(() => {
-    console.log('Main useEffect!!', isLogin.state);
+    // console.log('Main useEffect!!', isLogin.state);
+    console.log("useEffect render");
     if (!isLogin.state) return history.push('/');
     const onValueListener = cardsDB.onVal((cards) => {
       setCards(cards);
     });
     // onValueListener -> ref off 메서드
     return () => {
-      console.log('useEffect callback');
       onValueListener();
     };
-  }, [isLogin, cardsDB]);
-
-  const onChangeCard = (name, color, description, id, fileName, fileUrl) => {
-    const newCard = { name, color, description, id, fileName, fileUrl };
-    return cardsDB.setMyCards(id, newCard);
+  }, [isLogin, cardsDB, history]);
+ // FileInfo: name, color, description, id, fileName, fileUrl
+  const onChangeCard = (cardInfo) => {
+    const newCard = { ...cardInfo };
+    return cardsDB.setMyCards(newCard);
   };
 
   const onDeleteCard = (props) => {
@@ -37,17 +37,15 @@ const Main = ({ isLogin, cloudinary, AvatarComp, cardsDB }) => {
     return cardsDB.removeMyCard(id);
   };
 
-  const addCard = (name, color, description, fileName, fileUrl) => {
+
+  // id는 추가할 떄 만드는게 맞는 것 같다.
+  const addCard = (cardInfo) => {
     const id = Date.now();
     const newCard = {
-      name,
-      color,
-      description,
-      id,
-      fileName,
-      fileUrl,
+      ...cardInfo,
+      id
     };
-    return cardsDB.setMyCards(id, newCard);
+    return cardsDB.setMyCards(newCard);
   };
 
   return (

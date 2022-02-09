@@ -1,8 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import styles from './avatarInput.module.css';
 
 
-const AvatarInput = (props) => {
+const AvatarInput = memo((props) => {
+  console.log("Avatar input Rendering");
   const { fileName, onFileChange } = props;
   const [ loading, setLoading ] = useState(false);
   const btnTitle = fileName ? fileName : "No File";
@@ -33,6 +34,6 @@ const AvatarInput = (props) => {
       <input onChange={onFileInput} ref={inputRef} className={styles.avatar__input} type='file' accept='image/*' />
     </div>
   );
-};
+});
 
 export default AvatarInput;

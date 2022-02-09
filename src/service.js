@@ -123,8 +123,9 @@ export class firebaseServices {
 
 
 export class firebaseDB{
-  setMyCards = (cardID, cardInfo) => {
+  setMyCards = (cardInfo) => {
     const db = getDatabase();
+    const cardID = cardInfo.id;
     const myAuth = getAuth();
     const myUid = myAuth.currentUser.uid;
     set(ref(db, 'users/' + myUid + '/' + cardID), cardInfo);
