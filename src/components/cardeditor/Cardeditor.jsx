@@ -1,36 +1,38 @@
-import React, { memo, useCallback, useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import styles from './cardEditor.module.css';
 
-const CardEditor = memo( ({ onDeleteCard, cloudinary, AvatarComp, onChangeCard, cardInfo }) => {
-    const { id, name, description, color, fileName } = cardInfo;
+const CardEditor = memo(
+  ({ id, name, description, color, fileName, onDeleteCard, cloudinary, AvatarComp, onChangeCard }) => {
+    const cardInfo = { id, name, description, color, fileName };
+    // cardInfo 구분하기 위함
+
     const nameRef = useRef();
     const colorRef = useRef();
     const desRef = useRef();
-  
     const onInput = (e) => {
       const changeValue = e.currentTarget.value;
       const changeName = e.currentTarget.id;
       onChangeCard({
         ...cardInfo,
-        [changeName]: changeValue
+        [changeName]: changeValue,
       });
     };
-  
-    const onFileChange = useCallback(async (files) => {
+
+    const onFileChange = async (files) => {
       const fileInfo = await cloudinary.uploadFile(files);
       const newFileName = fileInfo.original_filename;
       const newFileUrl = fileInfo.url;
       onChangeCard({
         ...cardInfo,
         fileName: newFileName,
-        fileUrl: newFileUrl
+        fileUrl: newFileUrl,
       });
-    }, [cardInfo, cloudinary, onChangeCard]);
-  
+    };
+
     const onDeletebtnClick = () => {
-      onDeleteCard({id});
-    }
-  
+      onDeleteCard({ id });
+    };
+
     return (
       <div className={styles.main}>
         <form className={styles.form} encType='multiple/data-form'>
@@ -65,11 +67,13 @@ const CardEditor = memo( ({ onDeleteCard, cloudinary, AvatarComp, onChangeCard, 
               placeholder='description'
               onChange={onInput}
               value={description}
-            >
-            </textarea>
+            ></textarea>
           </div>
           <div className={styles.line}>
-            <AvatarComp cloudinary={cloudinary} onFileChange={onFileChange} fileName={fileName} />
+            <AvatarComp
+              onFileChange={onFileChange}
+              fileName={fileName}
+            />
             <div className={styles.deleteBtn} onClick={onDeletebtnClick}>
               delete
             </div>
@@ -77,8 +81,7 @@ const CardEditor = memo( ({ onDeleteCard, cloudinary, AvatarComp, onChangeCard, 
         </form>
       </div>
     );
-  }
+  },
 );
-
 
 export default CardEditor;

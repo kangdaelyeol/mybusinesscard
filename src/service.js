@@ -7,7 +7,7 @@ import {
   signInWithPopup,
   signOut,
   getAuth,
-  onAuthStateChanged
+  onAuthStateChanged,
 } from 'firebase/auth';
 
 const ENV_params = {
@@ -36,10 +36,10 @@ export class firebaseServices {
   checkLoginState = (setLoginState) => {
     const myAuth = getAuth();
     onAuthStateChanged(myAuth, (user) => {
-      console.log("check Login");
-      if(user) setLoginState(user);
-    })
-  }
+      console.log('check Login');
+      if (user) setLoginState(user);
+    });
+  };
 
   googleLogin = async () => {
     const auth = getAuth();
@@ -121,15 +121,15 @@ export class firebaseServices {
   };
 }
 
-
-export class firebaseDB{
+export class firebaseDB {
   setMyCards = (cardInfo) => {
+    console.log('setMyCards', cardInfo);
     const db = getDatabase();
     const cardID = cardInfo.id;
     const myAuth = getAuth();
     const myUid = myAuth.currentUser.uid;
     set(ref(db, 'users/' + myUid + '/' + cardID), cardInfo);
-  }
+  };
 
   onVal = (onUpdateCard) => {
     const myAuth = getAuth();
@@ -137,13 +137,20 @@ export class firebaseDB{
 
     const userId = myAuth.currentUser.uid;
     const userRef = ref(db, 'users/' + userId);
-    onValue(userRef, (snapshot) => {
-      const snapValue = snapshot.val();
-      onUpdateCard(snapValue || {});
-    });
+    onValue(
+      userRef,
+      (snapshot) => {
+        const snapValue = snapshot.val();
+        console.log('snapValue!', snapValue);
+        //onUpdateCard => setCards
+        // snapValue는 새로운 값이기 떄문에
+        // shallow 비교가 아니기 되버려서 안되는구나.
+        onUpdateCard(snapValue || {});
+      }
+    );
 
-    return () => off(userRef)
-  }
+    return () => off(userRef);
+  };
 
   removeMyCard = (cardID) => {
     // TO DO -> remove card Logic
@@ -151,8 +158,8 @@ export class firebaseDB{
     const myUid = myAuth.currentUser.uid;
     const db = getDatabase();
     const dbRef = ref(db, 'users/' + myUid + '/' + cardID);
-    return remove(dbRef);
-  }
+    remove(dbRef);
+  };
 }
 // form.addEventListener("submit", (e) => {
 //   e.preventDefault();

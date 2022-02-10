@@ -2,7 +2,7 @@ import React, { memo, useRef, useState } from 'react';
 import styles from './cardmaker.module.css';
 
 const Cardmaker = memo(
-  ({ AvatarComp, onSave, cloudinary }) => {
+  ({ AvatarComp, onSave, fileUploader }) => {
     const nameRef = useRef();
     const colorRef = useRef();
     const desRef = useRef();
@@ -13,7 +13,7 @@ const Cardmaker = memo(
     const [fileUrl, setFileUrl] = useState(null);
   
     const onFileChange = async (files) => {
-      const fileInfo = await cloudinary.uploadFile(files);
+      const fileInfo = await fileUploader.uploadFile(files);
       const f_name = fileInfo.original_filename;
       const f_url = fileInfo.url;
       setFileName(f_name);

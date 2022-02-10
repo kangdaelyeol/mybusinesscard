@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styles from './myCard.module.css';
-import defaultImg from "../../img/favicon.ico";
+import defaultImg from '../../img/favicon.ico';
 
-const MyCard = ({ cardInfo }) => {
-  const { name, color, description, fileUrl } = cardInfo;
+const MyCard = memo(({ name, color, description, fileUrl }) => {
   let formStyle = null;
   const path = fileUrl ? fileUrl : false;
   switch (color) {
@@ -20,7 +19,11 @@ const MyCard = ({ cardInfo }) => {
     <div className={styles.main}>
       <div className={`${styles.form} ${formStyle}`}>
         <div className={styles.form__left}>
-          <img alt="avatar" src={path ? path : defaultImg} className={styles.avatar} />
+          <img
+            alt='avatar'
+            src={path ? path : defaultImg}
+            className={styles.avatar}
+          />
         </div>
         <div className={styles.form__right}>
           <span className={styles.name}>{name}</span>
@@ -29,6 +32,6 @@ const MyCard = ({ cardInfo }) => {
       </div>
     </div>
   );
-};
+});
 
 export default MyCard;

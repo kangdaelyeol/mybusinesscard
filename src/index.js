@@ -7,7 +7,7 @@ const cloudinary = new cloudinaryService();
 const firebase = new firebaseServices();
 const cardsDB = new firebaseDB();
 
-const AvatarComp = memo(props => (<AvatarInput {...props} />));
+const AvatarComp = memo(props => (<AvatarInput {...props} fileUploader={cloudinary} />));
 
 ReactDOM.render(
   <React.StrictMode>

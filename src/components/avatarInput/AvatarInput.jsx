@@ -2,9 +2,8 @@ import React, { memo, useRef, useState } from 'react';
 import styles from './avatarInput.module.css';
 
 
-const AvatarInput = memo((props) => {
+const AvatarInput = memo(({ fileName, onFileChange }) => {
   console.log("Avatar input Rendering");
-  const { fileName, onFileChange } = props;
   const [ loading, setLoading ] = useState(false);
   const btnTitle = fileName ? fileName : "No File";
   const inputRef = useRef();
