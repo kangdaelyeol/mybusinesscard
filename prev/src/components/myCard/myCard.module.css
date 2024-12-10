@@ -1,0 +1,71 @@
+@value gradient__black from "../style/variable.css";
+
+.main {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vh;
+}
+
+.form {
+  width: 80%;
+  min-height: 70%;
+  max-height: 90%;
+  display: flex;
+  border-radius: 20px;
+  border: 1px solid black;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 7rem;
+  height: 7rem;
+}
+
+.form__left {
+  flex: 2 1 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form__right {
+  flex: 3 1 0;
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem 0;
+}
+
+.description {
+  font-size: 0.8rem;
+}
+
+/* Style - black */
+
+.form__style__black {
+  background-image: gradient__black;
+  color: gray;
+}
+
+
+.form__style__black .name {
+  border-bottom: 0.5px solid gray;
+}
+
+/* Style - pink */
+
+.form__style__pink { 
+  color: #303030;
+  background-color: pink;
+}
+
+.form__style__pink .name {
+  border-bottom: .5px solid #fce4ec;
+}
