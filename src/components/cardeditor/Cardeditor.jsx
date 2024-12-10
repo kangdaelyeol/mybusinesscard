@@ -1,5 +1,5 @@
 import React, { memo, useRef } from 'react';
-import styles from './cardEditor.module.css';
+import styles from './cardeditor.module.css';
 
 const CardEditor = memo(
   ({ id, name, description, color, fileName, onDeleteCard, cloudinary, AvatarComp, onChangeCard }) => {

@@ -7,16 +7,18 @@ const cloudinary = new cloudinaryService();
 const firebase = new firebaseServices();
 const cardsDB = new firebaseDB();
 
-const AvatarComp = memo(props => (<AvatarInput {...props} fileUploader={cloudinary} />));
+const AvatarComp = memo((props) => (
+	<AvatarInput {...props} fileUploader={cloudinary} />
+));
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App
-      cloudinary={cloudinary}
-      firebase={firebase}
-      AvatarComp={AvatarComp}
-      cardsDB={cardsDB}
-    />
-  </React.StrictMode>,
-  document.getElementById('root'),
+	<React.StrictMode>
+		<App
+			cloudinary={cloudinary}
+			firebase={firebase}
+			AvatarComp={AvatarComp}
+			cardsDB={cardsDB}
+		/>
+	</React.StrictMode>,
+	document.getElementById('root')
 );
