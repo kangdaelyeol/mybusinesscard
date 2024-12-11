@@ -1,6 +1,16 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { createCard } from '../store/cardsSlice'
 
 export default function CardMaker() {
+    const dispatch = useDispatch()
+    const [card, setCard] = useState({
+        id: '',
+        name: '',
+        description: '',
+        theme: 'black',
+        profile: '',
+    })
     const fileInputRef = useRef()
     const handleFileInput = (e) => {
         console.log(fileInputRef.current.files)
@@ -12,6 +22,28 @@ export default function CardMaker() {
     const handleFormSubmit = (e) => {
         e.preventDefault()
     }
+
+    const changeDescription = (e) => {
+        setCard((prev) => ({ ...prev, description: e.target.value }))
+    }
+
+    const changeName = (e) => {
+        setCard((prev) => ({ ...prev, name: e.target.value }))
+    }
+
+    const changeTheme = (e) => {
+        setCard((prev) => ({ ...prev, theme: e.target.value }))
+    }
+
+    const changeProfile = (value) => {
+        setCard((prev) => ({ ...prev, profile: value }))
+    }
+
+    const saveCard = (value) => {
+        const cardID = Date.now()
+        dispatch(createCard({ card: { ...card, id: cardID } }))
+    }
+
     return (
         <div className="flex flex-1 justify-center items-center h-[230px]">
             <form
@@ -26,11 +58,15 @@ export default function CardMaker() {
                         id="name"
                         placeholder="Name"
                         className="grow rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
+                        value={card.name}
+                        onChange={changeName}
                     />
                     <select
                         name="color"
                         id="color"
                         className="rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
+                        value={card.theme}
+                        onChange={changeTheme}
                     >
                         <option value="black">black</option>
                         <option value="pink">pink</option>
@@ -43,6 +79,8 @@ export default function CardMaker() {
                     id="description"
                     rows="3"
                     placeholder="description"
+                    value={card.description}
+                    onChange={changeDescription}
                 ></textarea>
 
                 <div className="flex w-full gap-[10px]">
