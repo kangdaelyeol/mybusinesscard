@@ -13,7 +13,7 @@ export default function CardEditor() {
         e.preventDefault()
     }
     return (
-        <div className="w-full flex justify-center items-center h-[40vh]">
+        <div className="flex flex-1 justify-center items-center h-[230px]">
             <form
                 className="flex flex-col gap-[10px] w-[400px]"
                 encType="multipart/form-data"

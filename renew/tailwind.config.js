@@ -5,6 +5,7 @@ export default {
         extend: {
             colors: {
                 'color-cyan': '#203340',
+                'color-card': 'rgba(50, 79, 130,0.3)',
             },
         },
     },
