@@ -1,11 +1,10 @@
-import React, { useContext, useRef } from 'react'
+import React, { useRef } from 'react'
 import { createCard } from '../store/cardsSlice'
-import { CardContext } from '../context/CardContext'
-import { CARD_ACTIONS } from '../reducer'
+import useCardMaker from '../hooks/useCardMaker'
 
 export default function CardMaker() {
-    const { state, dispatch } = useContext(CardContext)
-
+    const { state, changeDescription, changeName, changeProfile, changeTheme } =
+        useCardMaker()
     const fileInputRef = useRef()
     const handleFileInput = (e) => {
         console.log(fileInputRef.current.files)
@@ -16,34 +15,6 @@ export default function CardMaker() {
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-    }
-
-    const changeDescription = (e) => {
-        dispatch({
-            type: CARD_ACTIONS.UPDATE_DESCRIPTION,
-            payload: { description: e.target.value },
-        })
-    }
-
-    const changeName = (e) => {
-        dispatch({
-            type: CARD_ACTIONS.UPDATE_NAME,
-            payload: { name: e.target.value },
-        })
-    }
-
-    const changeTheme = (e) => {
-        dispatch({
-            type: CARD_ACTIONS.UPDATE_THEME,
-            payload: { theme: e.target.value },
-        })
-    }
-
-    const changeProfile = (value) => {
-        dispatch({
-            type: CARD_ACTIONS.UPDATE_PROFILE,
-            payload: { profile: value },
-        })
     }
 
     const saveCard = (value) => {
