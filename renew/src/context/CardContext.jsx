@@ -1,19 +1,16 @@
-import { createContextm, useState } from 'react'
+import { createContext, useReducer, useState } from 'react'
+import { initialState, reducer } from '../reducer'
 
 export const CardContext = createContext({
-    name: '',
-    description: '',
-    profile: '',
-    theme: '',
+    state: initialState,
+    dispatch: () => {},
 })
 
 export const CardProvider = ({ children }) => {
-    const [card, setCard] = useState({
-        id: '',
-        name: '',
-        description: '',
-        theme: 'black',
-        profile: '',
-    })
-    return <CardContext.Provider value={card}>{children}</CardContext.Provider>
+    const [state, dispatch] = useReducer(reducer, { ...initialState })
+    return (
+        <CardContext.Provider value={{ state, dispatch }}>
+            {children}
+        </CardContext.Provider>
+    )
 }

@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { CardContext } from '../context/CardContext'
 
 export default function CardDisplay() {
+    const { state } = useContext(CardContext)
     return (
         <div className="h-[230px] flex flex-1">
             <div className="w-[80%] m-auto flex gap-[20px] rounded-[20px] border-[3px] border-solid border-color-card p-[35px] bg-transparent">
@@ -10,8 +12,8 @@ export default function CardDisplay() {
                     className="rounded-[50%] w-[120px] h-[120px]"
                 />
                 <div className="">
-                    <div className="text-white">test name</div>
-                    <p className="text-white">test description</p>
+                    <div className="text-white">{state.name}</div>
+                    <p className="text-white">{state.description}</p>
                 </div>
             </div>
         </div>

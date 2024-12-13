@@ -1,16 +1,11 @@
-import React, { useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useContext, useRef } from 'react'
 import { createCard } from '../store/cardsSlice'
+import { CardContext } from '../context/CardContext'
+import { CARD_ACTIONS } from '../reducer'
 
 export default function CardMaker() {
-    const dispatch = useDispatch()
-    const [card, setCard] = useState({
-        id: '',
-        name: '',
-        description: '',
-        theme: 'black',
-        profile: '',
-    })
+    const { state, dispatch } = useContext(CardContext)
+
     const fileInputRef = useRef()
     const handleFileInput = (e) => {
         console.log(fileInputRef.current.files)
@@ -24,19 +19,31 @@ export default function CardMaker() {
     }
 
     const changeDescription = (e) => {
-        setCard((prev) => ({ ...prev, description: e.target.value }))
+        dispatch({
+            type: CARD_ACTIONS.UPDATE_DESCRIPTION,
+            payload: { description: e.target.value },
+        })
     }
 
     const changeName = (e) => {
-        setCard((prev) => ({ ...prev, name: e.target.value }))
+        dispatch({
+            type: CARD_ACTIONS.UPDATE_NAME,
+            payload: { name: e.target.value },
+        })
     }
 
     const changeTheme = (e) => {
-        setCard((prev) => ({ ...prev, theme: e.target.value }))
+        dispatch({
+            type: CARD_ACTIONS.UPDATE_THEME,
+            payload: { theme: e.target.value },
+        })
     }
 
     const changeProfile = (value) => {
-        setCard((prev) => ({ ...prev, profile: value }))
+        dispatch({
+            type: CARD_ACTIONS.UPDATE_PROFILE,
+            payload: { profile: value },
+        })
     }
 
     const saveCard = (value) => {
@@ -58,14 +65,14 @@ export default function CardMaker() {
                         id="name"
                         placeholder="Name"
                         className="grow rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
-                        value={card.name}
+                        value={state.name}
                         onChange={changeName}
                     />
                     <select
                         name="color"
                         id="color"
                         className="rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
-                        value={card.theme}
+                        value={state.theme}
                         onChange={changeTheme}
                     >
                         <option value="black">black</option>
@@ -79,7 +86,7 @@ export default function CardMaker() {
                     id="description"
                     rows="3"
                     placeholder="description"
-                    value={card.description}
+                    value={state.description}
                     onChange={changeDescription}
                 ></textarea>
 

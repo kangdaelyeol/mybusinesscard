@@ -4,6 +4,7 @@ import CardDisplay from './CardDisplay'
 import CardMaker from './CardMaker'
 import CardMakerDisplay from './CardMakerDisplay'
 import { useSelector } from 'react-redux'
+import { CardProvider } from '../context/CardContext'
 export default function Main() {
     const state = useSelector((state) => state.cards)
     return (
@@ -17,8 +18,10 @@ export default function Main() {
                 ))}
 
                 <div className="flex">
-                    <CardMaker />
-                    <CardMakerDisplay />
+                    <CardProvider>
+                        <CardMaker />
+                        <CardMakerDisplay />
+                    </CardProvider>
                 </div>
             </div>
         </div>
