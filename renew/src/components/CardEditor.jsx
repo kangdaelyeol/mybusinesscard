@@ -1,47 +1,34 @@
 import React, { useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import {
-    updateCardDescription,
-    updateCardName,
-    updateCardTheme,
-} from '../store/cardsSlice'
+import useCardEditor from '../hooks/useCardEditor'
 
 export default function CardEditor({ id, name, description, theme }) {
-    const dispatch = useDispatch()
+    const {
+        handleNameChange,
+        handleDescriptionChange,
+        handleThemeChange,
+        handleCardDelete,
+    } = useCardEditor()
+
     const fileInputRef = useRef()
+
     const handleFileInput = (e) => {
         console.log(fileInputRef.current.files)
     }
+
     const clickFileInput = () => {
         fileInputRef && fileInputRef.current.click()
     }
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = (e, id) => {
         e.preventDefault()
     }
 
-    const changeName = (e) => {
-        dispatch(updateCardName({ id, value: e.target.value }))
-    }
-
-    const changeDescription = (e) => {
-        dispatch(updateCardDescription({ id, value: e.target.value }))
-    }
-
-    const changeTheme = (e) => {
-        dispatch(updateCardTheme({ id, value: e.target.value }))
-    }
-
-    const deleteCard = () => {
-        dispatch(deleteCard({ id }))
-    }
-    
     return (
         <div className="flex flex-1 justify-center items-center h-[230px]">
             <form
                 className="flex flex-col gap-[10px] w-[400px]"
                 encType="multipart/form-data"
-                onSubmit={handleFormSubmit}
+                onSubmit={(e) => handleFormSubmit(e, id)}
             >
                 <div className="flex w-full gap-[10px]">
                     <input
@@ -51,13 +38,13 @@ export default function CardEditor({ id, name, description, theme }) {
                         placeholder="Name"
                         className="grow rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
                         value={name}
-                        onChange={changeName}
+                        onChange={(e) => handleNameChange(e, id)}
                     />
                     <select
                         name="color"
                         id="color"
                         className="rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
-                        onChange={changeTheme}
+                        onChange={(e) => handleThemeChange(e, id)}
                         value={theme}
                     >
                         <option value="black">black</option>
@@ -72,25 +59,25 @@ export default function CardEditor({ id, name, description, theme }) {
                     rows="3"
                     placeholder="description"
                     value={description}
-                    onChange={changeDescription}
+                    onChange={(e) => handleDescriptionChange(e, id)}
                 ></textarea>
 
                 <div className="flex w-full gap-[10px]">
                     <input
-                        onChange={handleFileInput}
+                        onChange={(e) => handleFileInput(e, id)}
                         accept="image/*"
                         ref={fileInputRef}
                         type="file"
                         className="hidden"
                     />
                     <button
-                        onClick={clickFileInput}
+                        onClick={(e) => clickFileInput(e, id)}
                         className="font-bold py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600 grow"
                     >
                         file
                     </button>
                     <button
-                        onClick={deleteCard}
+                        onClick={(e) => handleCardDelete(e, id)}
                         className="font-bold px-[15px] py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600"
                     >
                         delete
