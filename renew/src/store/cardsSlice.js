@@ -39,13 +39,14 @@ const cardsSlice = createSlice({
         },
 
         deleteCard: (state, action) => {
+            console.log(action.payload.id)
             state.cards = state.cards.filter(
                 (card) => card.id !== action.payload.id,
             )
         },
 
         createCard: (state, action) => {
-            state.cards.push(action.payload)
+            state.cards.push(action.payload.card)
         },
     },
 })
