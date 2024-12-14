@@ -11,7 +11,7 @@ export default function CardDisplay() {
                     src="https://avatars.githubusercontent.com/u/27201345?v=4"
                     className="rounded-[50%] w-[120px] h-[120px]"
                 />
-                <div className="">
+                <div>
                     <div className="text-white">{state.name}</div>
                     <p className="text-white">{state.description}</p>
                 </div>
