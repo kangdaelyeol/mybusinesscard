@@ -1,11 +1,15 @@
 import React, { useRef } from 'react'
 import { createCard } from '../store/cardsSlice'
 import useCardMaker from '../hooks/useCardMaker'
+import { useDispatch } from 'react-redux'
 
 export default function CardMaker() {
     const { state, changeDescription, changeName, changeProfile, changeTheme } =
         useCardMaker()
     const fileInputRef = useRef()
+
+    const dispatch = useDispatch()
+
     const handleFileInput = (e) => {
         console.log(fileInputRef.current.files)
     }
@@ -19,7 +23,7 @@ export default function CardMaker() {
 
     const saveCard = (value) => {
         const cardID = Date.now()
-        dispatch(createCard({ card: { ...card, id: cardID } }))
+        dispatch(createCard({ card: { ...state, id: cardID } }))
     }
 
     return (
@@ -75,7 +79,10 @@ export default function CardMaker() {
                     >
                         file
                     </button>
-                    <button className="font-bold px-[15px] py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600">
+                    <button
+                        onClick={saveCard}
+                        className="font-bold px-[15px] py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600"
+                    >
                         save
                     </button>
                 </div>
