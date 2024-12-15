@@ -1,18 +1,24 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import useCardEditor from '../hooks/useCardEditor'
-
+import { uploadCloudinaryImage } from '../api'
 export default function CardEditor({ id, name, description, theme }) {
     const {
         handleNameChange,
         handleDescriptionChange,
         handleThemeChange,
         handleCardDelete,
+        changeProfile,
     } = useCardEditor()
+
+    const [fileLoading, setFileLoading] = useState(false)
 
     const fileInputRef = useRef()
 
-    const handleFileInput = (e) => {
-        console.log(fileInputRef.current.files)
+    const handleFileInput = async (e, id) => {
+        setFileLoading(true)
+        const data = await uploadCloudinaryImage(fileInputRef.current.files[0])
+        changeProfile(data.url, id)
+        setFileLoading(false)
     }
 
     const clickFileInput = () => {
@@ -74,7 +80,17 @@ export default function CardEditor({ id, name, description, theme }) {
                         onClick={(e) => clickFileInput(e, id)}
                         className="font-bold py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600 grow"
                     >
-                        file
+                        {fileLoading ? (
+                            <div className="flex justify-center gap-[5px]">
+                                <svg
+                                    className="animate-spin h-5 w-5 mr-3 border-gray-900 border-[3px] border-t-transparent rounded-[50%]"
+                                    viewBox="0 0 24 24"
+                                ></svg>
+                                Processing...
+                            </div>
+                        ) : (
+                            'file'
+                        )}
                     </button>
                     <button
                         onClick={(e) => handleCardDelete(e, id)}

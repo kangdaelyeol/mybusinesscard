@@ -1,17 +1,22 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { createCard } from '../store/cardsSlice'
 import useCardMaker from '../hooks/useCardMaker'
 import { useDispatch } from 'react-redux'
+import { uploadCloudinaryImage } from '../api'
 
 export default function CardMaker() {
     const { state, changeDescription, changeName, changeProfile, changeTheme } =
         useCardMaker()
+    const [fileLoading, setFileLoading] = useState(false)
     const fileInputRef = useRef()
 
     const dispatch = useDispatch()
 
-    const handleFileInput = (e) => {
-        console.log(fileInputRef.current.files)
+    const handleFileInput = async (e) => {
+        setFileLoading(true)
+        const data = await uploadCloudinaryImage(fileInputRef.current.files[0])
+        changeProfile(data.url)
+        setFileLoading(false)
     }
     const clickFileInput = () => {
         fileInputRef && fileInputRef.current.click()
@@ -77,7 +82,17 @@ export default function CardMaker() {
                         onClick={clickFileInput}
                         className="font-bold py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600 grow"
                     >
-                        file
+                        {fileLoading ? (
+                            <div className="flex justify-center gap-[5px]">
+                                <svg
+                                    className="animate-spin h-5 w-5 mr-3 border-gray-900 border-[3px] border-t-transparent rounded-[50%]"
+                                    viewBox="0 0 24 24"
+                                ></svg>
+                                Processing...
+                            </div>
+                        ) : (
+                            'file'
+                        )}
                     </button>
                     <button
                         onClick={saveCard}
