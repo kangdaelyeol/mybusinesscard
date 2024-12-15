@@ -13,9 +13,9 @@ import { uploadCloudinaryImage } from '../api'
 export default function useCardEditor() {
     const [fileLoading, setFileLoading] = useState(false)
 
-    const handleFileInput = async (id, fileRef) => {
+    const handleFileInput = async (e, id) => {
         setFileLoading(true)
-        const data = await uploadCloudinaryImage(fileRef.current.files[0])
+        const data = await uploadCloudinaryImage(e.target.files[0])
         dispatch(updateCardProfile({ id, value: data.url }))
         setFileLoading(false)
     }

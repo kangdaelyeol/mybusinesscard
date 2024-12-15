@@ -61,7 +61,7 @@ export default function CardEditor({ id, name, description, theme }) {
 
                 <div className="flex w-full gap-[10px]">
                     <input
-                        onChange={() => handleFileInput(id, fileInputRef)}
+                        onChange={(e) => handleFileInput(e, id)}
                         accept="image/*"
                         ref={fileInputRef}
                         type="file"

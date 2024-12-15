@@ -30,9 +30,9 @@ export default function useCardMaker() {
         })
     }
 
-    const handleFileInput = async (fileRef) => {
+    const handleFileInput = async (e) => {
         setFileLoading(true)
-        const data = await uploadCloudinaryImage(fileRef.current.files[0])
+        const data = await uploadCloudinaryImage(e.target.files[0])
         dispatch({
             type: CARD_ACTIONS.UPDATE_PROFILE,
             payload: { profile: data.url },
