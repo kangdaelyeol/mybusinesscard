@@ -3,6 +3,7 @@ export const CARD_ACTIONS = Object.freeze({
     UPDATE_DESCRIPTION: Symbol.for('UPDATE_DESCRIPTION'),
     UPDATE_THEME: Symbol.for('UPDATE_THEME'),
     UPDATE_PROFILE: Symbol.for('UPDATE_PROFILE'),
+    CLEAR_CARD: Symbol.for('CLEAR_CARD'),
 })
 
 export const initialState = {
@@ -34,6 +35,11 @@ export const reducer = (state, action) => {
             return {
                 ...state,
                 theme: action.payload.theme,
+            }
+
+        case CARD_ACTIONS.CLEAR_CARD:
+            return {
+                ...initialState,
             }
     }
 }
