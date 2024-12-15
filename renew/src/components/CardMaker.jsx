@@ -1,34 +1,24 @@
-import React, { useRef, useState } from 'react'
-import { createCard } from '../store/cardsSlice'
+import React, { useRef } from 'react'
 import useCardMaker from '../hooks/useCardMaker'
-import { useDispatch } from 'react-redux'
-import { uploadCloudinaryImage } from '../api'
 
 export default function CardMaker() {
-    const { state, changeDescription, changeName, changeProfile, changeTheme } =
-        useCardMaker()
-    const [fileLoading, setFileLoading] = useState(false)
+    const {
+        state,
+        changeDescription,
+        changeName,
+        changeTheme,
+        handleFileInput,
+        saveCard,
+        fileLoading,
+    } = useCardMaker()
     const fileInputRef = useRef()
 
-    const dispatch = useDispatch()
-
-    const handleFileInput = async (e) => {
-        setFileLoading(true)
-        const data = await uploadCloudinaryImage(fileInputRef.current.files[0])
-        changeProfile(data.url)
-        setFileLoading(false)
-    }
-    const clickFileInput = () => {
+    const handleFileInputClick = () => {
         fileInputRef && fileInputRef.current.click()
     }
 
     const handleFormSubmit = (e) => {
         e.preventDefault()
-    }
-
-    const saveCard = (value) => {
-        const cardID = Date.now()
-        dispatch(createCard({ card: { ...state, id: cardID } }))
     }
 
     return (
@@ -79,7 +69,7 @@ export default function CardMaker() {
                         className="hidden"
                     />
                     <button
-                        onClick={clickFileInput}
+                        onClick={handleFileInputClick}
                         className="font-bold py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600 grow"
                     >
                         {fileLoading ? (
