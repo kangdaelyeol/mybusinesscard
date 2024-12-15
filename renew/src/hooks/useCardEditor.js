@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import {
     updateCardDescription,
@@ -7,7 +8,18 @@ import {
     updateCardProfile,
 } from '../store/cardsSlice'
 
+import { uploadCloudinaryImage } from '../api'
+
 export default function useCardEditor() {
+    const [fileLoading, setFileLoading] = useState(false)
+
+    const handleFileInput = async (id, fileRef) => {
+        setFileLoading(true)
+        const data = await uploadCloudinaryImage(fileRef.current.files[0])
+        dispatch(updateCardProfile({ id, value: data.url }))
+        setFileLoading(false)
+    }
+
     const dispatch = useDispatch()
 
     const handleNameChange = (e, id) => {
@@ -28,15 +40,12 @@ export default function useCardEditor() {
         dispatch(deleteCard({ id }))
     }
 
-    const changeProfile = (url, id) => {
-        dispatch(updateCardProfile({ id, value: url }))
-    }
-
     return {
         handleNameChange,
         handleDescriptionChange,
         handleThemeChange,
         handleCardDelete,
-        changeProfile,
+        handleFileInput,
+        fileLoading,
     }
 }

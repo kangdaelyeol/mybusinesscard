@@ -1,31 +1,22 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import useCardEditor from '../hooks/useCardEditor'
-import { uploadCloudinaryImage } from '../api'
 export default function CardEditor({ id, name, description, theme }) {
     const {
         handleNameChange,
         handleDescriptionChange,
         handleThemeChange,
         handleCardDelete,
-        changeProfile,
+        handleFileInput,
+        fileLoading,
     } = useCardEditor()
-
-    const [fileLoading, setFileLoading] = useState(false)
 
     const fileInputRef = useRef()
 
-    const handleFileInput = async (e, id) => {
-        setFileLoading(true)
-        const data = await uploadCloudinaryImage(fileInputRef.current.files[0])
-        changeProfile(data.url, id)
-        setFileLoading(false)
-    }
-
-    const clickFileInput = () => {
+    const handleFileInputClick = () => {
         fileInputRef && fileInputRef.current.click()
     }
 
-    const handleFormSubmit = (e, id) => {
+    const handleFormSubmit = (e) => {
         e.preventDefault()
     }
 
@@ -34,7 +25,7 @@ export default function CardEditor({ id, name, description, theme }) {
             <form
                 className="flex flex-col gap-[10px] w-[400px]"
                 encType="multipart/form-data"
-                onSubmit={(e) => handleFormSubmit(e, id)}
+                onSubmit={(e) => handleFormSubmit(e)}
             >
                 <div className="flex w-full gap-[10px]">
                     <input
@@ -70,14 +61,14 @@ export default function CardEditor({ id, name, description, theme }) {
 
                 <div className="flex w-full gap-[10px]">
                     <input
-                        onChange={(e) => handleFileInput(e, id)}
+                        onChange={() => handleFileInput(id, fileInputRef)}
                         accept="image/*"
                         ref={fileInputRef}
                         type="file"
                         className="hidden"
                     />
                     <button
-                        onClick={(e) => clickFileInput(e, id)}
+                        onClick={(e) => handleFileInputClick(e, id)}
                         className="font-bold py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600 grow"
                     >
                         {fileLoading ? (
