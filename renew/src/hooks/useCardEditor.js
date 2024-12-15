@@ -4,6 +4,7 @@ import {
     updateCardName,
     updateCardTheme,
     deleteCard,
+    updateCardProfile,
 } from '../store/cardsSlice'
 
 export default function useCardEditor() {
@@ -27,10 +28,15 @@ export default function useCardEditor() {
         dispatch(deleteCard({ id }))
     }
 
+    const changeProfile = (url, id) => {
+        dispatch(updateCardProfile({ id, value: url }))
+    }
+
     return {
         handleNameChange,
         handleDescriptionChange,
         handleThemeChange,
         handleCardDelete,
+        changeProfile,
     }
 }
