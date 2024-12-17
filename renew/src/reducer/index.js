@@ -11,7 +11,13 @@ export const initialState = {
     name: '',
     description: '',
     theme: 'black',
-    profile: '',
+    profile: {
+        url: '',
+        assetId: '',
+        signature: '',
+        publicId: '',
+        timestamp: '',
+    },
 }
 
 export const reducer = (state, action) => {

@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { CardContext } from '../context/CardContext'
 import { CARD_ACTIONS } from '../reducer'
-import { uploadCloudinaryImage } from '../api'
+import { deleteCloudinaryImage, uploadCloudinaryImage } from '../api'
 import { useDispatch } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
 
@@ -33,9 +33,22 @@ export default function useCardMaker() {
     const handleFileInput = async (e) => {
         setFileLoading(true)
         const data = await uploadCloudinaryImage(e.target.files[0])
+        if (state.profile.url)
+            deleteCloudinaryImage(
+                state.profile.signature,
+                state.profile.assetId,
+            )
         dispatch({
             type: CARD_ACTIONS.UPDATE_PROFILE,
-            payload: { profile: data.url },
+            payload: {
+                profile: {
+                    url: data.url,
+                    assetId: data.asset_id,
+                    signature: data.signature,
+                    publicId: data.public_id,
+                    timestamp: data.timestamp,
+                },
+            },
         })
         setFileLoading(false)
     }
