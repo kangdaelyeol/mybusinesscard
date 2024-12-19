@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     updateCardDescription,
     updateCardName,
@@ -8,15 +8,40 @@ import {
     updateCardProfile,
 } from '../store/cardsSlice'
 
-import { uploadCloudinaryImage } from '../api'
+import { deleteCloudinaryImage, uploadCloudinaryImage } from '../api'
+
+const MAX_PROFILE_SIZE = 3000000
 
 export default function useCardEditor() {
     const [fileLoading, setFileLoading] = useState(false)
+    const state = useSelector((state) => state.cards)
 
     const handleFileInput = async (e, id) => {
         setFileLoading(true)
+
+        if (
+            e.target.files[0]?.size > MAX_PROFILE_SIZE ||
+            !e.target.files[0].type.startsWith('image')
+        ) {
+            setFileLoading(false)
+            return
+        }
+
+        const card = state.cards.find((card) => card.id === id)
+        if (card.profile) deleteCloudinaryImage(card.signature, card.assetId)
+
         const data = await uploadCloudinaryImage(e.target.files[0])
-        dispatch(updateCardProfile({ id, value: data.url }))
+        dispatch(
+            updateCardProfile({
+                id,
+                value: {
+                    url: data.url,
+                    assetId: data.asset_id,
+                    signature: data.signature,
+                    publicId: data.public_id,
+                },
+            }),
+        )
         setFileLoading(false)
     }
 
