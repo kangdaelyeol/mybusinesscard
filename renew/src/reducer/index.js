@@ -16,7 +16,6 @@ export const initialState = {
         assetId: '',
         signature: '',
         publicId: '',
-        timestamp: '',
     },
 }
 
