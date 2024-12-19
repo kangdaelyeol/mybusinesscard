@@ -66,6 +66,7 @@ export default function useCardMaker() {
     }
 
     const saveCard = () => {
+        if (fileLoading) return
         const cardID = Date.now()
         dispatchRedux(createCard({ card: { ...state, id: cardID } }))
         dispatch({ type: CARD_ACTIONS.CLEAR_CARD })
