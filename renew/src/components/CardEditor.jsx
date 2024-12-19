@@ -13,6 +13,7 @@ export default function CardEditor({ id, name, description, theme }) {
     const fileInputRef = useRef()
 
     const handleFileInputClick = () => {
+        if (fileLoading) return
         fileInputRef && fileInputRef.current.click()
     }
 

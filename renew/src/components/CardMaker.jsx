@@ -14,6 +14,7 @@ export default function CardMaker() {
     const fileInputRef = useRef()
 
     const handleFileInputClick = () => {
+        if (fileLoading) return
         fileInputRef && fileInputRef.current.click()
     }
 
