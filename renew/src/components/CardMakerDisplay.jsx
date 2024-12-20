@@ -6,6 +6,8 @@ const defaultProfileURL = 'https://avatars.githubusercontent.com/u/27201345?v=4'
 
 export default function CardDisplay() {
     const { state } = useContext(CardContext)
+
+    const descriptionList = state.description.split('\n')
     return (
         <div className="h-[230px] flex flex-1">
             <div
@@ -31,9 +33,16 @@ export default function CardDisplay() {
                     <div className="select-none text-[25px]">
                         {state.name || 'Name'}
                     </div>
-                    <p className="select-none">
-                        {state.description || 'Description'}
-                    </p>
+                    {descriptionList.length === 1 && descriptionList[0] === ''
+                        ? 'description'
+                        : descriptionList.map((content, idx) => (
+                              <p
+                                  key={idx}
+                                  className="select-none whitespace-pre-wrap"
+                              >
+                                  {content}
+                              </p>
+                          ))}
                 </div>
             </div>
         </div>

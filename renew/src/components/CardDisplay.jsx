@@ -3,6 +3,7 @@ import classNames from 'classnames'
 const defaultProfileURL = 'https://avatars.githubusercontent.com/u/27201345?v=4'
 
 export default function CardDisplay({ name, theme, description, profile }) {
+    const descriptionList = description.split('\n')
     return (
         <div className="h-[230px] flex flex-1">
             <div
@@ -28,9 +29,16 @@ export default function CardDisplay({ name, theme, description, profile }) {
                     <div className="text-[25px] select-none">
                         {name || 'Name'}
                     </div>
-                    <p className="select-none">
-                        {description || 'Description'}
-                    </p>
+                    {descriptionList.length === 0 && descriptionList[0] === ''
+                        ? 'Description'
+                        : descriptionList.map((content, idx) => (
+                              <p
+                                  key={idx}
+                                  className="select-none whitespace-pre-wrap"
+                              >
+                                  {content}
+                              </p>
+                          ))}
                 </div>
             </div>
         </div>

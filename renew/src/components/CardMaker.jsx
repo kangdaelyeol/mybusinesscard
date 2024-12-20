@@ -13,7 +13,7 @@ export default function CardMaker() {
     } = useCardMaker()
     const fileInputRef = useRef()
 
-    const handleFileInputClick = (e) => {
+    const handleFileInputClick = () => {
         if (fileLoading) return
         fileInputRef && fileInputRef.current.click()
     }
@@ -21,7 +21,7 @@ export default function CardMaker() {
     return (
         <div className="flex flex-1 justify-center items-center h-[230px]">
             <div className="flex flex-col w-[400px] gap-[10px]">
-                <div className="flex w-[400px] gap-[10px]">
+                <div className="flex w-full gap-[10px]">
                     <input
                         type="text"
                         name="name"
@@ -44,7 +44,7 @@ export default function CardMaker() {
                 </div>
 
                 <textarea
-                    className="w-[400px] rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none text-white bg-gray-800"
+                    className="w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none text-white bg-gray-800"
                     name="description"
                     id="description"
                     rows="3"
@@ -53,7 +53,7 @@ export default function CardMaker() {
                     onChange={changeDescription}
                 ></textarea>
 
-                <div className="flex w-[400px] gap-[10px]">
+                <div className="flex w-full gap-[10px]">
                     <input
                         onChange={handleFileInput}
                         accept="image/*"
