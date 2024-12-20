@@ -7,7 +7,7 @@ export default function CardDisplay({ name, theme, description, profile }) {
         <div className="h-[230px] flex flex-1">
             <div
                 className={classNames(
-                    'w-[80%] m-auto flex gap-[20px] rounded-[20px] border-[3px] border-solid p-[35px] overflow-hidden',
+                    'w-[440px] m-auto flex gap-[20px] rounded-[20px] border-[3px] border-solid p-[35px] overflow-hidden',
                     {
                         'bg-theme-pink border-pink-300': theme === 'pink',
                         'bg-theme-black border-black': theme === 'black',

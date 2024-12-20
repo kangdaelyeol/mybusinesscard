@@ -17,17 +17,9 @@ export default function CardEditor({ id, name, description, theme }) {
         fileInputRef && fileInputRef.current.click()
     }
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault()
-    }
-
     return (
         <div className="flex flex-1 justify-center items-center h-[230px]">
-            <form
-                className="flex flex-col gap-[10px] w-[400px]"
-                encType="multipart/form-data"
-                onSubmit={(e) => handleFormSubmit(e)}
-            >
+            <div className="w-[400px] flex flex-col gap-[10px]">
                 <div className="flex w-full gap-[10px]">
                     <input
                         type="text"
@@ -51,7 +43,7 @@ export default function CardEditor({ id, name, description, theme }) {
                 </div>
 
                 <textarea
-                    className="w-[400px] rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none text-white bg-gray-800"
+                    className="w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none text-white bg-gray-800"
                     name="description"
                     id="description"
                     rows="3"
@@ -91,7 +83,7 @@ export default function CardEditor({ id, name, description, theme }) {
                         delete
                     </button>
                 </div>
-            </form>
+            </div>
         </div>
     )
 }

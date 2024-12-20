@@ -1,7 +1,6 @@
 import React, { useRef } from 'react'
 import useCardMaker from '../hooks/useCardMaker'
 
-
 export default function CardMaker() {
     const {
         state,
@@ -14,23 +13,15 @@ export default function CardMaker() {
     } = useCardMaker()
     const fileInputRef = useRef()
 
-    const handleFileInputClick = () => {
+    const handleFileInputClick = (e) => {
         if (fileLoading) return
         fileInputRef && fileInputRef.current.click()
     }
 
-    const handleFormSubmit = (e) => {
-        e.preventDefault()
-    }
-
     return (
         <div className="flex flex-1 justify-center items-center h-[230px]">
-            <form
-                className="flex flex-col gap-[10px] w-[400px]"
-                encType="multipart/form-data"
-                onSubmit={handleFormSubmit}
-            >
-                <div className="flex w-full gap-[10px]">
+            <div className="flex flex-col w-[400px] gap-[10px]">
+                <div className="flex w-[400px] gap-[10px]">
                     <input
                         type="text"
                         name="name"
@@ -62,7 +53,7 @@ export default function CardMaker() {
                     onChange={changeDescription}
                 ></textarea>
 
-                <div className="flex w-full gap-[10px]">
+                <div className="flex w-[400px] gap-[10px]">
                     <input
                         onChange={handleFileInput}
                         accept="image/*"
@@ -93,7 +84,7 @@ export default function CardMaker() {
                         save
                     </button>
                 </div>
-            </form>
+            </div>
         </div>
     )
 }
