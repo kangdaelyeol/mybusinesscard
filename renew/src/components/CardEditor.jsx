@@ -1,5 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import useCardEditor from '../hooks/useCardEditor'
+import classNames from 'classnames'
+import { ThemeContext } from '../context/ThemeContext'
 export default function CardEditor({ id, name, description, theme }) {
     const {
         handleNameChange,
@@ -9,6 +11,8 @@ export default function CardEditor({ id, name, description, theme }) {
         handleFileInput,
         fileLoading,
     } = useCardEditor()
+
+    const { theme: themeMode } = useContext(ThemeContext)
 
     const fileInputRef = useRef()
 
@@ -26,7 +30,13 @@ export default function CardEditor({ id, name, description, theme }) {
                         name="name"
                         id="name"
                         placeholder="Name"
-                        className="input-black grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]"
+                        className={classNames(
+                            'grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]',
+                            {
+                                'input-black': themeMode === 'dark',
+                                'input-white': themeMode === 'light',
+                            },
+                        )}
                         value={name}
                         onChange={(e) => handleNameChange(e, id)}
                     />

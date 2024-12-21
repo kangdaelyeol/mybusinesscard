@@ -3,16 +3,28 @@
 @tailwind utilities;
 
 @layer components {
-  .btn-black {
-    @apply bg-header-black border-border-black text-text-white;
+  .btn-dark {
+    @apply bg-color-black border-border-black text-text-white;
   }
 
-  .btn-black:hover {
+  .btn-dark:hover {
     @apply bg-btn-bg-lightblack border-btn-border-lightblack;
   }
 
-  .input-black {
-    @apply bg-header-black text-text-white border-border-black;
+  .btn-light {
+    @apply bg-color-blue border-color-blue text-text-white;
+  }
+
+  .btn-light:hover {
+    @apply bg-color-white text-color-blue;
+  }
+
+  .input-dark {
+    @apply bg-color-black text-text-white border-border-black;
+  }
+
+  .input-light {
+    @apply bg-transparent text-color-black-light border-border-black;
   }
 }
 

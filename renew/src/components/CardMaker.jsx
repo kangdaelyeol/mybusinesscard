@@ -1,6 +1,7 @@
-import React, { useRef } from 'react'
+import React, { useContext, useRef } from 'react'
 import useCardMaker from '../hooks/useCardMaker'
-
+import classNames from 'classnames'
+import { ThemeContext } from '../context/ThemeContext'
 export default function CardMaker() {
     const {
         state,
@@ -11,6 +12,9 @@ export default function CardMaker() {
         saveCard,
         fileLoading,
     } = useCardMaker()
+
+    const { theme } = useContext(ThemeContext)
+
     const fileInputRef = useRef()
 
     const handleFileInputClick = () => {
@@ -27,14 +31,26 @@ export default function CardMaker() {
                         name="name"
                         id="name"
                         placeholder="Name"
-                        className="input-black grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]"
+                        className={classNames(
+                            'grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]',
+                            {
+                                'input-dark': theme === 'dark',
+                                'input-light': theme === 'light',
+                            },
+                        )}
                         value={state.name}
                         onChange={changeName}
                     />
                     <select
                         name="color"
                         id="color"
-                        className="input-black rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]"
+                        className={classNames(
+                            'input-black rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]',
+                            {
+                                'input-dark': theme === 'dark',
+                                'input-light': theme === 'light',
+                            },
+                        )}
                         value={state.theme}
                         onChange={changeTheme}
                     >
@@ -44,7 +60,13 @@ export default function CardMaker() {
                 </div>
 
                 <textarea
-                    className="input-black w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none border-[1px]"
+                    className={classNames(
+                        'w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none border-[1px]',
+                        {
+                            'input-dark': theme === 'dark',
+                            'input-light': theme === 'light',
+                        },
+                    )}
                     name="description"
                     id="description"
                     rows="3"
@@ -63,7 +85,13 @@ export default function CardMaker() {
                     />
                     <button
                         onClick={handleFileInputClick}
-                        className="btn-black font-bold py-[10px] rounded-[5px] select-none grow transition-all border-[1px]"
+                        className={classNames(
+                            'btn-black font-bold py-[10px] rounded-[5px] select-none grow transition-all border-[1px]',
+                            {
+                                'btn-light': theme === 'light',
+                                'btn-dark': theme === 'dark',
+                            },
+                        )}
                     >
                         {fileLoading ? (
                             <div className="flex justify-center gap-[5px]">
@@ -79,7 +107,13 @@ export default function CardMaker() {
                     </button>
                     <button
                         onClick={saveCard}
-                        className="btn-black font-bold px-[15px] py-[10px] rounded-[5px] text-white select-none border-[1px] transition-all"
+                        className={classNames(
+                            'font-bold px-[15px] py-[10px] rounded-[5px] text-white select-none border-[1px] transition-all',
+                            {
+                                'btn-light': theme === 'light',
+                                'btn-dark': theme === 'dark',
+                            },
+                        )}
                     >
                         save
                     </button>
