@@ -16,12 +16,12 @@ export default function Header() {
                     </div>
                 )}
 
-                <span className="inset-0 m-auto text-white font-bold text-[1.8rem]">
+                <span className="inset-0 m-auto text-white font-medium text-[1.8rem]">
                     Create Business Card
                 </span>
 
                 {isLogin && (
-                    <div className="absolute h-[40px] leading-[40px] px-[10px] right-[20px] top-0 bottom-0 my-auto text-[1rem] font-bold text-color-cyan bg-gray-500 border-[1px] border-solid border-black rounded-[5px] cursor-pointer transition-all hover:bg-black hover:text-white">
+                    <div className="btn-black absolute h-[40px] leading-[40px] px-[10px] right-[20px] top-0 bottom-0 my-auto text-[1rem] font-bold border-[1px] rounded-[5px] cursor-pointer transition-all">
                         logout
                     </div>
                 )}

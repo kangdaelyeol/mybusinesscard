@@ -26,14 +26,14 @@ export default function CardEditor({ id, name, description, theme }) {
                         name="name"
                         id="name"
                         placeholder="Name"
-                        className="grow rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
+                        className="input-black grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]"
                         value={name}
                         onChange={(e) => handleNameChange(e, id)}
                     />
                     <select
                         name="color"
                         id="color"
-                        className="rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
+                        className="input-black rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]"
                         onChange={(e) => handleThemeChange(e, id)}
                         value={theme}
                     >
@@ -43,7 +43,7 @@ export default function CardEditor({ id, name, description, theme }) {
                 </div>
 
                 <textarea
-                    className="w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none text-white bg-gray-800"
+                    className="input-black w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none border-[1px]"
                     name="description"
                     id="description"
                     rows="3"
@@ -62,12 +62,12 @@ export default function CardEditor({ id, name, description, theme }) {
                     />
                     <button
                         onClick={(e) => handleFileInputClick(e, id)}
-                        className="font-bold py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600 grow"
+                        className="btn-black grow font-bold py-[10px] rounded-[5px] select-none border-[1px] transition-all"
                     >
                         {fileLoading ? (
                             <div className="flex justify-center gap-[5px]">
                                 <svg
-                                    className="animate-spin h-5 w-5 mr-3 border-gray-900 border-[3px] border-t-transparent rounded-[50%]"
+                                    className="animate-spin h-5 w-5 mr-3 border-text-white border-[3px] border-t-transparent rounded-[50%]"
                                     viewBox="0 0 24 24"
                                 ></svg>
                                 Processing...
@@ -78,7 +78,7 @@ export default function CardEditor({ id, name, description, theme }) {
                     </button>
                     <button
                         onClick={(e) => handleCardDelete(e, id)}
-                        className="font-bold px-[15px] py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600"
+                        className="btn-black font-bold px-[15px] py-[10px] rounded-[5px] select-none border-[1px] transition-all"
                     >
                         delete
                     </button>
