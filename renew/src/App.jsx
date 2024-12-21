@@ -3,6 +3,7 @@ import HomePage from './pages/HomePage'
 import Main from './components/Main'
 import { Provider } from 'react-redux'
 import { store } from './store'
+import { ThemeProvider } from './context/ThemeContext'
 
 const routerConfig = [
     {
@@ -21,9 +22,11 @@ const router = createBrowserRouter(routerConfig)
 
 function App() {
     return (
-        <Provider store={store}>
-            <RouterProvider router={router} />
-        </Provider>
+        <ThemeProvider>
+            <Provider store={store}>
+                <RouterProvider router={router} />
+            </Provider>
+        </ThemeProvider>
     )
 }
 
