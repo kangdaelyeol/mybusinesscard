@@ -19,7 +19,7 @@ export default function CardEditor({ id, name, description, theme }) {
 
     return (
         <div className="flex flex-1 justify-center items-center h-[230px]">
-            <div className="w-[400px] flex flex-col gap-[10px]">
+            <div className="w-editor-lg flex flex-col gap-[10px]">
                 <div className="flex w-full gap-[10px]">
                     <input
                         type="text"

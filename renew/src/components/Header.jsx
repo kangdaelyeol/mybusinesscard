@@ -4,7 +4,7 @@ export default function Header() {
     const isLogin = true
 
     return (
-        <header className="bg-color-cyan fixed w-[100%]">
+        <header className="bg-header-black fixed w-[100%]">
             <div className="max-w-[1100px] relative mx-auto h-[100px] flex">
                 {isLogin && (
                     <div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
     return (
-        <footer className="h-[70px] bg-color-cyan w-full flex justify-center items-center">
+        <footer className="h-[70px] bg-footer-black w-full flex justify-center items-center">
             <a
                 href="https://github.com/kangdaelyeol"
                 target="_blank"

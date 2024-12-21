@@ -2,7 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilites {
+@layer utilities {
+  .btn-black {
+    @apply bg-header-black border-border-black text-text-white;
+  }
+
+  .btn-black:hover {
+    @apply bg-btn-bg-lightblack border-btn-border-lightblack;
+  }
+
+  .input-black {
+    @apply bg-header-black text-text-white border-border-black;
+  }
+
   .bg-theme-black {
     background-image: linear-gradient(
         200deg,

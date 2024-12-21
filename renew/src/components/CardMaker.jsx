@@ -20,21 +20,21 @@ export default function CardMaker() {
 
     return (
         <div className="flex flex-1 justify-center items-center h-[230px]">
-            <div className="flex flex-col w-[400px] gap-[10px]">
+            <div className="flex flex-col w-editor-lg gap-[10px]">
                 <div className="flex w-full gap-[10px]">
                     <input
                         type="text"
                         name="name"
                         id="name"
                         placeholder="Name"
-                        className="grow rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
+                        className="input-black grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]"
                         value={state.name}
                         onChange={changeName}
                     />
                     <select
                         name="color"
                         id="color"
-                        className="rounded-[5px] px-[10px] py-[5px] bg-gray-800 outline-none text-white"
+                        className="input-black rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]"
                         value={state.theme}
                         onChange={changeTheme}
                     >
@@ -44,7 +44,7 @@ export default function CardMaker() {
                 </div>
 
                 <textarea
-                    className="w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none text-white bg-gray-800"
+                    className="input-black w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none border-[1px]"
                     name="description"
                     id="description"
                     rows="3"
@@ -63,12 +63,12 @@ export default function CardMaker() {
                     />
                     <button
                         onClick={handleFileInputClick}
-                        className="font-bold py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600 grow"
+                        className="btn-black font-bold py-[10px] rounded-[5px] select-none grow transition-all border-[1px]"
                     >
                         {fileLoading ? (
                             <div className="flex justify-center gap-[5px]">
                                 <svg
-                                    className="animate-spin h-5 w-5 mr-3 border-gray-900 border-[3px] border-t-transparent rounded-[50%]"
+                                    className="animate-spin h-5 w-5 mr-3 border-text-white border-[3px] border-t-transparent rounded-[50%]"
                                     viewBox="0 0 24 24"
                                 ></svg>
                                 Processing...
@@ -79,7 +79,7 @@ export default function CardMaker() {
                     </button>
                     <button
                         onClick={saveCard}
-                        className="font-bold px-[15px] py-[10px] rounded-[5px] text-white bg-gray-700 select-none hover:bg-gray-600"
+                        className="btn-black font-bold px-[15px] py-[10px] rounded-[5px] text-white select-none border-[1px] transition-all"
                     >
                         save
                     </button>
