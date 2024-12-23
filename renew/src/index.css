@@ -4,15 +4,15 @@
 
 @layer components {
   .btn-dark {
-    @apply bg-color-black border-border-black text-text-white;
+    @apply bg-color-black border-color-gray text-color-white-light;
   }
 
   .btn-dark:hover {
-    @apply bg-btn-bg-lightblack border-btn-border-lightblack;
+    @apply bg-color-black-light border-color-gray-light;
   }
 
   .btn-light {
-    @apply bg-color-blue border-color-blue text-text-white;
+    @apply bg-color-blue border-color-blue text-color-white-light;
   }
 
   .btn-light:hover {
@@ -20,11 +20,11 @@
   }
 
   .input-dark {
-    @apply bg-color-black text-text-white border-border-black;
+    @apply bg-color-black text-color-white-light border-color-gray;
   }
 
   .input-light {
-    @apply bg-transparent text-color-black-light border-border-black;
+    @apply bg-transparent text-color-black-semilight border-color-gray;
   }
 }
 

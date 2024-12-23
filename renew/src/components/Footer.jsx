@@ -8,7 +8,7 @@ export default function Footer() {
             className={classNames(
                 'h-footer-height w-full flex justify-center items-center',
                 {
-                    'bg-color-black text-text-white': theme === 'dark',
+                    'bg-color-black text-color-white-light': theme === 'dark',
                     'bg-white text-color-black-light': theme === 'light',
                 },
             )}

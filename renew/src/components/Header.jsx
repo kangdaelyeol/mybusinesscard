@@ -9,7 +9,7 @@ export default function Header() {
         <header
             className={classNames('fixed w-[100%]', {
                 'bg-white text-black-light': theme === 'light',
-                'bg-color-black text-text-white': theme === 'dark',
+                'bg-color-black text-color-white-light': theme === 'dark',
             })}
         >
             <div className="max-w-[1100px] relative mx-auto h-header-height flex">
@@ -31,18 +31,24 @@ export default function Header() {
                     className=" absolute top-0 bottom-0 my-auto h-[24px] right-[110px] cursor-pointer select-none"
                     onClick={toggleTheme}
                 >
-                    {theme === 'dark' ? (
-                        <span className="material-symbols-outlined text-text-white">
-                            light_mode
-                        </span>
-                    ) : (
-                        <span className="material-symbols-outlined">
-                            dark_mode
-                        </span>
-                    )}
+                    <span
+                        className={classNames('material-symbols-outlined', {
+                            'text-color-white-light': theme === 'dark',
+                        })}
+                    >
+                        {theme === 'dark' ? 'light_mode' : 'dark_mode'}
+                    </span>
                 </div>
                 {isLogin && (
-                    <div className="btn-black absolute h-[40px] leading-[40px] px-[10px] right-[20px] top-0 bottom-0 my-auto text-[1rem] font-bold border-[1px] rounded-[5px] cursor-pointer transition-all">
+                    <div
+                        className={classNames(
+                            'absolute h-[40px] leading-[40px] px-[10px] right-[20px] top-0 bottom-0 my-auto text-[1rem] font-bold border-[1px] rounded-[5px] cursor-pointer transition-all',
+                            {
+                                'btn-black': theme === 'dark',
+                                'btn-light': theme === 'light',
+                            },
+                        )}
+                    >
                         logout
                     </div>
                 )}

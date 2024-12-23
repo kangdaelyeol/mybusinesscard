@@ -5,13 +5,12 @@ export default {
         extend: {
             colors: {
                 'color-cyan': '#203340',
-                'color-card': 'rgba(50, 79, 130, 0.3)',
                 'color-black': '#141314',
-                'color-black-light': '#1c1b1d',
-                'btn-bg-lightblack': '#242324',
-                'border-black': '#858585',
-                'btn-border-lightblack': '#a5a5a5',
-                'text-white': '#e6e1e3',
+                'color-black-semilight': '#1c1b1d',
+                'color-black-light': '#242324',
+                'color-gray': '#858585',
+                'color-gray-light': '#a5a5a5',
+                'color-white-light': '#e6e1e3',
                 'color-white': '#f5f5f7',
                 'color-blue': '#1a74e8',
             },

@@ -14,7 +14,7 @@ export default function Main() {
         <div
             className={classNames('py-[100px] min-h-[100vh] mb-[-70px]', {
                 'bg-color-white': theme === 'light',
-                'bg-color-black-light': theme === 'dark',
+                'bg-color-black-semilight': theme === 'dark',
             })}
         >
             <div className="max-w-[1100px] mx-auto flex flex-col">
