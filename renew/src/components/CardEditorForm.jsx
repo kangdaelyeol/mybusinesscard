@@ -38,7 +38,7 @@ export default function CardEditorForm({
                         name="color"
                         id="color"
                         className={classNames(
-                            'input-black rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]',
+                            'rounded-[5px] px-[10px] py-[5px] outline-none border-[1px] cursor-pointer',
                             {
                                 'input-dark': theme === 'dark',
                                 'input-light': theme === 'light',

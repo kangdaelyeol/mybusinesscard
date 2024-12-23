@@ -21,14 +21,14 @@ export default function Main() {
                 {state.cards.map((card) => (
                     <div key={card.id} className="flex">
                         <CardEditor card={card} />
-                        <CardDisplay {...card} />
+                        <CardDisplay card={card} />
                     </div>
                 ))}
 
                 <div className="flex">
                     <CardProvider>
                         <CardMaker />
-                        <CardMakerDisplay />
+                        <CardDisplay />
                     </CardProvider>
                 </div>
             </div>
