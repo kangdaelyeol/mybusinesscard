@@ -32,7 +32,7 @@ export default function useCardMaker() {
         })
     }
 
-    const handleFileInput = async (e) => {
+    const uploadFile = async (e) => {
         setFileLoading(true)
 
         if (
@@ -77,7 +77,7 @@ export default function useCardMaker() {
         changeDescription,
         changeName,
         changeTheme,
-        handleFileInput,
+        uploadFile,
         saveCard,
         fileLoading,
     }

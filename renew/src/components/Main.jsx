@@ -20,7 +20,7 @@ export default function Main() {
             <div className="max-w-[1100px] mx-auto flex flex-col">
                 {state.cards.map((card) => (
                     <div key={card.id} className="flex">
-                        <CardEditor {...card} />
+                        <CardEditor card={card} />
                         <CardDisplay {...card} />
                     </div>
                 ))}
