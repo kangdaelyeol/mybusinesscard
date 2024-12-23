@@ -44,7 +44,7 @@ export default function Header() {
                         className={classNames(
                             'absolute h-[40px] leading-[40px] px-[10px] right-[20px] top-0 bottom-0 my-auto text-[1rem] font-bold border-[1px] rounded-[5px] cursor-pointer transition-all',
                             {
-                                'btn-black': theme === 'dark',
+                                'btn-dark': theme === 'dark',
                                 'btn-light': theme === 'light',
                             },
                         )}

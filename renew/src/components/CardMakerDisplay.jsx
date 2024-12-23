@@ -14,8 +14,10 @@ export default function CardDisplay() {
                 className={classNames(
                     'w-[440px] m-auto flex gap-[20px] rounded-[20px] border-[3px] border-solid p-[35px] overflow-hidden',
                     {
-                        'bg-theme-pink border-pink-300': state.theme === 'pink',
-                        'bg-theme-black border-black': state.theme === 'black',
+                        'bg-theme-pink border-pink-300 text-white':
+                            state.theme === 'pink',
+                        'bg-theme-black border-black text-gray-200':
+                            state.theme === 'black',
                     },
                 )}
             >
@@ -24,12 +26,7 @@ export default function CardDisplay() {
                     src={state.profile.url || defaultProfileURL}
                     className="rounded-[50%] w-[120px] h-[120px]"
                 />
-                <div
-                    className={classNames({
-                        'text-gray-200': state.theme === 'black',
-                        'text-white': state.theme === 'pink',
-                    })}
-                >
+                <div>
                     <div className="select-none text-[25px]">
                         {state.name || 'Name'}
                     </div>

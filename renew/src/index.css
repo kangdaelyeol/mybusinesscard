@@ -16,7 +16,7 @@
   }
 
   .btn-light:hover {
-    @apply bg-color-white text-color-blue;
+    @apply bg-color-blue-light border-color-blue-light;
   }
 
   .input-dark {

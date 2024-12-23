@@ -33,8 +33,8 @@ export default function CardEditor({ id, name, description, theme }) {
                         className={classNames(
                             'grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]',
                             {
-                                'input-black': themeMode === 'dark',
-                                'input-white': themeMode === 'light',
+                                'input-dark': themeMode === 'dark',
+                                'input-light': themeMode === 'light',
                             },
                         )}
                         value={name}
@@ -43,7 +43,13 @@ export default function CardEditor({ id, name, description, theme }) {
                     <select
                         name="color"
                         id="color"
-                        className="input-black rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]"
+                        className={classNames(
+                            'rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]',
+                            {
+                                'input-dark': themeMode === 'dark',
+                                'input-light': themeMode === 'light',
+                            },
+                        )}
                         onChange={(e) => handleThemeChange(e, id)}
                         value={theme}
                     >
@@ -53,7 +59,13 @@ export default function CardEditor({ id, name, description, theme }) {
                 </div>
 
                 <textarea
-                    className="input-black w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none border-[1px]"
+                    className={classNames(
+                        'w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none border-[1px]',
+                        {
+                            'input-dark': themeMode === 'dark',
+                            'input-light': themeMode === 'light',
+                        },
+                    )}
                     name="description"
                     id="description"
                     rows="3"
@@ -72,7 +84,13 @@ export default function CardEditor({ id, name, description, theme }) {
                     />
                     <button
                         onClick={(e) => handleFileInputClick(e, id)}
-                        className="btn-black grow font-bold py-[10px] rounded-[5px] select-none border-[1px] transition-all"
+                        className={classNames(
+                            'grow font-bold py-[10px] rounded-[5px] select-none border-[1px] transition-all',
+                            {
+                                'btn-dark': themeMode === 'dark',
+                                'btn-light': themeMode === 'light',
+                            },
+                        )}
                     >
                         {fileLoading ? (
                             <div className="flex justify-center gap-[5px]">
@@ -88,7 +106,13 @@ export default function CardEditor({ id, name, description, theme }) {
                     </button>
                     <button
                         onClick={(e) => handleCardDelete(e, id)}
-                        className="btn-black font-bold px-[15px] py-[10px] rounded-[5px] select-none border-[1px] transition-all"
+                        className={classNames(
+                            'font-bold px-[15px] py-[10px] rounded-[5px] select-none border-[1px] transition-all',
+                            {
+                                'btn-dark': themeMode === 'dark',
+                                'btn-light': themeMode === 'light',
+                            },
+                        )}
                     >
                         delete
                     </button>

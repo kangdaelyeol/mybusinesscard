@@ -13,6 +13,7 @@ export default {
                 'color-white-light': '#e6e1e3',
                 'color-white': '#f5f5f7',
                 'color-blue': '#1a74e8',
+                'color-blue-light': '#1d94f0',
             },
             width: {
                 'editor-lg': '400px',
