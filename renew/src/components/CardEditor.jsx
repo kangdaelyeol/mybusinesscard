@@ -1,24 +1,22 @@
-import React, { useContext, useRef } from 'react'
+import React from 'react'
 import useCardEditor from '../hooks/useCardEditor'
-import classNames from 'classnames'
-import { ThemeContext } from '../context/ThemeContext'
 import CardEditorForm from './CardEditorForm'
 export default function CardEditor({ card }) {
     const {
-        handleNameChange,
-        handleDescriptionChange,
-        handleThemeChange,
-        handleCardDelete,
-        handleFileInput,
+        updateName,
+        updateDescription,
+        updateTheme,
+        deleteMyCard,
+        updateProfile,
         fileLoading,
     } = useCardEditor()
 
     const handlers = {
-        handleNameChange: (e) => handleNameChange(e, card.id),
-        handleThemeChange: (e) => handleThemeChange(e, card.id),
-        handleDescriptionChange: (e) => handleDescriptionChange(e, card.id),
-        handleFileInput: (e) => handleFileInput(e, card.id),
-        handleButtonClick: (e) => handleCardDelete(e, card.id),
+        handleNameChange: (e) => updateName(e, card.id),
+        handleThemeChange: (e) => updateTheme(e, card.id),
+        handleDescriptionChange: (e) => updateDescription(e, card.id),
+        handleFileInput: (e) => updateProfile(e, card.id),
+        handleButtonClick: (e) => deleteMyCard(e, card.id),
     }
 
     return (

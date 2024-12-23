@@ -16,7 +16,7 @@ export default function useCardEditor() {
     const [fileLoading, setFileLoading] = useState(false)
     const state = useSelector((state) => state.cards)
 
-    const handleFileInput = async (e, id) => {
+    const updateProfile = async (e, id) => {
         setFileLoading(true)
 
         if (
@@ -47,19 +47,19 @@ export default function useCardEditor() {
 
     const dispatch = useDispatch()
 
-    const handleNameChange = (e, id) => {
+    const updateName = (e, id) => {
         dispatch(updateCardName({ id, value: e.target.value }))
     }
 
-    const handleDescriptionChange = (e, id) => {
+    const updateDescription = (e, id) => {
         dispatch(updateCardDescription({ id, value: e.target.value }))
     }
 
-    const handleThemeChange = (e, id) => {
+    const updateTheme = (e, id) => {
         dispatch(updateCardTheme({ id, value: e.target.value }))
     }
 
-    const handleCardDelete = (e, id) => {
+    const deleteMyCard = (e, id) => {
         // Form submission canceled because the form is not connected 경고 방지
         e.preventDefault()
         if (fileLoading) return
@@ -67,11 +67,11 @@ export default function useCardEditor() {
     }
 
     return {
-        handleNameChange,
-        handleDescriptionChange,
-        handleThemeChange,
-        handleCardDelete,
-        handleFileInput,
+        updateName,
+        updateDescription,
+        updateTheme,
+        deleteMyCard,
+        updateProfile,
         fileLoading,
     }
 }
