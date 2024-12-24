@@ -4,6 +4,7 @@ import Main from './components/Main'
 import { Provider } from 'react-redux'
 import { store } from './store'
 import { ThemeProvider } from './context/ThemeContext'
+import Login from './components/Login'
 
 const routerConfig = [
     {
@@ -13,6 +14,10 @@ const routerConfig = [
             {
                 index: true,
                 element: <Main />,
+            },
+            {
+                path: '/login',
+                element: <Login />,
             },
         ],
     },
