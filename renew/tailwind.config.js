@@ -19,8 +19,14 @@ export default {
                 'editor-lg': '400px',
             },
             height: {
-                'header-height': '100px',
-                'footer-height': '70px',
+                'header-height': 'var(--header-height)',
+                'footer-height': 'var(--footer-height)',
+            },
+            padding: {
+                'header-height': 'var(--header-height)',
+            },
+            margin: {
+                'footer-height': 'calc(var(--footer-height) * -1)',
             },
         },
     },

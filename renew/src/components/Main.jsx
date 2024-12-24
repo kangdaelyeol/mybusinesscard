@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import CardEditor from './CardEditor'
 import CardDisplay from './CardDisplay'
 import CardMaker from './CardMaker'
-import CardMakerDisplay from './CardMakerDisplay'
 import { useSelector } from 'react-redux'
 import { CardProvider } from '../context/CardContext'
 import { ThemeContext } from '../context/ThemeContext'
@@ -12,10 +11,13 @@ export default function Main() {
     const state = useSelector((state) => state.cards)
     return (
         <div
-            className={classNames('py-[100px] min-h-[100vh] mb-[-70px]', {
-                'bg-color-white': theme === 'light',
-                'bg-color-black-semilight': theme === 'dark',
-            })}
+            className={classNames(
+                'py-header-height min-h-[100vh] mb-footer-height',
+                {
+                    'bg-color-white': theme === 'light',
+                    'bg-color-black-semilight': theme === 'dark',
+                },
+            )}
         >
             <div className="max-w-[1100px] mx-auto flex flex-col">
                 {state.cards.map((card) => (

@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --header-height: 100px;
+    --footer-height: 70px;
+  }
+}
+
 @layer components {
   .btn-dark {
     @apply bg-color-black border-color-gray text-color-white-light;
