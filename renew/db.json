@@ -1,0 +1,10 @@
+{
+  "user": [
+    {
+      "id": "test",
+      "password": "1234",
+      "profile": "",
+      "cards": []
+    }
+  ]
+}
