@@ -1,6 +1,7 @@
 import React, { useRef, useContext } from 'react'
 import classNames from 'classnames'
 import { ThemeContext } from '../context/ThemeContext'
+import LoadingSpinner from './LoadingSpinner'
 export default function CardEditorForm({
     buttonName,
     card,
@@ -86,17 +87,7 @@ export default function CardEditorForm({
                             },
                         )}
                     >
-                        {fileLoading ? (
-                            <div className="flex justify-center gap-[5px]">
-                                <svg
-                                    className="animate-spin h-5 w-5 mr-3 border-text-white border-[3px] border-t-transparent rounded-[50%]"
-                                    viewBox="0 0 24 24"
-                                ></svg>
-                                Processing...
-                            </div>
-                        ) : (
-                            'file'
-                        )}
+                        {fileLoading ? <LoadingSpinner /> : 'file'}
                     </button>
                     <button
                         onClick={handlers.handleButtonClick}
