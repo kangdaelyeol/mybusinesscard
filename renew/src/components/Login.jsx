@@ -1,9 +1,30 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
+import { userLogin } from '../api'
+import LoadingSpinner from './LoadingSpinner'
 export default function Login() {
     const { theme } = useContext(ThemeContext)
+    const [loading, setLoading] = useState(false)
+    const [loginInput, setLoginInput] = useState({ username: '', password: '' })
+
+    const handleUserLogin = async () => {
+        if (loading) return
+        setLoading(true)
+
+        const res = await userLogin(loginInput.username, loginInput.password)
+        console.log(res)
+        setLoading(false)
+    }
+
+    const handleUsernameInput = (e) => {
+        setLoginInput((prev) => ({ ...prev, username: e.target.value }))
+    }
+
+    const handlePasswordInput = (e) => {
+        setLoginInput((prev) => ({ ...prev, password: e.target.value }))
+    }
     return (
         <div
             className={classNames(
@@ -22,14 +43,19 @@ export default function Login() {
                     className="bg-transparent border-b-[1px] border-solid border-gray-light p-[5px] mt-[30px] text-[18px]"
                     type="text"
                     placeholder="Username"
+                    value={loginInput.username}
+                    onChange={handleUsernameInput}
                 />
                 <input
                     className="bg-transparent border-b-[1px] border-solid border-gray-light p-[5px] mt-[20px] text-[18px]"
                     type="password"
                     placeholder="Password"
+                    value={loginInput.password}
+                    onChange={handlePasswordInput}
                 />
 
                 <button
+                    onClick={handleUserLogin}
                     className={classNames(
                         'text-color-white py-[7px] mt-[30px]',
                         {
@@ -40,7 +66,7 @@ export default function Login() {
                         },
                     )}
                 >
-                    Log in
+                    {loading ? <LoadingSpinner /> : 'Log in'}
                 </button>
 
                 <label className="mt-[20px]" htmlFor="remember">
