@@ -1,13 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import LoadingSpinner from './LoadingSpinner'
 import useLogin from '../hooks/useLogin'
-import { UserContext } from '../context/UserContext'
 import { ThemeContext } from '../context/ThemeContext'
 export default function Login() {
-    const { theme } = UserContext(ThemeContext)
-
+    const { theme } = useContext(ThemeContext)
     const {
         loading,
         handleUserLogin,
