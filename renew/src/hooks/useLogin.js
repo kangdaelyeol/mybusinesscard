@@ -1,9 +1,7 @@
 import { useContext, useState } from 'react'
-import { ThemeContext } from '../context/ThemeContext'
 import { userLogin } from '../api'
 import { UserContext } from '../context/UserContext'
 export default function useLogin() {
-    const { theme } = useContext(ThemeContext)
     const { setUser } = useContext(UserContext)
     const [loading, setLoading] = useState(false)
     const [loginInput, setLoginInput] = useState({ username: '', password: '' })
@@ -35,7 +33,6 @@ export default function useLogin() {
     }
 
     return {
-        theme,
         handleUserLogin,
         handleUsernameInput,
         handlePasswordInput,
