@@ -8,6 +8,7 @@ import Login from './components/Login'
 import { UserProvider } from './context/UserContext'
 import LoggedInOnly from './components/LoggedInOnly'
 import GuestOnly from './components/GuestOnly'
+import Signup from './components/Signup'
 
 const routerConfig = [
     {
@@ -27,6 +28,14 @@ const routerConfig = [
                 element: (
                     <GuestOnly>
                         <Login />
+                    </GuestOnly>
+                ),
+            },
+            {
+                path: 'signup',
+                element: (
+                    <GuestOnly>
+                        <Signup />
                     </GuestOnly>
                 ),
             },
