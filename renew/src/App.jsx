@@ -28,9 +28,11 @@ const router = createBrowserRouter(routerConfig)
 function App() {
     return (
         <ThemeProvider>
-            <Provider store={store}>
-                <RouterProvider router={router} />
-            </Provider>
+            <UserProvider>
+                <Provider store={store}>
+                    <RouterProvider router={router} />
+                </Provider>
+            </UserProvider>
         </ThemeProvider>
     )
 }
