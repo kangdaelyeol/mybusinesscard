@@ -30,14 +30,28 @@ export const deleteCloudinaryImage = (signature, assetId) => {
 }
 
 export const userLogin = async (username, password) => {
+    if (!/^[\w]{4,20}$/.test(username)) {
+        return {
+            status: 400,
+            reason: "username has 4 to 20 length of characters and doesn't contain special symbol.",
+        }
+    }
+
+    if (!/^[\w!@#$%^&*()]{4,20}$/.test(password)) {
+        return {
+            status: 400,
+            reason: "password has 4 to 20 length of characters and doesn't contain blank",
+        }
+    }
+
     const res = await fetch(USER_REQUEST_URL)
 
     const json = await res.json()
 
     const user = json.find((user) => user.id === username)
-    if (!user) return { status: 400 }
+    if (!user) return { status: 400, reason: 'invalid username' }
     if (user.password === password) return { status: 200, data: user }
-    else return { status: 400 }
+    else return { status: 400, reason: "password doesn't match!" }
 }
 
 export const userSignup = async (username, password, confirmPassword) => {
