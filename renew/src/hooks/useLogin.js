@@ -5,10 +5,12 @@ export default function useLogin() {
     const { setUser } = useContext(UserContext)
     const [loading, setLoading] = useState(false)
     const [loginInput, setLoginInput] = useState({ username: '', password: '' })
+    const [errorMessage, setErrorMessage] = useState('')
 
     const handleUserLogin = async (e) => {
         e.preventDefault()
         if (loading) return
+
         setLoading(true)
 
         const res = await userLogin(loginInput.username, loginInput.password)
@@ -20,15 +22,19 @@ export default function useLogin() {
                 profile: res.data.profile,
                 cards: res.data.cards,
             }))
+        } else if (res.status === 400) {
+            setErrorMessage(res.reason)
         }
         setLoading(false)
     }
 
     const handleUsernameInput = (e) => {
+        setErrorMessage('')
         setLoginInput((prev) => ({ ...prev, username: e.target.value }))
     }
 
     const handlePasswordInput = (e) => {
+        setErrorMessage('')
         setLoginInput((prev) => ({ ...prev, password: e.target.value }))
     }
 
@@ -38,5 +44,6 @@ export default function useLogin() {
         handlePasswordInput,
         loading,
         loginInput,
+        errorMessage,
     }
 }

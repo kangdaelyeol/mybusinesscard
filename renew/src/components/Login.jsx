@@ -12,6 +12,7 @@ export default function Login() {
         handleUsernameInput,
         handlePasswordInput,
         loginInput,
+        errorMessage,
     } = useLogin()
 
     return (
@@ -44,9 +45,15 @@ export default function Login() {
                     onChange={handlePasswordInput}
                 />
 
+                {errorMessage && (
+                    <div className="mt-[10px] text-red-500 whitespace-pre-wrap text-center">
+                        {errorMessage}
+                    </div>
+                )}
+
                 <button
                     className={classNames(
-                        'text-color-white py-[7px] mt-[30px]',
+                        'text-color-white py-[7px] mt-[15px]',
                         {
                             'bg-color-gray-light hover:bg-color-black-light':
                                 theme === 'dark',
