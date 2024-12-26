@@ -1,30 +1,17 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
-import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
-import { userLogin } from '../api'
 import LoadingSpinner from './LoadingSpinner'
+import useLogin from '../hooks/useLogin'
 export default function Login() {
-    const { theme } = useContext(ThemeContext)
-    const [loading, setLoading] = useState(false)
-    const [loginInput, setLoginInput] = useState({ username: '', password: '' })
-
-    const handleUserLogin = async () => {
-        if (loading) return
-        setLoading(true)
-
-        const res = await userLogin(loginInput.username, loginInput.password)
-        console.log(res)
-        setLoading(false)
-    }
-
-    const handleUsernameInput = (e) => {
-        setLoginInput((prev) => ({ ...prev, username: e.target.value }))
-    }
-
-    const handlePasswordInput = (e) => {
-        setLoginInput((prev) => ({ ...prev, password: e.target.value }))
-    }
+    const {
+        theme,
+        loading,
+        handleUserLogin,
+        handleUsernameInput,
+        handlePasswordInput,
+        loginInput,
+    } = useLogin()
     return (
         <div
             className={classNames(
