@@ -5,6 +5,9 @@ import { Provider } from 'react-redux'
 import { store } from './store'
 import { ThemeProvider } from './context/ThemeContext'
 import Login from './components/Login'
+import { UserProvider } from './context/UserContext'
+import LoggedInOnly from './components/LoggedInOnly'
+import GuestOnly from './components/GuestOnly'
 
 const routerConfig = [
     {
@@ -13,11 +16,19 @@ const routerConfig = [
         children: [
             {
                 index: true,
-                element: <Main />,
+                element: (
+                    <LoggedInOnly>
+                        <Main />
+                    </LoggedInOnly>
+                ),
             },
             {
-                path: '/login',
-                element: <Login />,
+                path: 'login',
+                element: (
+                    <GuestOnly>
+                        <Login />
+                    </GuestOnly>
+                ),
             },
         ],
     },

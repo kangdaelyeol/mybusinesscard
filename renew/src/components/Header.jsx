@@ -1,9 +1,16 @@
 import React, { useContext } from 'react'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
+import { initialState, UserContext } from '../context/UserContext'
 export default function Header() {
-    const isLogin = true
+    const { user, setUser } = useContext(UserContext)
     const { theme, toggleTheme } = useContext(ThemeContext)
+
+    const handleLogoutClick = () => {
+        setUser({
+            ...initialState,
+        })
+    }
 
     return (
         <header
@@ -13,7 +20,7 @@ export default function Header() {
             })}
         >
             <div className="max-w-[1100px] relative mx-auto h-header-height flex">
-                {isLogin && (
+                {user?.username && (
                     <div>
                         <img
                             alt="profile"
@@ -39,8 +46,9 @@ export default function Header() {
                         {theme === 'dark' ? 'light_mode' : 'dark_mode'}
                     </span>
                 </div>
-                {isLogin && (
+                {user?.username && (
                     <div
+                        onClick={handleLogoutClick}
                         className={classNames(
                             'absolute h-[40px] leading-[40px] px-[10px] right-[20px] top-0 bottom-0 my-auto text-[1rem] font-bold border-[1px] rounded-[5px] cursor-pointer transition-all',
                             {
