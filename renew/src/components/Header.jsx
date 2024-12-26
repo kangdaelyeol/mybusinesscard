@@ -35,7 +35,13 @@ export default function Header() {
                 </span>
 
                 <div
-                    className=" absolute top-0 bottom-0 my-auto h-[24px] right-[110px] cursor-pointer select-none"
+                    className={classNames(
+                        'absolute top-0 bottom-0 my-auto h-[24px] cursor-pointer select-none',
+                        {
+                            'right-[110px]': user.username,
+                            'right-[30px]': !user.username,
+                        },
+                    )}
                     onClick={toggleTheme}
                 >
                     <span
