@@ -1,35 +1,21 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import { ThemeContext } from '../context/ThemeContext'
 import LoadingSpinner from './LoadingSpinner'
+import useSignup from '../hooks/useSignup'
 
 export default function Signup() {
     const { theme } = useContext(ThemeContext)
-    const [signupInput, setSignupInput] = useState({
-        username: '',
-        password: '',
-        confirmPassword: '',
-    })
-
-    const [loading, setLoading] = useState(false)
-
-    const handleUsernameInput = (e) => {
-        setSignupInput((prev) => ({ ...prev, username: e.target.value }))
-    }
-
-    const handlePasswordInput = (e) => {
-        setSignupInput((prev) => ({ ...prev, password: e.target.value }))
-    }
-
-    const handleConfirmPasswordInput = (e) => {
-        setSignupInput((prev) => ({ ...prev, confirmPassword: e.target.value }))
-    }
-
-    const handleSignupSubmit = (e) => {
-        e.preventDefault()
-    }
-
+    const {
+        handleUsernameInput,
+        handlePasswordInput,
+        handleConfirmPasswordInput,
+        handleSignupSubmit,
+        loading,
+        signupInput,
+    } = useSignup()
+    
     return (
         <form
             onSubmit={handleSignupSubmit}
@@ -79,19 +65,8 @@ export default function Signup() {
                         },
                     )}
                 >
-                    {loading ? <LoadingSpinner /> : 'Log in'}
+                    {loading ? <LoadingSpinner /> : 'Sign up'}
                 </button>
-
-                <label className="mt-[20px]" htmlFor="remember">
-                    <input
-                        id="remember"
-                        type="checkbox"
-                        className="mr-[5px] border-30px border-solid border-gray-300"
-                    />
-                    <span className="cursor-pointer select-none text-color-gray">
-                        Remember me
-                    </span>
-                </label>
             </div>
             <Link
                 className={classNames(
