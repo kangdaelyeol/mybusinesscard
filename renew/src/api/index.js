@@ -58,7 +58,7 @@ export const userSignup = async (username, password, confirmPassword) => {
     if (password !== confirmPassword) {
         return {
             status: 400,
-            reason: "Password doesn't match confirm password correctly. Please check your password again",
+            reason: "Password doesn't match confirm password correctly.\nPlease check your password again",
         }
     }
 

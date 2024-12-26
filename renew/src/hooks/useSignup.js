@@ -9,18 +9,22 @@ export default function useSignup() {
         password: '',
         confirmPassword: '',
     })
+    const [errorMessage, setErrorMessage] = useState('')
 
     const [loading, setLoading] = useState(false)
 
     const handleUsernameInput = (e) => {
+        setErrorMessage('')
         setSignupInput((prev) => ({ ...prev, username: e.target.value }))
     }
 
     const handlePasswordInput = (e) => {
+        setErrorMessage('')
         setSignupInput((prev) => ({ ...prev, password: e.target.value }))
     }
 
     const handleConfirmPasswordInput = (e) => {
+        setErrorMessage('')
         setSignupInput((prev) => ({ ...prev, confirmPassword: e.target.value }))
     }
 
@@ -33,7 +37,7 @@ export default function useSignup() {
             const { id, profile, cards } = res.value
             setUser({ username: id, profile, cards })
         } else {
-            console.log(res)
+            setErrorMessage(res.reason)
         }
 
         setLoading(false)
@@ -45,6 +49,7 @@ export default function useSignup() {
         handleConfirmPasswordInput,
         handleSignupSubmit,
         loading,
-        signupInput
+        signupInput,
+        errorMessage,
     }
 }

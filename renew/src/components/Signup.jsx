@@ -14,8 +14,9 @@ export default function Signup() {
         handleSignupSubmit,
         loading,
         signupInput,
+        errorMessage,
     } = useSignup()
-    
+
     return (
         <form
             onSubmit={handleSignupSubmit}
@@ -27,7 +28,7 @@ export default function Signup() {
                 },
             )}
         >
-            <div className="flex flex-col px-[30px] py-[20px] bg-color-white w-[400px] m-auto mt-[60px]">
+            <div className="flex flex-col px-[30px] py-[20px] bg-color-white w-[400px] m-auto mt-[50px]">
                 <div className="text-[30px] font-bold text-center text-color-black-light">
                     SIGN UP
                 </div>
@@ -53,6 +54,12 @@ export default function Signup() {
                     value={signupInput.confirmPassword}
                     onChange={handleConfirmPasswordInput}
                 />
+
+                {errorMessage && (
+                    <div className="text-center whitespace-pre-wrap text-red-600 mt-[10px]">
+                        {errorMessage}
+                    </div>
+                )}
 
                 <button
                     className={classNames(
