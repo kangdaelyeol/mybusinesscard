@@ -9,8 +9,9 @@ import {
 } from '../store/cardsSlice'
 
 import { deleteCloudinaryImage, uploadCloudinaryImage } from '../api'
+import { MAX_PROFILE_SIZE } from '../constants'
 
-const MAX_PROFILE_SIZE = 3000000
+
 
 export default function useCardEditor() {
     const [fileLoading, setFileLoading] = useState(false)

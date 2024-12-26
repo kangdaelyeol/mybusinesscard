@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
 import { initialState, UserContext } from '../context/UserContext'
+import { DEFAULT_PROFILE } from '../constants'
 export default function Header() {
     const { user, setUser } = useContext(UserContext)
     const { theme, toggleTheme } = useContext(ThemeContext)
@@ -25,7 +26,7 @@ export default function Header() {
                         <img
                             alt="profile"
                             className="absolute inset-y-0 my-auto left-[20px] h-[50px] w-[50px] rounded-[50%] ml-[15px]"
-                            src="https://avatars.githubusercontent.com/u/27201345?v=4"
+                            src={DEFAULT_PROFILE}
                         ></img>
                     </div>
                 )}

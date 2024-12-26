@@ -4,8 +4,8 @@ import { CARD_ACTIONS } from '../reducer'
 import { deleteCloudinaryImage, uploadCloudinaryImage } from '../api'
 import { useDispatch } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
+import { MAX_PROFILE_SIZE } from '../constants'
 
-const MAX_PROFILE_SIZE = 3000000 // 3MB
 
 export default function useCardMaker() {
     const { state, dispatch } = useContext(CardContext)

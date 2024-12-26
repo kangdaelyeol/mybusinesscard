@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import classNames from 'classnames'
 import { CardContext } from '../context/CardContext'
-const defaultProfileURL = 'https://avatars.githubusercontent.com/u/27201345?v=4'
+import { DEFAULT_CARD_PROFILE } from '../constants'
 
 export default function CardDisplay({ card }) {
     let data
@@ -23,7 +23,7 @@ export default function CardDisplay({ card }) {
             >
                 <img
                     alt="avatar"
-                    src={data.profile.url || defaultProfileURL}
+                    src={data.profile.url || DEFAULT_CARD_PROFILE}
                     className="rounded-[50%] w-[120px] h-[120px]"
                 />
                 <div>

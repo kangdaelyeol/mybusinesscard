@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
+import { GITHUB_URL } from '../constants'
 export default function Footer() {
     const { theme } = useContext(ThemeContext)
     return (
@@ -14,7 +15,7 @@ export default function Footer() {
             )}
         >
             <a
-                href="https://github.com/kangdaelyeol"
+                href={GITHUB_URL}
                 target="_blank"
                 className="font-bold text-[15px] hover:underline"
             >
