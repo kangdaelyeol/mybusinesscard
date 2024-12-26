@@ -8,7 +8,8 @@ export default function useLogin() {
     const [loading, setLoading] = useState(false)
     const [loginInput, setLoginInput] = useState({ username: '', password: '' })
 
-    const handleUserLogin = async () => {
+    const handleUserLogin = async (e) => {
+        e.preventDefault()
         if (loading) return
         setLoading(true)
 

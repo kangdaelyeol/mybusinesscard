@@ -12,8 +12,10 @@ export default function Login() {
         handlePasswordInput,
         loginInput,
     } = useLogin()
+
     return (
-        <div
+        <form
+            onSubmit={handleUserLogin}
             className={classNames(
                 'min-h-[100vh] pt-header-height mb-footer-height',
                 {
@@ -42,7 +44,6 @@ export default function Login() {
                 />
 
                 <button
-                    onClick={handleUserLogin}
                     className={classNames(
                         'text-color-white py-[7px] mt-[30px]',
                         {
@@ -79,6 +80,6 @@ export default function Login() {
             >
                 Don't have an account?
             </Link>
-        </div>
+        </form>
     )
 }
