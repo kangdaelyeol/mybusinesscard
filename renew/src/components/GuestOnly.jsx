@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom'
 export default function GuestOnly({ children }) {
     const { user } = useContext(UserContext)
 
-    if (user?.username) return <Navigate to="/" />
+    if (user?.username) return <Navigate to="/" replace />
 
     return children
 }
