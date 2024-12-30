@@ -11,7 +11,7 @@
 
 @layer components {
   .btn-dark {
-    @apply bg-color-black border-color-gray text-color-white-light;
+    @apply cursor-pointer bg-color-black border-color-gray text-color-white-light;
   }
 
   .btn-dark:hover {
@@ -19,7 +19,7 @@
   }
 
   .btn-light {
-    @apply bg-color-blue border-color-blue text-color-white-light;
+    @apply cursor-pointer bg-color-blue border-color-blue text-color-white-light;
   }
 
   .btn-light:hover {
@@ -32,6 +32,18 @@
 
   .input-light {
     @apply bg-transparent text-color-black-semilight border-color-gray;
+  }
+
+  .avatar-edit {
+    @apply invisible opacity-0;
+  }
+
+  .avatar:hover > .avatar-edit {
+    @apply visible opacity-80;
+  }
+
+  .avatar-edit:hover {
+    @apply visible opacity-80;
   }
 }
 

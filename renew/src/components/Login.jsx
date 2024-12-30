@@ -69,7 +69,7 @@ export default function Login() {
                     <input
                         id="remember"
                         type="checkbox"
-                        className="mr-[5px] border-30px border-solid border-gray-300"
+                        className="mr-[5px] border-solid border-gray-300"
                     />
                     <span className="cursor-pointer select-none text-color-gray">
                         Remember me
