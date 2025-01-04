@@ -38,8 +38,18 @@ const cardsSlice = createSlice({
             })
         },
 
+        updateCardProfileStyle: (state, action) => {
+            const { id, value } = action.payload
+
+            state.cards = state.cards.map((card) => {
+                if (card.id === id) {
+                    card.profile.style = { ...card.profile.style, ...value }
+                }
+                return card
+            })
+        },
+
         deleteCard: (state, action) => {
-            console.log(action.payload.id)
             state.cards = state.cards.filter(
                 (card) => card.id !== action.payload.id,
             )
@@ -57,6 +67,7 @@ export const {
     updateCardName,
     updateCardTheme,
     updateCardProfile,
+    updateCardProfileStyle,
     deleteCard,
 } = cardsSlice.actions
 
