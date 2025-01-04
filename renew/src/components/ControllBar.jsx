@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import React, { useState, useEffect } from 'react'
+import { RATE_BAR_WIDTH } from '../constants'
 
-const RATE_BAR_WIDTH = 400
 export default function ControllBar({
     setRate,
     title,

@@ -6,8 +6,7 @@ import AvatarSizing from './AvatarSizing'
 import { CARD_ACTIONS } from '../reducer'
 import { useDispatch } from 'react-redux'
 import { updateCardProfileStyle } from '../store/cardsSlice'
-
-const CARD_IMAGE_SIZE = 120
+import { CARD_IMAGE_SIZE } from '../constants'
 
 export default function CardDisplay({ card }) {
     let data, saveProfileStyle
@@ -72,9 +71,10 @@ export default function CardDisplay({ card }) {
                 )}
             >
                 <div
-                    className="avatar w-[120px] h-[120px] relative rounded-[var(--img-rounded)] overflow-hidden"
+                    className="avatar w-[var(--img-size)] h-[var(--img-size)] relative rounded-[var(--img-rounded)] overflow-hidden"
                     style={{
                         '--img-rounded': `${rounded}%`,
+                        '--img-size': `${CARD_IMAGE_SIZE}px`,
                     }}
                 >
                     <img

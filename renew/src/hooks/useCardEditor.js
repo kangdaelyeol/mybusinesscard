@@ -67,8 +67,6 @@ export default function useCardEditor() {
     }
 
     const deleteMyCard = (e, id) => {
-        // Form submission canceled because the form is not connected 경고 방지
-        e.preventDefault()
         if (fileLoading) return
         dispatch(deleteCard({ id }))
     }

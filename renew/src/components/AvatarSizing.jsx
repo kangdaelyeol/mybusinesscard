@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
 import ControllBar from './ControllBar'
+import { PICTURE_BOX_SIZE, MAX_SCALE_VALUE } from '../constants'
 
 export default function AvatarSizing({ url, style, saveProfileStyle }) {
-    const PICTURE_BOX_SIZE = 400
-
-    const MIN_SCALE_VALUE = 1
-    const MAX_SCALE_VALUE = 5
-
     const [scaleRate, setScaleRate] = useState(style.scale)
 
     const [translateXRate, setTranslateXRate] = useState(style.transX)
@@ -55,7 +51,12 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                     Set your picture display!
                 </div>
                 <div className="flex gap-[30px]">
-                    <div className="h-[400px] w-[400px] relative overflow-hidden border-[5px] border-gray-900 border-solid">
+                    <div
+                        className="relative w-[var(--img-size)] h-[var(--img-size)] overflow-hidden border-[5px] border-gray-900 border-solid"
+                        style={{
+                            '--img-size': `${PICTURE_BOX_SIZE}px`,
+                        }}
+                    >
                         <img
                             className="absolute filter scale-[var(--img-scale)] origin-top-left translate-x-[var(--img-translateX)] translate-y-[var(--img-translateY)]"
                             src={url}
@@ -92,7 +93,7 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                         <ControllBar
                             title="Scale"
                             setRate={setScaleRate}
-                            minVal={MIN_SCALE_VALUE}
+                            minVal={1}
                             maxVal={MAX_SCALE_VALUE}
                             currentValue={scaleRate}
                         />
