@@ -1,45 +1,17 @@
 import classNames from 'classnames'
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { RATE_BAR_WIDTH } from '../constants'
+import useControlbar from '../hooks/useControlBar'
 
 export default function ControllBar({ setRate, title, minVal, maxVal, value }) {
-    let barRate = (value - minVal) / (maxVal - minVal)
-    let isDisable = false
+    const {
+        handleBarMove,
+        handleMouseClear,
+        handleMouseDown,
+        barRate,
+        isDisable,
+    } = useControlbar(minVal, maxVal, setRate, value, RATE_BAR_WIDTH)
 
-    if (isNaN(barRate)) {
-        barRate = minVal
-        isDisable = true
-    }
-
-    useEffect(() => {
-        const rate =
-            minVal + ((maxVal - minVal) * (value - minVal)) / (maxVal - minVal)
-
-        if (rate >= maxVal) setRate(maxVal)
-        else if (rate < minVal) setRate(minVal)
-        else if (minVal === maxVal) setRate(minVal)
-        else setRate(rate)
-    }, [maxVal])
-
-    const [mouseDown, setMouseDown] = useState(false)
-
-    const handleBarMove = (e) => {
-        if (!mouseDown) return
-
-        const rate =
-            (maxVal - minVal) * (e.nativeEvent.offsetX / RATE_BAR_WIDTH) +
-            minVal
-
-        setRate(rate)
-    }
-
-    const handleMouseDown = () => {
-        setMouseDown(true)
-    }
-
-    const handleMouseClear = () => {
-        setMouseDown(false)
-    }
     return (
         <div className="relative mb-[30px]">
             <div className="text-color-white mb-[15px] font-bold text-[20px]">
