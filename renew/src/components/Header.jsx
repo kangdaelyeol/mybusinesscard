@@ -15,7 +15,7 @@ export default function Header() {
 
     return (
         <header
-            className={classNames('fixed w-[100%]', {
+            className={classNames('fixed w-[100%] z-10', {
                 'bg-white text-black-light': theme === 'light',
                 'bg-color-black text-color-white-light': theme === 'dark',
             })}
