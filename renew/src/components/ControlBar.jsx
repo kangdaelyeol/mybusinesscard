@@ -2,14 +2,8 @@ import classNames from 'classnames'
 import React, { useState, useEffect } from 'react'
 import { RATE_BAR_WIDTH } from '../constants'
 
-export default function ControllBar({
-    setRate,
-    title,
-    minVal,
-    maxVal,
-    currentValue,
-}) {
-    let barRate = (currentValue - minVal) / (maxVal - minVal)
+export default function ControllBar({ setRate, title, minVal, maxVal, value }) {
+    let barRate = (value - minVal) / (maxVal - minVal)
     let isDisable = false
 
     if (isNaN(barRate)) {
@@ -19,8 +13,7 @@ export default function ControllBar({
 
     useEffect(() => {
         const rate =
-            minVal +
-            ((maxVal - minVal) * (currentValue - minVal)) / (maxVal - minVal)
+            minVal + ((maxVal - minVal) * (value - minVal)) / (maxVal - minVal)
 
         if (rate >= maxVal) setRate(maxVal)
         else if (rate < minVal) setRate(minVal)

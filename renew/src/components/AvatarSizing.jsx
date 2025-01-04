@@ -1,17 +1,21 @@
-import React, { useState } from 'react'
-import ControllBar from './ControllBar'
+import React from 'react'
+import ControlBar from './ControlBar'
 import { PICTURE_BOX_SIZE, MAX_SCALE_VALUE } from '../constants'
+import useAvatarSizing from '../hooks/useAvatarSizing'
 
 export default function AvatarSizing({ url, style, saveProfileStyle }) {
-    const [scaleRate, setScaleRate] = useState(style.scale)
+    const {
+        imgStyle,
+        setScaleRate,
+        setRoundedRate,
+        setTransXRate,
+        setTransYRate,
+        handleSaveStyle,
+    } = useAvatarSizing(style, saveProfileStyle)
 
-    const [translateXRate, setTranslateXRate] = useState(style.transX)
+    const { width, height, scale, rounded, transX, transY } = imgStyle
 
-    const [translateYRate, setTranslateYRate] = useState(style.transY)
-
-    const [roundRate, setRoundRate] = useState(style.rounded)
-
-    const widthRate = style.width / style.height
+    const widthRate = width / height
 
     let newHeight, newWidth, minTransX, minTransY
 
@@ -35,14 +39,36 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
         ]
     }
 
-    const handleSaveStyle = () => {
-        saveProfileStyle({
-            scale: scaleRate,
-            transX: translateXRate,
-            transY: translateYRate,
-            rounded: roundRate,
-        })
-    }
+    const controlBarOptionList = [
+        {
+            title: 'Scale',
+            setRate: setScaleRate,
+            minVal: 1,
+            maxVal: MAX_SCALE_VALUE,
+            value: scale,
+        },
+        {
+            title: 'TranslateX',
+            setRate: setTransXRate,
+            minVal: 0,
+            maxVal: 100 * scale - 100 + minTransX,
+            value: transX,
+        },
+        {
+            title: 'TranslateY',
+            setRate: setTransYRate,
+            minVal: 0,
+            maxVal: 100 * scale - 100 + minTransY,
+            value: transY,
+        },
+        {
+            title: 'Round',
+            setRate: setRoundedRate,
+            minVal: 0,
+            maxVal: 50,
+            value: rounded,
+        },
+    ]
 
     return (
         <div className="bg-picture-edit w-screen h-screen fixed top-0 left-0 flex flex-col justify-center items-center backdrop-blur-sm z-10">
@@ -64,15 +90,15 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                             width={newWidth}
                             height={newHeight}
                             style={{
-                                '--img-scale': scaleRate,
-                                '--img-translateX': `-${translateXRate}%`,
-                                '--img-translateY': `-${translateYRate}%`,
+                                '--img-scale': scale,
+                                '--img-translateX': `-${transX}%`,
+                                '--img-translateY': `-${transY}%`,
                             }}
                         />
                         <div
                             className="absolute top-0 left-0 w-full h-full rounded-[var(--picture-rounded)] overflow-hidden"
                             style={{
-                                '--picture-rounded': `${roundRate}%`,
+                                '--picture-rounded': `${rounded}%`,
                             }}
                         >
                             <img
@@ -82,44 +108,17 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                                 width={newWidth}
                                 height={newHeight}
                                 style={{
-                                    '--img-scale': scaleRate,
-                                    '--img-translateX': `-${translateXRate}%`,
-                                    '--img-translateY': `-${translateYRate}%`,
+                                    '--img-scale': scale,
+                                    '--img-translateX': `-${transX}%`,
+                                    '--img-translateY': `-${transY}%`,
                                 }}
                             />
                         </div>
                     </div>
                     <div className="flex flex-col h-[400px] w-[400px]">
-                        <ControllBar
-                            title="Scale"
-                            setRate={setScaleRate}
-                            minVal={1}
-                            maxVal={MAX_SCALE_VALUE}
-                            currentValue={scaleRate}
-                        />
-                        <ControllBar
-                            title="TranslateX"
-                            setRate={setTranslateXRate}
-                            minVal={0}
-                            maxVal={100 * scaleRate - 100 + minTransX}
-                            currentValue={translateXRate}
-                        />
-
-                        <ControllBar
-                            title="TranslateY"
-                            setRate={setTranslateYRate}
-                            minVal={0}
-                            maxVal={100 * scaleRate - 100 + minTransY}
-                            currentValue={translateYRate}
-                        />
-
-                        <ControllBar
-                            title="Round"
-                            setRate={setRoundRate}
-                            minVal={0}
-                            maxVal={50}
-                            currentValue={roundRate}
-                        />
+                        {controlBarOptionList.map((option) => (
+                            <ControlBar key={option.title} {...option} />
+                        ))}
 
                         <button
                             onClick={handleSaveStyle}
