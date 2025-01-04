@@ -11,8 +11,6 @@ import {
 import { deleteCloudinaryImage, uploadCloudinaryImage } from '../api'
 import { MAX_PROFILE_SIZE } from '../constants'
 
-
-
 export default function useCardEditor() {
     const [fileLoading, setFileLoading] = useState(false)
     const state = useSelector((state) => state.cards)
@@ -40,6 +38,14 @@ export default function useCardEditor() {
                     assetId: data.asset_id,
                     signature: data.signature,
                     publicId: data.public_id,
+                    style: {
+                        scale: 1,
+                        transX: 0,
+                        transY: 0,
+                        rounded: 50,
+                        width: data.width,
+                        height: data.height,
+                    },
                 },
             }),
         )

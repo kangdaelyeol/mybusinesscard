@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
 import { MAX_PROFILE_SIZE } from '../constants'
 
-
 export default function useCardMaker() {
     const { state, dispatch } = useContext(CardContext)
     const dispatchRedux = useDispatch()
@@ -59,6 +58,14 @@ export default function useCardMaker() {
                     signature: data.signature,
                     publicId: data.public_id,
                     timestamp: data.timestamp,
+                    style: {
+                        scale: 1,
+                        transX: 0,
+                        transY: 0,
+                        rounded: 50,
+                        width: data.width,
+                        height: data.height,
+                    },
                 },
             },
         })
