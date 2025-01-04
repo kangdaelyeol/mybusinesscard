@@ -1,4 +1,4 @@
-export default function calculateImageSize(width, height, boxSize) {
+const calculateImageSize = (width, height, boxSize) => {
     let newHeight, newWidth, minTransX, minTransY
 
     const widthRate = width / height
@@ -13,3 +13,5 @@ export default function calculateImageSize(width, height, boxSize) {
 
     return { newHeight, newWidth, minTransX, minTransY }
 }
+
+export default calculateImageSize
