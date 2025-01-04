@@ -7,6 +7,10 @@
     --header-height: 100px;
     --footer-height: 70px;
   }
+
+  img {
+    max-width: none;
+  }
 }
 
 @layer components {
@@ -48,6 +52,12 @@
 }
 
 @layer utilities {
+  .filter {
+    filter: blur(10px);
+  }
+  .bg-picture-edit {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
   .bg-theme-black {
     background-image: linear-gradient(
         200deg,
