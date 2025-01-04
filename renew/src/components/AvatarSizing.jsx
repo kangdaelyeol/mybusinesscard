@@ -2,6 +2,7 @@ import React from 'react'
 import ControlBar from './ControlBar'
 import { PICTURE_BOX_SIZE, MAX_SCALE_VALUE } from '../constants'
 import useAvatarSizing from '../hooks/useAvatarSizing'
+import calculateImageSize from '../utils/calculateImageSize'
 
 export default function AvatarSizing({ url, style, saveProfileStyle }) {
     const {
@@ -15,29 +16,11 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
 
     const { width, height, scale, rounded, transX, transY } = imgStyle
 
-    const widthRate = width / height
-
-    let newHeight, newWidth, minTransX, minTransY
-
-    if (widthRate >= 1) {
-        ;[newWidth, newHeight] = [
-            widthRate * PICTURE_BOX_SIZE,
-            PICTURE_BOX_SIZE,
-        ]
-        ;[minTransX, minTransY] = [
-            ((newWidth - PICTURE_BOX_SIZE) / newWidth) * 100,
-            0,
-        ]
-    } else {
-        ;[newWidth, newHeight] = [
-            PICTURE_BOX_SIZE,
-            PICTURE_BOX_SIZE / widthRate,
-        ]
-        ;[minTransX, minTransY] = [
-            0,
-            ((newHeight - PICTURE_BOX_SIZE) / newHeight) * 100,
-        ]
-    }
+    const { newHeight, newWidth, minTransX, minTransY } = calculateImageSize(
+        width,
+        height,
+        PICTURE_BOX_SIZE,
+    )
 
     const controlBarOptionList = [
         {
