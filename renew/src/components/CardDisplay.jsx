@@ -1,19 +1,61 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import classNames from 'classnames'
 import { CardContext } from '../context/CardContext'
-import { DEFAULT_CARD_PROFILE } from '../constants'
 import { ThemeContext } from '../context/ThemeContext'
+import AvatarSizing from './AvatarSizing'
+import { CARD_ACTIONS } from '../reducer'
+import { useDispatch } from 'react-redux'
+import { updateCardProfileStyle } from '../store/cardsSlice'
+
+const CARD_IMAGE_SIZE = 120
 
 export default function CardDisplay({ card }) {
-    let data
-    if (!card) data = useContext(CardContext).state
-    else data = card
+    let data, saveProfileStyle
+    const [editPicture, setEditPicture] = useState(false)
+
+    if (!card) {
+        const { state, dispatch } = useContext(CardContext)
+        data = state
+        saveProfileStyle = (style) => {
+            dispatch({
+                type: CARD_ACTIONS.UPDATE_PROFILE_STYLE,
+                payload: { style },
+            })
+            setEditPicture(false)
+        }
+    } else {
+        data = card
+        const dispatch = useDispatch()
+        saveProfileStyle = (style) => {
+            dispatch(updateCardProfileStyle({ id: data.id, value: style }))
+            setEditPicture(false)
+        }
+    }
+
     const descriptionList = data.description.split('\n')
+
+    const handlePictureEdit = () => {
+        setEditPicture(true)
+    }
 
     const { theme } = useContext(ThemeContext)
 
-    const onImgLoad = (e) => {
-        console.log(e.target.naturalHeight, e.target.naturalWidth)
+    const { width, height, transX, transY, scale, rounded } = data.profile.style
+
+    let newImgWidth, newImgHeight
+
+    const widthRate = width / height
+
+    if (widthRate >= 1) {
+        ;[newImgWidth, newImgHeight] = [
+            CARD_IMAGE_SIZE * widthRate,
+            CARD_IMAGE_SIZE,
+        ]
+    } else {
+        ;[newImgWidth, newImgHeight] = [
+            CARD_IMAGE_SIZE,
+            CARD_IMAGE_SIZE / widthRate,
+        ]
     }
 
     return (
@@ -29,14 +71,22 @@ export default function CardDisplay({ card }) {
                     },
                 )}
             >
-                <div className="avatar w-[120px] h-[120px] relative rounded-[50%] overflow-hidden">
+                <div
+                    className="avatar w-[120px] h-[120px] relative rounded-[var(--img-rounded)] overflow-hidden"
+                    style={{
+                        '--img-rounded': `${rounded}%`,
+                    }}
+                >
                     <img
                         alt="avatar"
-                        src={data.profile.url || DEFAULT_CARD_PROFILE}
-                        className="max-w-none cursor-pointer w-[var(--img-width)] h-[var(--img-width)]"
-                        onLoad={onImgLoad}
+                        src={data.profile.url}
+                        className="max-w-none cursor-pointer scale-[var(--img-scale)] origin-top-left translate-x-[var(--img-transX)] translate-y-[var(--img-transY)]"
+                        width={newImgWidth}
+                        height={newImgHeight}
                         style={{
-                            '--img-width': '120px',
+                            '--img-transX': `-${transX}%`,
+                            '--img-transY': `-${transY}%`,
+                            '--img-scale': scale,
                         }}
                     />
                     <div
@@ -47,6 +97,7 @@ export default function CardDisplay({ card }) {
                                 'btn-dark': theme === 'dark',
                             },
                         )}
+                        onClick={handlePictureEdit}
                     >
                         Edit
                     </div>
@@ -67,6 +118,12 @@ export default function CardDisplay({ card }) {
                           ))}
                 </div>
             </div>
+            {editPicture && (
+                <AvatarSizing
+                    {...data.profile}
+                    saveProfileStyle={saveProfileStyle}
+                />
+            )}
         </div>
     )
 }
