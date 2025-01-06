@@ -53,14 +53,13 @@ export default function Header() {
                         {theme === 'dark' ? 'light_mode' : 'dark_mode'}
                     </span>
                 </div>
-                <div className="cursor-pointer" onClick={handleProfileClick}>
-                    <img
-                        alt="profile"
-                        className="absolute inset-y-0 my-auto right-[25px] h-[50px] w-[50px] rounded-[50%]"
-                        src={user?.profile?.url || DEFAULT_PROFILE}
-                    ></img>
+                <div
+                    className="absolute inset-y-0 my-auto right-[30px] h-[50px] w-[50px] cursor-pointer"
+                    onClick={handleProfileClick}
+                >
+                    <ImgDisplay size={50} profile={user.profile} />
                 </div>
-                {profileDetail && <ProfileDetail user={user} />}
+                {profileDetail && <ProfileDetail />}
             </div>
         </header>
     )

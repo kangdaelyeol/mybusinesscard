@@ -1,6 +1,10 @@
 import React from 'react'
 import ControlBar from './ControlBar'
-import { PICTURE_BOX_SIZE, MAX_SCALE_VALUE } from '../constants'
+import {
+    PICTURE_BOX_SIZE,
+    MAX_SCALE_VALUE,
+    DEFAULT_PROFILE,
+} from '../constants'
 import useAvatarSizing from '../hooks/useAvatarSizing'
 import calculateImageSize from '../utils/calculateImageSize'
 
@@ -68,7 +72,7 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                     >
                         <img
                             className="absolute filter scale-[var(--img-scale)] origin-top-left translate-x-[var(--img-translateX)] translate-y-[var(--img-translateY)]"
-                            src={url}
+                            src={url || DEFAULT_PROFILE}
                             alt="resized picture"
                             width={newWidth}
                             height={newHeight}
@@ -86,7 +90,7 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                         >
                             <img
                                 className="absolute scale-[var(--img-scale)] translate-x-[var(--img-translateX)] translate-y-[var(--img-translateY)] origin-top-left"
-                                src={url}
+                                src={url || DEFAULT_PROFILE}
                                 alt="resized picture"
                                 width={newWidth}
                                 height={newHeight}
