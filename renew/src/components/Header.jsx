@@ -26,8 +26,14 @@ export default function Header() {
                         <img
                             alt="profile"
                             className="absolute inset-y-0 my-auto left-[20px] h-[50px] w-[50px] rounded-[50%] ml-[15px]"
-                            src={DEFAULT_PROFILE}
+                            src={user?.profile?.url || DEFAULT_PROFILE}
                         ></img>
+                    </div>
+                )}
+
+                {user?.nickname && (
+                    <div className="text-[24px] flex items-center text-color-white absolute top-0 bottom-0 my-auto left-[110px]">
+                        {user.nickname}
                     </div>
                 )}
 

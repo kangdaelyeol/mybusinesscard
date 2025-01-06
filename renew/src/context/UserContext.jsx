@@ -1,9 +1,5 @@
 import React, { createContext, useState } from 'react'
-
-export const initialState = {
-    user: { username: '', profile: '', cards: '' },
-    setUser: () => {},
-}
+import { initialState } from '../reducer'
 
 export const UserContext = createContext(initialState)
 

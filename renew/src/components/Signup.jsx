@@ -12,6 +12,7 @@ export default function Signup() {
         handlePasswordInput,
         handleConfirmPasswordInput,
         handleSignupSubmit,
+        handleNicknameInput,
         loading,
         signupInput,
         errorMessage,
@@ -39,6 +40,15 @@ export default function Signup() {
                     value={signupInput.username}
                     onChange={handleUsernameInput}
                 />
+
+                <input
+                    className="bg-transparent border-b-[1px] border-solid border-gray-light p-[5px] mt-[30px] text-[18px]"
+                    type="text"
+                    placeholder="Nickname"
+                    value={signupInput.nickname}
+                    onChange={handleNicknameInput}
+                />
+
                 <input
                     className="bg-transparent border-b-[1px] border-solid border-gray-light p-[5px] mt-[20px] text-[18px]"
                     type="password"

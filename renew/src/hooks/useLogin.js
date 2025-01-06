@@ -21,6 +21,7 @@ export default function useLogin() {
                 username: res.data.id,
                 profile: res.data.profile,
                 cards: res.data.cards,
+                nickname: res.data.nickname,
             }))
         } else if (res.status === 400) {
             setErrorMessage(res.reason)

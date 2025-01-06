@@ -7,6 +7,7 @@ export default function useSignup() {
     const [signupInput, setSignupInput] = useState({
         username: '',
         password: '',
+        nickname: '',
         confirmPassword: '',
     })
     const [errorMessage, setErrorMessage] = useState('')
@@ -32,10 +33,15 @@ export default function useSignup() {
         e.preventDefault()
         setLoading(true)
         const { username, password, confirmPassword } = signupInput
-        const res = await userSignup(username, password, confirmPassword)
+        const res = await userSignup(
+            username,
+            nickname,
+            password,
+            confirmPassword,
+        )
         if (res.status === 200) {
-            const { id, profile, cards } = res.value
-            setUser({ username: id, profile, cards })
+            const { id, profile, cards, nickname } = res.value
+            setUser({ username: id, profile, cards, nickname })
         } else {
             setErrorMessage(res.reason)
         }
@@ -43,11 +49,17 @@ export default function useSignup() {
         setLoading(false)
     }
 
+    const handleNicknameInput = (e) => {
+        setErrorMessage('')
+        setSignupInput((prev) => ({ ...prev, nickname: e.target.nickname }))
+    }
+
     return {
         handleUsernameInput,
         handlePasswordInput,
         handleConfirmPasswordInput,
         handleSignupSubmit,
+        handleNicknameInput,
         loading,
         signupInput,
         errorMessage,
