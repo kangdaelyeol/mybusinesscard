@@ -1,9 +1,28 @@
 import React, { createContext, useState } from 'react'
-import { initialUserState } from '../reducer'
+import { DEFAULT_PROFILE } from '../constants'
+
+export const initialUserState = {
+    username: '',
+    nickname: '',
+    profile: {
+        url: DEFAULT_PROFILE,
+        assetId: '',
+        signature: '',
+        publicId: '',
+        style: {
+            scale: 1,
+            transX: 0,
+            transY: 0,
+            rounded: 50,
+            width: 120,
+            height: 120,
+        },
+    },
+    cards: [],
+}
 
 export const UserContext = createContext({
-    user: { ...initialUserState },
-    setUser: () => {},
+    ...initialUserState,
 })
 
 export const UserProvider = ({ children }) => {

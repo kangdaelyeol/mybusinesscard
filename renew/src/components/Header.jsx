@@ -2,9 +2,9 @@ import React, { useContext, useState } from 'react'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
 import { UserContext } from '../context/UserContext'
-import { initialUserState } from '../reducer'
-import { DEFAULT_PROFILE } from '../constants'
 import ProfileDetail from './ProfileDetail'
+import { initialUserState } from '../context/UserContext'
+import ImgDisplay from './ImgDisplay'
 
 export default function Header() {
     const { user, setUser } = useContext(UserContext)
@@ -13,6 +13,7 @@ export default function Header() {
     const [profileDetail, setProfileDetail] = useState(true)
 
     const handleProfileClick = () => {
+        if (!user.username) return
         setProfileDetail((prev) => !prev)
     }
 

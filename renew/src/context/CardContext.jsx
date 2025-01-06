@@ -1,13 +1,35 @@
-import { createContext, useReducer, useState } from 'react'
-import { initialState, reducer } from '../reducer'
+import { createContext, useReducer } from 'react'
+import { reducer } from '../reducer'
+import { DEFAULT_CARD_PROFILE } from '../constants'
+
+export const initialCardState = {
+    id: '',
+    name: '',
+    description: '',
+    theme: 'black',
+    profile: {
+        url: DEFAULT_CARD_PROFILE,
+        assetId: '',
+        signature: '',
+        publicId: '',
+        style: {
+            scale: 1,
+            transX: 0,
+            transY: 0,
+            rounded: 50,
+            width: 120,
+            height: 120,
+        },
+    },
+}
 
 export const CardContext = createContext({
-    state: initialState,
+    state: initialCardState,
     dispatch: () => {},
 })
 
 export const CardProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, { ...initialState })
+    const [state, dispatch] = useReducer(reducer, { ...initialCardState })
     return (
         <CardContext.Provider value={{ state, dispatch }}>
             {children}
