@@ -1,12 +1,12 @@
 import React, { useContext, useState } from 'react'
 import classNames from 'classnames'
 import { CardContext } from '../context/CardContext'
-import { ThemeContext } from '../context/ThemeContext'
 import AvatarSizing from './AvatarSizing'
 import { CARD_ACTIONS } from '../reducer'
 import { useDispatch } from 'react-redux'
 import { updateCardProfileStyle } from '../store/cardsSlice'
 import { CARD_IMAGE_SIZE } from '../constants'
+import ImgDisplay from './ImgDisplay'
 
 export default function CardDisplay({ card }) {
     let data, saveProfileStyle
@@ -37,26 +37,6 @@ export default function CardDisplay({ card }) {
         setEditPicture(true)
     }
 
-    const { theme } = useContext(ThemeContext)
-
-    const { width, height, transX, transY, scale, rounded } = data.profile.style
-
-    let newImgWidth, newImgHeight
-
-    const widthRate = width / height
-
-    if (widthRate >= 1) {
-        ;[newImgWidth, newImgHeight] = [
-            CARD_IMAGE_SIZE * widthRate,
-            CARD_IMAGE_SIZE,
-        ]
-    } else {
-        ;[newImgWidth, newImgHeight] = [
-            CARD_IMAGE_SIZE,
-            CARD_IMAGE_SIZE / widthRate,
-        ]
-    }
-
     return (
         <div className="h-[230px] flex flex-1">
             <div
@@ -70,37 +50,8 @@ export default function CardDisplay({ card }) {
                     },
                 )}
             >
-                <div
-                    className="avatar w-[var(--img-size)] h-[var(--img-size)] relative rounded-[var(--img-rounded)] overflow-hidden"
-                    style={{
-                        '--img-rounded': `${rounded}%`,
-                        '--img-size': `${CARD_IMAGE_SIZE}px`,
-                    }}
-                >
-                    <img
-                        alt="avatar"
-                        src={data.profile.url}
-                        className="max-w-none cursor-pointer scale-[var(--img-scale)] origin-top-left translate-x-[var(--img-transX)] translate-y-[var(--img-transY)]"
-                        width={newImgWidth}
-                        height={newImgHeight}
-                        style={{
-                            '--img-transX': `-${transX}%`,
-                            '--img-transY': `-${transY}%`,
-                            '--img-scale': scale,
-                        }}
-                    />
-                    <div
-                        className={classNames(
-                            'avatar-edit w-full h-full absolute top-0 left-0 transition-all flex justify-center items-center object-',
-                            {
-                                'btn-light': theme === 'light',
-                                'btn-dark': theme === 'dark',
-                            },
-                        )}
-                        onClick={handlePictureEdit}
-                    >
-                        Edit
-                    </div>
+                <div className="relative" onClick={handlePictureEdit}>
+                    <ImgDisplay size={CARD_IMAGE_SIZE} profile={data.profile} />
                 </div>
                 <div>
                     <div className="text-[25px] select-none object-cover">

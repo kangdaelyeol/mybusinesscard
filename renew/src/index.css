@@ -37,18 +37,6 @@
   .input-light {
     @apply bg-transparent text-color-black-semilight border-color-gray;
   }
-
-  .avatar-edit {
-    @apply invisible opacity-0;
-  }
-
-  .avatar:hover > .avatar-edit {
-    @apply visible opacity-80;
-  }
-
-  .avatar-edit:hover {
-    @apply visible opacity-80;
-  }
 }
 
 @layer utilities {

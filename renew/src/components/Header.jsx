@@ -10,7 +10,7 @@ export default function Header() {
     const { user, setUser } = useContext(UserContext)
     const { theme, toggleTheme } = useContext(ThemeContext)
 
-    const [profileDetail, setProfileDetail] = useState(true)
+    const [profileDetail, setProfileDetail] = useState(false)
 
     const handleProfileClick = () => {
         if (!user.username) return
