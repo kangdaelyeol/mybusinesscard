@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
-import { initialState, UserContext } from '../context/UserContext'
+import { UserContext } from '../context/UserContext'
+import { initialUserState } from '../reducer'
 import { DEFAULT_PROFILE } from '../constants'
 export default function Header() {
     const { user, setUser } = useContext(UserContext)
@@ -9,7 +10,7 @@ export default function Header() {
 
     const handleLogoutClick = () => {
         setUser({
-            ...initialState,
+            ...initialUserState,
         })
     }
 

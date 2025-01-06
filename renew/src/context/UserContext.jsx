@@ -1,10 +1,15 @@
 import React, { createContext, useState } from 'react'
-import { initialState } from '../reducer'
+import { initialUserState } from '../reducer'
 
-export const UserContext = createContext(initialState)
+export const UserContext = createContext({
+    user: { ...initialUserState },
+    setUser: () => {},
+})
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState({ ...initialState })
+    const [user, setUser] = useState({
+        ...initialUserState,
+    })
     return (
         <UserContext.Provider value={{ user, setUser }}>
             {children}

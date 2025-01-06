@@ -9,7 +9,7 @@ export const CARD_ACTIONS = Object.freeze({
     CLEAR_CARD: Symbol.for('CLEAR_CARD'),
 })
 
-export const initialState = {
+export const initialUserState = {
     id: '',
     name: '',
     description: '',
