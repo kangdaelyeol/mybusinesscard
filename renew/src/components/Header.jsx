@@ -1,12 +1,20 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
 import { UserContext } from '../context/UserContext'
 import { initialUserState } from '../reducer'
 import { DEFAULT_PROFILE } from '../constants'
+import ProfileDetail from './ProfileDetail'
+
 export default function Header() {
     const { user, setUser } = useContext(UserContext)
     const { theme, toggleTheme } = useContext(ThemeContext)
+
+    const [profileDetail, setProfileDetail] = useState(true)
+
+    const handleProfileClick = () => {
+        setProfileDetail((prev) => !prev)
+    }
 
     const handleLogoutClick = () => {
         setUser({
@@ -22,22 +30,6 @@ export default function Header() {
             })}
         >
             <div className="max-w-[1100px] relative mx-auto h-header-height flex">
-                {user?.username && (
-                    <div>
-                        <img
-                            alt="profile"
-                            className="absolute inset-y-0 my-auto left-[20px] h-[50px] w-[50px] rounded-[50%] ml-[15px]"
-                            src={user?.profile?.url || DEFAULT_PROFILE}
-                        ></img>
-                    </div>
-                )}
-
-                {user?.nickname && (
-                    <div className="text-[24px] flex items-center text-color-white absolute top-0 bottom-0 my-auto left-[110px]">
-                        {user.nickname}
-                    </div>
-                )}
-
                 <span className="inset-0 m-auto font-medium text-[1.8rem]">
                     Create Business Card
                 </span>
@@ -60,20 +52,14 @@ export default function Header() {
                         {theme === 'dark' ? 'light_mode' : 'dark_mode'}
                     </span>
                 </div>
-                {user?.username && (
-                    <div
-                        onClick={handleLogoutClick}
-                        className={classNames(
-                            'absolute h-[40px] leading-[40px] px-[10px] right-[20px] top-0 bottom-0 my-auto text-[1rem] font-bold border-[1px] rounded-[5px] transition-all',
-                            {
-                                'btn-dark': theme === 'dark',
-                                'btn-light': theme === 'light',
-                            },
-                        )}
-                    >
-                        logout
-                    </div>
-                )}
+                <div className="cursor-pointer" onClick={handleProfileClick}>
+                    <img
+                        alt="profile"
+                        className="absolute inset-y-0 my-auto right-[25px] h-[50px] w-[50px] rounded-[50%]"
+                        src={user?.profile?.url || DEFAULT_PROFILE}
+                    ></img>
+                </div>
+                {profileDetail && <ProfileDetail user={user} />}
             </div>
         </header>
     )
