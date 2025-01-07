@@ -16,5 +16,5 @@ export default function useHeader() {
         setProfileDetail(false)
     }
 
-    return { profileDetail, handleProfileClick, handleLogoutClick }
+    return { profileDetail, handleProfileClick, handleLogoutClick, userState }
 }

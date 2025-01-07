@@ -4,7 +4,7 @@ import useCardMaker from '../hooks/useCardMaker'
 import CardEditorForm from './CardEditorForm'
 export default function CardMaker() {
     const {
-        state,
+        cardState,
         changeDescription,
         changeName,
         changeTheme,
@@ -25,7 +25,7 @@ export default function CardMaker() {
         <CardEditorForm
             handlers={handlers}
             fileLoading={fileLoading}
-            card={state}
+            card={cardState}
             buttonName={'save'}
         />
     )

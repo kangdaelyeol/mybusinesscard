@@ -29,11 +29,11 @@ export const CardContext = createContext({
 })
 
 export const CardProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducers.cardReducer, {
+    const [cardState, cardDispatch] = useReducer(reducers.cardReducer, {
         ...initialCardState,
     })
     return (
-        <CardContext.Provider value={{ state, dispatch }}>
+        <CardContext.Provider value={{ cardState, cardDispatch }}>
             {children}
         </CardContext.Provider>
     )

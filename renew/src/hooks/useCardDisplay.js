@@ -9,10 +9,10 @@ export default function useCardDisplay(card) {
     const [editPicture, setEditPicture] = useState(false)
 
     if (!card) {
-        const { state, dispatch } = useContext(CardContext)
-        data = state
+        const { cardState, cardDispatch } = useContext(CardContext)
+        data = cardState
         saveProfileStyle = (style) => {
-            dispatch({
+            cardDispatch({
                 type: CARD_ACTIONS.UPDATE_PROFILE_STYLE,
                 payload: { style },
             })

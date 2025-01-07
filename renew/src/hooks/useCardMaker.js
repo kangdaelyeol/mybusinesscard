@@ -6,25 +6,25 @@ import { useDispatch } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
 
 export default function useCardMaker() {
-    const { state, dispatch } = useContext(CardContext)
-    const dispatchRedux = useDispatch()
+    const { cardState, cardDispatch } = useContext(CardContext)
+    const dispatch = useDispatch()
     const [fileLoading, setFileLoading] = useState(false)
     const changeDescription = (e) => {
-        dispatch({
+        cardDispatch({
             type: CARD_ACTIONS.UPDATE_DESCRIPTION,
             payload: { description: e.target.value },
         })
     }
 
     const changeName = (e) => {
-        dispatch({
+        cardDispatch({
             type: CARD_ACTIONS.UPDATE_NAME,
             payload: { name: e.target.value },
         })
     }
 
     const changeTheme = (e) => {
-        dispatch({
+        cardDispatch({
             type: CARD_ACTIONS.UPDATE_THEME,
             payload: { theme: e.target.value },
         })
@@ -34,17 +34,18 @@ export default function useCardMaker() {
         setFileLoading(true)
 
         const res = await uploadCloudinaryImage(e.target.files[0])
-        if (state.profile.url)
-            deleteCloudinaryImage(
-                state.profile.signature,
-                state.profile.assetId,
-            )
 
         if (res.status !== 200) {
             console.log(res.message)
             setFileLoading(false)
             return
         }
+
+        if (cardState.profile.url)
+            deleteCloudinaryImage(
+                cardState.profile.signature,
+                cardState.profile.assetId,
+            )
 
         const {
             url,
@@ -56,7 +57,7 @@ export default function useCardMaker() {
             height,
         } = res.data
 
-        dispatch({
+        cardDispatch({
             type: CARD_ACTIONS.UPDATE_PROFILE,
             payload: {
                 profile: {
@@ -82,12 +83,12 @@ export default function useCardMaker() {
     const saveCard = () => {
         if (fileLoading) return
         const cardID = Date.now()
-        dispatchRedux(createCard({ card: { ...state, id: cardID } }))
-        dispatch({ type: CARD_ACTIONS.CLEAR_CARD })
+        dispatch(createCard({ card: { ...cardState, id: cardID } }))
+        cardDispatch({ type: CARD_ACTIONS.CLEAR_CARD })
     }
 
     return {
-        state,
+        cardState,
         changeDescription,
         changeName,
         changeTheme,

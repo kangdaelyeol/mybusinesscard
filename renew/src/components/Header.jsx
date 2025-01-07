@@ -6,7 +6,8 @@ import ImgDisplay from './ImgDisplay'
 import useHeader from '../hooks/useHeader'
 
 export default function Header() {
-    const { profileDetail, handleProfileClick, handleLogoutClick } = useHeader()
+    const { profileDetail, handleProfileClick, handleLogoutClick, userState } =
+        useHeader()
     const { theme, toggleTheme } = useContext(ThemeContext)
 
     return (
