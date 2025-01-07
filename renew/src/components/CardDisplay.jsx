@@ -24,7 +24,15 @@ export default function CardDisplay({ card }) {
                     },
                 )}
             >
-                <div className="relative" onClick={handlePictureEdit}>
+                <div className="relative group">
+                    <div
+                        onClick={handlePictureEdit}
+                        className="absolute invisible opacity-0 group-hover:visible group-hover:opacity-100 flex justify-center items-center bottom-0 right-0 w-[30px] h-[30px] bg-color-black z-[10] rounded-[50%] cursor-pointer hover:bg-color-black-bright"
+                    >
+                        <span className="material-symbols-outlined text-[20px]">
+                            edit
+                        </span>
+                    </div>
                     <ImgDisplay size={CARD_IMAGE_SIZE} profile={data.profile} />
                 </div>
                 <div>

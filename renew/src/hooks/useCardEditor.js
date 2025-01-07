@@ -28,9 +28,9 @@ export default function useCardEditor() {
         }
 
         if (card.profile.url) {
-            console.log(card)
             deleteCloudinaryImage(card.signature, card.assetId)
         }
+
         const { url, asset_id, signature, public_id, width, height } = res.data
         dispatch(
             updateCardProfile({
