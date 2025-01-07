@@ -1,5 +1,5 @@
 import { createContext, useReducer } from 'react'
-import { reducer } from '../reducer'
+import reducers from '../reducer'
 import { DEFAULT_CARD_PROFILE } from '../constants'
 
 export const initialCardState = {
@@ -29,7 +29,9 @@ export const CardContext = createContext({
 })
 
 export const CardProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, { ...initialCardState })
+    const [state, dispatch] = useReducer(reducers.cardReducer, {
+        ...initialCardState,
+    })
     return (
         <CardContext.Provider value={{ state, dispatch }}>
             {children}

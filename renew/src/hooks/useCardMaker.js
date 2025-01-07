@@ -1,10 +1,9 @@
 import { useContext, useState } from 'react'
 import { CardContext } from '../context/CardContext'
-import { CARD_ACTIONS } from '../reducer'
+import { CARD_ACTIONS } from '../reducer/cardReducer'
 import { deleteCloudinaryImage, uploadCloudinaryImage } from '../api'
 import { useDispatch } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
-import { MAX_PROFILE_SIZE } from '../constants'
 
 export default function useCardMaker() {
     const { state, dispatch } = useContext(CardContext)

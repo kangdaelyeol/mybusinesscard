@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react'
 import { CardContext } from '../context/CardContext'
-import { CARD_ACTIONS } from '../reducer'
+import { CARD_ACTIONS } from '../reducer/cardReducer'
 import { useDispatch } from 'react-redux'
 import { updateCardProfileStyle } from '../store/cardsSlice'
 

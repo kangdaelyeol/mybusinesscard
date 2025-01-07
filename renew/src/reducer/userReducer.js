@@ -7,7 +7,7 @@ export const USER_ACTIONS = Object.freeze({
     UPDATE_PROFILE_STYLE: Symbol.for('USER_UPDATE_PROFILE_STYLE'),
 })
 
-export const userReducer = (state, action) => {
+const reducer = (state, action) => {
     switch (action.type) {
         case USER_ACTIONS.LOGIN:
             const { id, profile, cards, nickname } = action.payload.user
@@ -36,3 +36,5 @@ export const userReducer = (state, action) => {
             }
     }
 }
+
+export default reducer
