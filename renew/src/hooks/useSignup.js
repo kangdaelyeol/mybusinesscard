@@ -30,10 +30,15 @@ export default function useSignup() {
         setSignupInput((prev) => ({ ...prev, confirmPassword: e.target.value }))
     }
 
+    const handleNicknameInput = (e) => {
+        setErrorMessage('')
+        setSignupInput((prev) => ({ ...prev, nickname: e.target.value }))
+    }
+
     const handleSignupSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        const { username, password, confirmPassword } = signupInput
+        const { username, password, confirmPassword, nickname } = signupInput
         const res = await userSignup(
             username,
             nickname,
@@ -41,21 +46,17 @@ export default function useSignup() {
             confirmPassword,
         )
         if (res.status === 200) {
-            const { id, profile, cards, nickname } = res.value
+            const { username, profile, cards, nickname } = res.value
+            console.log(res.value)
             userDispatch({
                 type: USER_ACTIONS.LOGIN,
-                payload: { user: { username: id, profile, cards, nickname } },
+                payload: { user: { username, profile, cards, nickname } },
             })
         } else {
             setErrorMessage(res.reason)
         }
 
         setLoading(false)
-    }
-
-    const handleNicknameInput = (e) => {
-        setErrorMessage('')
-        setSignupInput((prev) => ({ ...prev, nickname: e.target.nickname }))
     }
 
     return {

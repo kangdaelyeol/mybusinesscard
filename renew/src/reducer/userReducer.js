@@ -10,9 +10,9 @@ export const USER_ACTIONS = Object.freeze({
 const reducer = (state, action) => {
     switch (action.type) {
         case USER_ACTIONS.LOGIN:
-            const { id, profile, cards, nickname } = action.payload.user
+            const { username, profile, cards, nickname } = action.payload.user
             return {
-                username: id,
+                username,
                 profile,
                 cards,
                 nickname,

@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { MAX_PROFILE_SIZE } from '../constants'
+import { db } from '../service/firebase'
+import { ref, set, get, child } from 'firebase/database'
 
 const CLOUDINARY_UPLOAD_REQUEST_URL =
     'https://api.cloudinary.com/v1_1/dfvqmpyji/image/upload'
 
 const CLOUDINARY_DELETE_REQUEST_URL =
     'https://api.cloudinary.com/v1_1/dfvqmpyji/asset/destroy'
-
-const USER_REQUEST_URL = 'http://localhost:5000/user'
 
 export const uploadCloudinaryImage = async (file) => {
     if (file?.size > MAX_PROFILE_SIZE || !file.type.startsWith('image')) {
@@ -52,15 +52,21 @@ export const userLogin = async (username, password) => {
             reason: "password has 4 to 20 length of characters and doesn't contain blank",
         }
     }
+    try {
+        const snapshot = await get(child(ref(db), `/users/${username}`))
 
-    const res = await fetch(USER_REQUEST_URL)
+        if (!snapshot.exists()) {
+            return { status: 400, reason: 'invalid username' }
+        }
 
-    const json = await res.json()
-
-    const user = json.find((user) => user.id === username)
-    if (!user) return { status: 400, reason: 'invalid username' }
-    if (user.password === password) return { status: 200, data: user }
-    else return { status: 400, reason: "password doesn't match!" }
+        const data = snapshot.val()
+        if (data.password !== password)
+            return { status: 400, reason: "password doesn't match!" }
+        return { status: 200, data }
+    } catch (e) {
+        console.log(e)
+        return { status: 400, reason: 'error' }
+    }
 }
 
 export const userSignup = async (
@@ -97,33 +103,59 @@ export const userSignup = async (
         }
     }
 
-    const userList = await (await fetch(USER_REQUEST_URL)).json()
+    try {
+        const userRef = ref(db)
+        const snapshot = await get(child(userRef, `/users/${username}`))
 
-    if (userList.find((user) => user.id === username)) {
-        return {
-            status: 400,
-            reason: 'username exists already!',
+        if (snapshot.exists()) {
+            return { status: 400, reason: 'username already exists.' }
         }
-    }
 
-    const userData = await (
-        await fetch(USER_REQUEST_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
+        await set(child(userRef, `/users/${username}`), {
+            username,
+            nickname,
+            password,
+            profile: {
+                url: '',
+                assetId: '',
+                signature: '',
+                publicId: '',
+                style: {
+                    scale: 1,
+                    transX: 0,
+                    transY: 0,
+                    rounded: 50,
+                    width: 120,
+                    height: 120,
+                },
             },
-            body: JSON.stringify({
-                id: username,
-                nickname,
-                password,
-                profile: '',
-                cards: [],
-            }),
+            cards: [],
         })
-    ).json()
 
-    return {
-        status: 200,
-        value: userData,
+        return {
+            status: 200,
+            value: {
+                username,
+                nickname,
+                profile: {
+                    url: '',
+                    assetId: '',
+                    signature: '',
+                    publicId: '',
+                    style: {
+                        scale: 1,
+                        transX: 0,
+                        transY: 0,
+                        rounded: 50,
+                        width: 120,
+                        height: 120,
+                    },
+                },
+                cards: [],
+            },
+        }
+    } catch (e) {
+        console.log(e)
+        return { status: 400, reason: e }
     }
 }
