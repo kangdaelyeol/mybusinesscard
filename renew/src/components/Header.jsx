@@ -1,26 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
-import { UserContext } from '../context/UserContext'
 import ProfileDetail from './ProfileDetail'
 import ImgDisplay from './ImgDisplay'
-import { USER_ACTIONS } from '../reducer/userReducer'
+import useHeader from '../hooks/useHeader'
 
 export default function Header() {
-    const { userState, userDispatch } = useContext(UserContext)
+    const { profileDetail, handleProfileClick, handleLogoutClick } = useHeader()
     const { theme, toggleTheme } = useContext(ThemeContext)
-
-    const [profileDetail, setProfileDetail] = useState(false)
-
-    const handleProfileClick = () => {
-        if (!userState.username) return
-        setProfileDetail((prev) => !prev)
-    }
-
-    const handleLogoutClick = () => {
-        userDispatch({ type: USER_ACTIONS.LOGOUT })
-        setProfileDetail(false)
-    }
 
     return (
         <header
