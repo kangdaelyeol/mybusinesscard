@@ -9,7 +9,7 @@ export default function ImgDisplay({ size, profile }) {
 
     return (
         <div
-            className="relative overflow-hidden rounded-[var(--img-rounded)] w-[var(--img-size)] h-[var(--img-size)] cursor-pointer"
+            className="relative overflow-hidden rounded-[var(--img-rounded)] w-[var(--img-size)] h-[var(--img-size)]"
             style={{
                 '--img-size': `${size}px`,
                 '--img-rounded': `${rounded}%`,
