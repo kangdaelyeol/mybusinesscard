@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { MAX_PROFILE_SIZE } from '../constants'
 
 const CLOUDINARY_UPLOAD_REQUEST_URL =
     'https://api.cloudinary.com/v1_1/dfvqmpyji/image/upload'
@@ -9,14 +10,22 @@ const CLOUDINARY_DELETE_REQUEST_URL =
 const USER_REQUEST_URL = 'http://localhost:5000/user'
 
 export const uploadCloudinaryImage = async (file) => {
+    if (file?.size > MAX_PROFILE_SIZE || !file.type.startsWith('image')) {
+        return {
+            status: 400,
+            message:
+                "Maximum size of file is 3MB or type of file should be 'image'",
+        }
+    }
+
     const formData = new FormData()
     formData.append('file', file)
     formData.append('api_key', import.meta.env.VITE_API_KEY)
     formData.append('upload_preset', import.meta.env.VITE_UPLOAD_PRESET)
 
     const res = await axios.post(CLOUDINARY_UPLOAD_REQUEST_URL, formData)
-    console.log(res.data)
-    return res.data
+
+    return { status: res.status, data: res.data }
 }
 
 export const deleteCloudinaryImage = (signature, assetId) => {

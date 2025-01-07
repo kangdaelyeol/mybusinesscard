@@ -9,7 +9,6 @@ import {
 } from '../store/cardsSlice'
 
 import { deleteCloudinaryImage, uploadCloudinaryImage } from '../api'
-import { MAX_PROFILE_SIZE } from '../constants'
 
 export default function useCardEditor() {
     const [fileLoading, setFileLoading] = useState(false)
@@ -18,33 +17,33 @@ export default function useCardEditor() {
     const updateProfile = async (e, id) => {
         setFileLoading(true)
 
-        if (
-            e.target.files[0]?.size > MAX_PROFILE_SIZE ||
-            !e.target.files[0].type.startsWith('image')
-        ) {
+        const card = state.cards.find((card) => card.id === id)
+
+        const res = await uploadCloudinaryImage(e.target.files[0])
+
+        if (res.status !== 200) {
             setFileLoading(false)
+            console.log(res.message)
             return
         }
 
-        const card = state.cards.find((card) => card.id === id)
         if (card.profile) deleteCloudinaryImage(card.signature, card.assetId)
-
-        const data = await uploadCloudinaryImage(e.target.files[0])
+        const { url, asset_id, signature, public_id, width, height } = res.data
         dispatch(
             updateCardProfile({
                 id,
                 value: {
-                    url: data.url,
-                    assetId: data.asset_id,
-                    signature: data.signature,
-                    publicId: data.public_id,
+                    url,
+                    assetId: asset_id,
+                    signature,
+                    publicId: public_id,
                     style: {
                         scale: 1,
                         transX: 0,
                         transY: 0,
                         rounded: 50,
-                        width: data.width,
-                        height: data.height,
+                        width,
+                         height,
                     },
                 },
             }),

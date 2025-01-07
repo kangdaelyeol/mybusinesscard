@@ -34,37 +34,45 @@ export default function useCardMaker() {
     const uploadFile = async (e) => {
         setFileLoading(true)
 
-        if (
-            e.target.files[0]?.size > MAX_PROFILE_SIZE ||
-            !e.target.files[0]?.type.startsWith('image')
-        ) {
-            setFileLoading(false)
-            // TODO: show popup in Maker Component
-            return
-        }
-
-        const data = await uploadCloudinaryImage(e.target.files[0])
+        const res = await uploadCloudinaryImage(e.target.files[0])
         if (state.profile.url)
             deleteCloudinaryImage(
                 state.profile.signature,
                 state.profile.assetId,
             )
+
+        if (res.status !== 200) {
+            console.log(res.message)
+            setFileLoading(false)
+            return
+        }
+
+        const {
+            url,
+            asset_id,
+            signature,
+            public_id,
+            timestamp,
+            width,
+            height,
+        } = res.data
+
         dispatch({
             type: CARD_ACTIONS.UPDATE_PROFILE,
             payload: {
                 profile: {
-                    url: data.url,
-                    assetId: data.asset_id,
-                    signature: data.signature,
-                    publicId: data.public_id,
-                    timestamp: data.timestamp,
+                    url,
+                    assetId: asset_id,
+                    signature,
+                    publicId: public_id,
+                    timestamp,
                     style: {
                         scale: 1,
                         transX: 0,
                         transY: 0,
                         rounded: 50,
-                        width: data.width,
-                        height: data.height,
+                        width,
+                        height,
                     },
                 },
             },
