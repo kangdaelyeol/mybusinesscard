@@ -1,5 +1,6 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useReducer, useState } from 'react'
 import { DEFAULT_PROFILE } from '../constants'
+import { userReducer } from '../reducer/userReducer'
 
 export const initialUserState = {
     username: '',
@@ -26,11 +27,10 @@ export const UserContext = createContext({
 })
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState({
-        ...initialUserState,
-    })
+    const [userState, userDispatch] = useReducer(userReducer, initialUserState)
+
     return (
-        <UserContext.Provider value={{ user, setUser }}>
+        <UserContext.Provider value={{ userState, userDispatch }}>
             {children}
         </UserContext.Provider>
     )

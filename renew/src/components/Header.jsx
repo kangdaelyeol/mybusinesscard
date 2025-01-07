@@ -3,24 +3,22 @@ import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
 import { UserContext } from '../context/UserContext'
 import ProfileDetail from './ProfileDetail'
-import { initialUserState } from '../context/UserContext'
 import ImgDisplay from './ImgDisplay'
+import { USER_ACTIONS } from '../reducer/userReducer'
 
 export default function Header() {
-    const { user, setUser } = useContext(UserContext)
+    const { userState, userDispatch } = useContext(UserContext)
     const { theme, toggleTheme } = useContext(ThemeContext)
 
     const [profileDetail, setProfileDetail] = useState(false)
 
     const handleProfileClick = () => {
-        if (!user.username) return
+        if (!userState.username) return
         setProfileDetail((prev) => !prev)
     }
 
     const handleLogoutClick = () => {
-        setUser({
-            ...initialUserState,
-        })
+        userDispatch({ type: USER_ACTIONS.LOGOUT })
     }
 
     return (
@@ -39,8 +37,8 @@ export default function Header() {
                     className={classNames(
                         'absolute top-0 bottom-0 my-auto h-[24px] cursor-pointer select-none',
                         {
-                            'right-[110px]': user.username,
-                            'right-[30px]': !user.username,
+                            'right-[110px]': userState.username,
+                            'right-[30px]': !userState.username,
                         },
                     )}
                     onClick={toggleTheme}
@@ -57,7 +55,7 @@ export default function Header() {
                     className="absolute inset-y-0 my-auto right-[30px] h-[50px] w-[50px] cursor-pointer"
                     onClick={handleProfileClick}
                 >
-                    <ImgDisplay size={50} profile={user.profile} />
+                    <ImgDisplay size={50} profile={userState.profile} />
                 </div>
                 {profileDetail && <ProfileDetail />}
             </div>

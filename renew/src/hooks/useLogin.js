@@ -1,8 +1,9 @@
 import { useContext, useState } from 'react'
 import { userLogin } from '../api'
 import { UserContext } from '../context/UserContext'
+import { USER_ACTIONS } from '../reducer/userReducer'
 export default function useLogin() {
-    const { setUser } = useContext(UserContext)
+    const { userDispatch } = useContext(UserContext)
     const [loading, setLoading] = useState(false)
     const [loginInput, setLoginInput] = useState({ username: '', password: '' })
     const [errorMessage, setErrorMessage] = useState('')
@@ -16,13 +17,11 @@ export default function useLogin() {
         const res = await userLogin(loginInput.username, loginInput.password)
 
         if (res.status === 200) {
-            setUser((prev) => ({
-                ...prev,
-                username: res.data.id,
-                profile: res.data.profile,
-                cards: res.data.cards,
-                nickname: res.data.nickname,
-            }))
+            const { id, profile, cards, nickname } = res.data
+            userDispatch({
+                type: USER_ACTIONS.LOGIN,
+                payload: { user: { id, profile, cards, nickname } },
+            })
         } else if (res.status === 400) {
             setErrorMessage(res.reason)
         }

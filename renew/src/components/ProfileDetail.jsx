@@ -4,11 +4,12 @@ import { UserContext } from '../context/UserContext'
 import ImgDisplay from './ImgDisplay'
 import { uploadCloudinaryImage } from '../api'
 import LoadingSpinner from './LoadingSpinner'
+import { USER_ACTIONS } from '../reducer/userReducer'
 
 const PROFILE_DETAIL_IMG_SIZE = 100
 
 export default function ProfileDetail() {
-    const { user, setUser } = useContext(UserContext)
+    const { userState, userDispatch } = useContext(UserContext)
     const [avatarSizing, setAvatarSizing] = useState(false)
     const [avatarOption, setAvatarOption] = useState(false)
     const [fileLoading, setFileLoading] = useState(false)
@@ -16,7 +17,10 @@ export default function ProfileDetail() {
     const fileInputRef = useRef()
 
     const saveProfileStyle = (style) => {
-        setUser((prev) => ({ ...prev, profile: { ...prev.profile, style } }))
+        userDispatch({
+            type: USER_ACTIONS.UPDATE_PROFILE_STYLE,
+            payload: { style },
+        })
         setAvatarSizing(false)
         setAvatarOption(false)
     }
@@ -41,23 +45,25 @@ export default function ProfileDetail() {
 
         const { url, asset_id, signature, public_id, width, height } = res.data
 
-        setUser((prev) => ({
-            ...prev,
-            profile: {
-                url,
-                assetId: asset_id,
-                signature,
-                publicId: public_id,
-                style: {
-                    scale: 1,
-                    transX: 0,
-                    transY: 0,
-                    rounded: 50,
-                    width,
-                    height,
-                },
+        const profile = {
+            url,
+            assetId: asset_id,
+            signature,
+            publicId: public_id,
+            style: {
+                scale: 1,
+                transX: 0,
+                transY: 0,
+                rounded: 50,
+                width,
+                height,
             },
-        }))
+        }
+
+        userDispatch({
+            type: USER_ACTIONS.UPDATE_PROFILE,
+            payload: { profile },
+        })
 
         setFileLoading(false)
         setAvatarSizing(true)
@@ -72,7 +78,7 @@ export default function ProfileDetail() {
             <div className="relative">
                 <ImgDisplay
                     size={PROFILE_DETAIL_IMG_SIZE}
-                    profile={user.profile}
+                    profile={userState.profile}
                 />
                 <div
                     className="absolute bottom-[-8px] right-[-8px] flex justify-center items-center w-[30px] h-[30px] bg-color-black rounded-[50%] cursor-pointer hover:bg-color-black-bright"
@@ -106,7 +112,7 @@ export default function ProfileDetail() {
                 )}
             </div>
             <div className="text-center text-[24px] font-lightbold">
-                안녕하세요, {user.username}님
+                안녕하세요, {userState.username}님
             </div>
 
             <div className="py-[7px] w-[150px] font-bold text-center border-solid border-[1px] border-color-white rounded-[9999px] cursor-pointer text-color-skyblue hover:bg-color-black-bright">
@@ -129,7 +135,7 @@ export default function ProfileDetail() {
 
             {avatarSizing && (
                 <AvatarSizing
-                    {...user.profile}
+                    {...userState.profile}
                     saveProfileStyle={saveProfileStyle}
                 />
             )}

@@ -1,9 +1,10 @@
 import { useState, useContext } from 'react'
 import { userSignup } from '../api'
 import { UserContext } from '../context/UserContext'
+import { USER_ACTIONS } from '../reducer/userReducer'
 
 export default function useSignup() {
-    const { setUser } = useContext(UserContext)
+    const { userDispatch } = useContext(UserContext)
     const [signupInput, setSignupInput] = useState({
         username: '',
         password: '',
@@ -41,7 +42,10 @@ export default function useSignup() {
         )
         if (res.status === 200) {
             const { id, profile, cards, nickname } = res.value
-            setUser({ username: id, profile, cards, nickname })
+            userDispatch({
+                type: USER_ACTIONS.LOGIN,
+                payload: { user: { username: id, profile, cards, nickname } },
+            })
         } else {
             setErrorMessage(res.reason)
         }
