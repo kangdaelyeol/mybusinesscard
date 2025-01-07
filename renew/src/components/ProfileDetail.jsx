@@ -1,77 +1,24 @@
-import React, { useContext, useRef, useState } from 'react'
+import React from 'react'
 import AvatarSizing from './AvatarSizing'
-import { UserContext } from '../context/UserContext'
 import ImgDisplay from './ImgDisplay'
-import { uploadCloudinaryImage } from '../api'
 import LoadingSpinner from './LoadingSpinner'
-import { USER_ACTIONS } from '../reducer/userReducer'
+import useProfileDetail from '../hooks/useProfileDetail'
 
 const PROFILE_DETAIL_IMG_SIZE = 100
 
-export default function ProfileDetail() {
-    const { userState, userDispatch } = useContext(UserContext)
-    const [avatarSizing, setAvatarSizing] = useState(false)
-    const [avatarOption, setAvatarOption] = useState(false)
-    const [fileLoading, setFileLoading] = useState(false)
-
-    const fileInputRef = useRef()
-
-    const saveProfileStyle = (style) => {
-        userDispatch({
-            type: USER_ACTIONS.UPDATE_PROFILE_STYLE,
-            payload: { style },
-        })
-        setAvatarSizing(false)
-        setAvatarOption(false)
-    }
-
-    const handleEditPositionClick = () => {
-        setAvatarSizing(true)
-    }
-
-    const handleEditProfileClick = () => {
-        setAvatarOption((prev) => !prev)
-    }
-
-    const handleFileInput = async (e) => {
-        setFileLoading(true)
-        const res = await uploadCloudinaryImage(e.target.files[0])
-
-        if (res.status !== 200) {
-            console.log(res.message)
-            setFileLoading(false)
-            return
-        }
-
-        const { url, asset_id, signature, public_id, width, height } = res.data
-
-        const profile = {
-            url,
-            assetId: asset_id,
-            signature,
-            publicId: public_id,
-            style: {
-                scale: 1,
-                transX: 0,
-                transY: 0,
-                rounded: 50,
-                width,
-                height,
-            },
-        }
-
-        userDispatch({
-            type: USER_ACTIONS.UPDATE_PROFILE,
-            payload: { profile },
-        })
-
-        setFileLoading(false)
-        setAvatarSizing(true)
-    }
-
-    const handleNewFileClick = () => {
-        fileInputRef.current.click()
-    }
+export default function ProfileDetail({ handleLogoutClick }) {
+    const {
+        fileInputRef,
+        handleNewFileClick,
+        saveProfileStyle,
+        handleEditPositionClick,
+        handleEditProfileClick,
+        handleFileInput,
+        userState,
+        avatarSizing,
+        avatarOption,
+        fileLoading,
+    } = useProfileDetail()
 
     return (
         <div className="absolute flex flex-col gap-[10px] items-center bg-color-black-light top-[var(--header-height)] right-0 rounded-[30px] w-[400px] mr-[10px] mt-[10px] p-[15px]">
@@ -119,7 +66,10 @@ export default function ProfileDetail() {
                 계정 관리
             </div>
 
-            <div className="py-[10px] w-[300px] text-center bg-color-black cursor-pointer hover:bg-color-black-bright rounded-[8px]">
+            <div
+                onClick={handleLogoutClick}
+                className="py-[10px] w-[300px] text-center bg-color-black cursor-pointer hover:bg-color-black-bright rounded-[8px]"
+            >
                 로그아웃
             </div>
 

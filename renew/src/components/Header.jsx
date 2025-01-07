@@ -19,6 +19,7 @@ export default function Header() {
 
     const handleLogoutClick = () => {
         userDispatch({ type: USER_ACTIONS.LOGOUT })
+        setProfileDetail(false)
     }
 
     return (
@@ -57,7 +58,9 @@ export default function Header() {
                 >
                     <ImgDisplay size={50} profile={userState.profile} />
                 </div>
-                {profileDetail && <ProfileDetail />}
+                {userState.username && profileDetail && (
+                    <ProfileDetail handleLogoutClick={handleLogoutClick} />
+                )}
             </div>
         </header>
     )
