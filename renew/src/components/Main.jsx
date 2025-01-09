@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import CardDisplay from './CardDisplay'
 import { useSelector } from 'react-redux'
 import { CardProvider } from '../context/CardContext'

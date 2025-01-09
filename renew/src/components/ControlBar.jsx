@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import React from 'react'
 import { RATE_BAR_WIDTH } from '../constants'
 import useControlbar from '../hooks/useControlBar'
 

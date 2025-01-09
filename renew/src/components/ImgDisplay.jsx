@@ -1,4 +1,3 @@
-import React from 'react'
 import { DEFAULT_PROFILE } from '../constants'
 import calculateImageSize from '../utils/calculateImageSize'
 

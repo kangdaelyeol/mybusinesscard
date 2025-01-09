@@ -1,4 +1,3 @@
-import React from 'react'
 import AvatarSizing from './AvatarSizing'
 import ImgDisplay from './ImgDisplay'
 import LoadingSpinner from './LoadingSpinner'

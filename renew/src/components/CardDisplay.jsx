@@ -1,4 +1,3 @@
-import React from 'react'
 import classNames from 'classnames'
 import AvatarSizing from './AvatarSizing'
 import { CARD_IMAGE_SIZE } from '../constants'

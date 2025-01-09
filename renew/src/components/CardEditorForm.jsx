@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from 'react'
+import { useRef, useContext } from 'react'
 import classNames from 'classnames'
 import { ThemeContext } from '../context/ThemeContext'
 import LoadingSpinner from './LoadingSpinner'
