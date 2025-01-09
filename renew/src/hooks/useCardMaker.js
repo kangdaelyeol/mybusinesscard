@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react'
 import { CardContext } from '../context/CardContext'
 import { CARD_ACTIONS } from '../reducer/cardReducer'
-import { deleteCloudinaryImage, setCard, uploadCloudinaryImage } from '../api'
+import { cardClient, imageClient } from '../client'
 import { useDispatch } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
 import { UserContext } from '../context/UserContext'
@@ -35,16 +35,16 @@ export default function useCardMaker() {
     const uploadFile = async (e) => {
         setFileLoading(true)
 
-        const res = await uploadCloudinaryImage(e.target.files[0])
+        const res = await imageClient.uploadInCloudinary(e.target.files[0])
 
         if (res.status !== 200) {
-            console.log(res.message)
+            console.log('Error - uploadInClodinary: ', res.message)
             setFileLoading(false)
             return
         }
 
         if (cardState.profile.url)
-            deleteCloudinaryImage(
+            imageClient.deleteInCloudinary(
                 cardState.profile.signature,
                 cardState.profile.assetId,
             )
@@ -90,7 +90,7 @@ export default function useCardMaker() {
             ...cardState,
             id: cardID,
         }
-        const res = await setCard(userState.username, newCard)
+        const res = await cardClient.create(userState.username, newCard)
         if (res.status !== 200) {
             console.log('Error - setCard: ', res.reason)
             return

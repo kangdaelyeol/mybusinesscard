@@ -1,9 +1,10 @@
 import { useContext, useState } from 'react'
-import { userLogin } from '../api'
+import { authClient } from '../client'
 import { UserContext } from '../context/UserContext'
 import { USER_ACTIONS } from '../reducer/userReducer'
 import { useDispatch } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
+
 export default function useLogin() {
     const { userDispatch } = useContext(UserContext)
     const dispatch = useDispatch()
@@ -17,7 +18,10 @@ export default function useLogin() {
 
         setLoading(true)
 
-        const res = await userLogin(loginInput.username, loginInput.password)
+        const res = await authClient.signIn(
+            loginInput.username,
+            loginInput.password,
+        )
 
         if (res.status === 200) {
             const { username, profile, cards = [], nickname } = res.data

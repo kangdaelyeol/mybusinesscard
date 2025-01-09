@@ -3,7 +3,7 @@ import { CardContext } from '../context/CardContext'
 import { CARD_ACTIONS } from '../reducer/cardReducer'
 import { useDispatch } from 'react-redux'
 import { updateCardProfileStyle } from '../store/cardsSlice'
-import { setCardProfileStyle } from '../api'
+import { cardClient } from '../client'
 import { UserContext } from '../context/UserContext'
 
 export default function useCardDisplay(card) {
@@ -26,7 +26,7 @@ export default function useCardDisplay(card) {
         const dispatch = useDispatch()
         saveProfileStyle = (style) => {
             dispatch(updateCardProfileStyle({ id: data.id, value: style }))
-            setCardProfileStyle(userState.username, data.id, style)
+            cardClient.updateProfileStyle(userState.username, data.id, style)
             setEditPicture(false)
         }
     }

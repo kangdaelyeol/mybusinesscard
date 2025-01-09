@@ -1,5 +1,5 @@
 import { useState, useContext } from 'react'
-import { userSignup } from '../api'
+import { userClient } from '../client'
 import { UserContext } from '../context/UserContext'
 import { USER_ACTIONS } from '../reducer/userReducer'
 
@@ -39,7 +39,7 @@ export default function useSignup() {
         e.preventDefault()
         setLoading(true)
         const { username, password, confirmPassword, nickname } = signupInput
-        const res = await userSignup(
+        const res = await userClient.create(
             username,
             nickname,
             password,

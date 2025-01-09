@@ -8,15 +8,7 @@ import {
     updateCardProfile,
 } from '../store/cardsSlice'
 
-import {
-    deleteCloudinaryImage,
-    removeCard,
-    setCardTheme,
-    setCardDescription,
-    setCardName,
-    uploadCloudinaryImage,
-    setCardProfile,
-} from '../api'
+import { imageClient, cardClient } from '../client'
 import { UserContext } from '../context/UserContext'
 
 export default function useCardEditor() {
@@ -31,7 +23,9 @@ export default function useCardEditor() {
 
         const card = state.cards.find((card) => card.id === id)
 
-        const cloudinaryRes = await uploadCloudinaryImage(e.target.files[0])
+        const cloudinaryRes = await imageClient.uploadInCloudinary(
+            e.target.files[0],
+        )
 
         if (cloudinaryRes.status !== 200) {
             setFileLoading(false)
@@ -57,17 +51,21 @@ export default function useCardEditor() {
             },
         }
 
-        const firebaseRes = await setCardProfile(username, id, newProfile)
+        const firebaseRes = await cardClient.updateProfile(
+            username,
+            id,
+            newProfile,
+        )
 
         if (firebaseRes.status !== 200) {
             console.log(firebaseRes.reason)
-            deleteCloudinaryImage(signature, asset_id)
+            imageClient.deleteInCloudinary(signature, asset_id)
             setFileLoading(false)
             return
         }
 
         if (card.profile.url) {
-            deleteCloudinaryImage(card.signature, card.assetId)
+            imageClient.deleteInCloudinary(card.signature, card.assetId)
         }
 
         dispatch(updateCardProfile({ id, value: newProfile }))
@@ -77,23 +75,23 @@ export default function useCardEditor() {
     const dispatch = useDispatch()
 
     const updateName = (e, id) => {
-        setCardName(username, id, e.target.value)
+        cardClient.updateName(username, id, e.target.value)
         dispatch(updateCardName({ id, value: e.target.value }))
     }
 
     const updateDescription = (e, id) => {
-        setCardDescription(username, id, e.target.value)
+        cardClient.updateDescription(username, id, e.target.value)
         dispatch(updateCardDescription({ id, value: e.target.value }))
     }
 
     const updateTheme = (e, id) => {
-        setCardTheme(username, id, e.target.value)
+        cardClient.updateTheme(username, id, e.target.value)
         dispatch(updateCardTheme({ id, value: e.target.value }))
     }
 
     const deleteMyCard = (e, id) => {
         if (fileLoading) return
-        removeCard(username, id)
+        cardClient.remove(username, id)
         dispatch(deleteCard({ id }))
     }
 

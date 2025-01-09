@@ -1,10 +1,5 @@
 import { useContext, useRef, useState } from 'react'
-import {
-    deleteCloudinaryImage,
-    setUserProfile,
-    setUserProfileStyle,
-    uploadCloudinaryImage,
-} from '../api'
+import { imageClient, userClient } from '../client'
 import { USER_ACTIONS } from '../reducer/userReducer'
 import { UserContext } from '../context/UserContext'
 
@@ -17,9 +12,12 @@ export default function useProfileDetail() {
     const fileInputRef = useRef()
 
     const saveProfileStyle = async (style) => {
-        const res = await setUserProfileStyle(userState.username, style)
+        const res = await userClient.updateProfileStyle(
+            userState.username,
+            style,
+        )
         if (res.status !== 200) {
-            console.log('Error - setUserProfileStyle: ', e)
+            console.log('Error - updateUserProfileStyle: ', e)
             setAvatarSizing(false)
             setAvatarOption(false)
             return
@@ -42,7 +40,7 @@ export default function useProfileDetail() {
 
     const handleFileInput = async (e) => {
         setFileLoading(true)
-        const res = await uploadCloudinaryImage(e.target.files[0])
+        const res = await imageClient.uploadInCloudinary(e.target.files[0])
 
         if (res.status !== 200) {
             console.log(res.reason)
@@ -67,11 +65,14 @@ export default function useProfileDetail() {
             },
         }
 
-        const setProfileRes = await setUserProfile(userState.username, profile)
+        const setProfileRes = await userClient.updateProfile(
+            userState.username,
+            profile,
+        )
 
         if (setProfileRes.status !== 200) {
-            console.log('Error - setUserProfile: ', setProfileRes.reason)
-            deleteCloudinaryImage(profile.signature, profile.assetId)
+            console.log('Error - updateUserProfile: ', setProfileRes.reason)
+            imageClient.deleteInCloudinary(profile.signature, profile.assetId)
             setFileLoading(false)
             return
         }
@@ -88,6 +89,7 @@ export default function useProfileDetail() {
     const handleNewFileClick = () => {
         fileInputRef.current.click()
     }
+
     return {
         fileInputRef,
         handleNewFileClick,
