@@ -2,41 +2,15 @@ import { useRef, useContext } from 'react'
 import classNames from 'classnames'
 import { ThemeContext } from '../context/ThemeContext'
 import LoadingSpinner from './LoadingSpinner'
-import useCardEditor from '../hooks/useCardEditor'
-import useCardMaker from '../hooks/useCardMaker'
+import useCardEditorForm from '../hooks/useCardEditorForm'
 
 export default function CardEditorForm({ card }) {
     const { theme } = useContext(ThemeContext)
 
     const fileInputRef = useRef()
 
-    let cardModule
-    let handlers
-    let buttonName
-
-    if (!card) {
-        cardModule = useCardMaker()
-        handlers = {
-            handleNameChange: cardModule.changeName,
-            handleThemeChange: cardModule.changeTheme,
-            handleDescriptionChange: cardModule.changeDescription,
-            handleFileInput: cardModule.uploadFile,
-            handleButtonClick: cardModule.saveCard,
-        }
-        buttonName = 'Save'
-        card = cardModule.cardState
-    } else {
-        cardModule = useCardEditor()
-        handlers = {
-            handleNameChange: (e) => cardModule.updateName(e, card.id),
-            handleThemeChange: (e) => cardModule.updateTheme(e, card.id),
-            handleDescriptionChange: (e) =>
-                cardModule.updateDescription(e, card.id),
-            handleFileInput: (e) => cardModule.updateProfile(e, card.id),
-            handleButtonClick: (e) => cardModule.deleteMyCard(e, card.id),
-        }
-        buttonName = 'Delete'
-    }
+    const { handlers, buttonName, cardState, cardModule } =
+        useCardEditorForm(card)
 
     const handleFileInputClick = () => {
         if (cardModule.fileLoading) return
@@ -59,7 +33,7 @@ export default function CardEditorForm({ card }) {
                                 'input-light': theme === 'light',
                             },
                         )}
-                        value={card.name}
+                        value={cardState.name}
                         onChange={handlers.handleNameChange}
                     />
                     <select
@@ -72,7 +46,7 @@ export default function CardEditorForm({ card }) {
                                 'input-light': theme === 'light',
                             },
                         )}
-                        value={card.theme}
+                        value={cardState.theme}
                         onChange={handlers.handleThemeChange}
                     >
                         <option value="black">black</option>
@@ -92,7 +66,7 @@ export default function CardEditorForm({ card }) {
                     id="description"
                     rows="3"
                     placeholder="description"
-                    value={card.description}
+                    value={cardState.description}
                     onChange={handlers.handleDescriptionChange}
                 ></textarea>
 
