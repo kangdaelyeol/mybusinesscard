@@ -1,5 +1,10 @@
 import { useContext, useRef, useState } from 'react'
-import { uploadCloudinaryImage } from '../api'
+import {
+    deleteCloudinaryImage,
+    setUserProfile,
+    setUserProfileStyle,
+    uploadCloudinaryImage,
+} from '../api'
 import { USER_ACTIONS } from '../reducer/userReducer'
 import { UserContext } from '../context/UserContext'
 
@@ -11,7 +16,14 @@ export default function useProfileDetail() {
 
     const fileInputRef = useRef()
 
-    const saveProfileStyle = (style) => {
+    const saveProfileStyle = async (style) => {
+        const res = await setUserProfileStyle(userState.username, style)
+        if (res.status !== 200) {
+            console.log('Error - setUserProfileStyle: ', e)
+            setAvatarSizing(false)
+            setAvatarOption(false)
+            return
+        }
         userDispatch({
             type: USER_ACTIONS.UPDATE_PROFILE_STYLE,
             payload: { style },
@@ -33,7 +45,7 @@ export default function useProfileDetail() {
         const res = await uploadCloudinaryImage(e.target.files[0])
 
         if (res.status !== 200) {
-            console.log(res.message)
+            console.log(res.reason)
             setFileLoading(false)
             return
         }
@@ -53,6 +65,15 @@ export default function useProfileDetail() {
                 width,
                 height,
             },
+        }
+
+        const setProfileRes = await setUserProfile(userState.username, profile)
+
+        if (setProfileRes.status !== 200) {
+            console.log('Error - setUserProfile: ', setProfileRes.reason)
+            deleteCloudinaryImage(profile.signature, profile.assetId)
+            setFileLoading(false)
+            return
         }
 
         userDispatch({

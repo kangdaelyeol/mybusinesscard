@@ -6,6 +6,15 @@ const cardsSlice = createSlice({
         cards: [],
     },
     reducers: {
+        initCards: (state, action) => {
+            const { cards } = action.payload
+            state.cards = cards
+        },
+
+        clearCards: () => {
+            return []
+        },
+
         updateCardName: (state, action) => {
             const { id, value } = action.payload
             state.cards = state.cards.map((card) => {
@@ -62,6 +71,8 @@ const cardsSlice = createSlice({
 })
 
 export const {
+    initCards,
+    clearCards,
     createCard,
     updateCardDescription,
     updateCardName,

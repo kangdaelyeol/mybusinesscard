@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { MAX_PROFILE_SIZE } from '../constants'
 import { db } from '../service/firebase'
-import { ref, set, get, child } from 'firebase/database'
+import { ref, set, get, child, remove } from 'firebase/database'
 
 const CLOUDINARY_UPLOAD_REQUEST_URL =
     'https://api.cloudinary.com/v1_1/dfvqmpyji/image/upload'
@@ -13,8 +13,7 @@ export const uploadCloudinaryImage = async (file) => {
     if (file?.size > MAX_PROFILE_SIZE || !file.type.startsWith('image')) {
         return {
             status: 400,
-            message:
-                "Maximum size of file is 3MB or type of file should be 'image'",
+            reason: "Maximum size of file is 3MB or type of file should be 'image'",
         }
     }
 
@@ -62,6 +61,8 @@ export const userLogin = async (username, password) => {
         const data = snapshot.val()
         if (data.password !== password)
             return { status: 400, reason: "password doesn't match!" }
+        data.cards = data.cards ? Object.values(data.cards) : []
+
         return { status: 200, data }
     } catch (e) {
         console.log(e)
@@ -129,7 +130,7 @@ export const userSignup = async (
                     height: 120,
                 },
             },
-            cards: [],
+            cards: {},
         })
 
         return {
@@ -151,11 +152,166 @@ export const userSignup = async (
                         height: 120,
                     },
                 },
-                cards: [],
+                cards: {},
             },
         }
     } catch (e) {
         console.log(e)
         return { status: 400, reason: e }
+    }
+}
+
+export const setCard = async (username, card) => {
+    try {
+        const cardRef = ref(db, `users/${username}/cards/${card.id}`)
+        await set(cardRef, card)
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
+    }
+}
+
+export const setCardName = async (username, cardId, value) => {
+    try {
+        const cardRef = ref(db, `users/${username}/cards/${cardId}/name`)
+        await set(cardRef, value)
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
+    }
+}
+
+export const setCardDescription = async (username, cardId, value) => {
+    try {
+        const cardRef = ref(db, `users/${username}/cards/${cardId}/description`)
+        await set(cardRef, value)
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
+    }
+}
+
+export const setCardTheme = async (username, cardId, value) => {
+    try {
+        const cardRef = ref(db, `users/${username}/cards/${cardId}/theme`)
+        await set(cardRef, value)
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
+    }
+}
+
+export const setCardProfile = async (username, cardId, value) => {
+    try {
+        const cardRef = ref(db, `users/${username}/cards/${cardId}/profile`)
+        await set(cardRef, value)
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
+    }
+}
+
+export const setCardProfileStyle = async (username, cardId, value) => {
+    console.log(username, cardId, value)
+    try {
+        const cardRef = ref(
+            db,
+            `users/${username}/cards/${cardId}/profile/style`,
+        )
+        await set(cardRef, value)
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
+    }
+}
+
+export const removeCard = async (username, cardId) => {
+    try {
+        const cardRef = ref(db, `users/${username}/cards/${cardId}`)
+        remove(cardRef)
+
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
+    }
+}
+
+export const getUser = async (username) => {
+    const userRef = ref(`users/${username}`)
+    const user = await get(db, userRef)
+    if (!user.exists()) {
+        return {
+            status: 400,
+            reason: "user doesn't exist!",
+        }
+    }
+    return {
+        status: 200,
+        data: user,
+    }
+}
+
+export const setUserProfile = async (username, profile) => {
+    const userProfileRef = ref(db, `users/${username}/profile`)
+    try {
+        await set(userProfileRef, profile)
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
+    }
+}
+
+export const setUserProfileStyle = async (username, style) => {
+    const userProfileStyleRef = ref(db, `users/${username}/profile/style`)
+    try {
+        await set(userProfileStyleRef, style)
+        return {
+            status: 200,
+        }
+    } catch (e) {
+        return {
+            status: 400,
+            reason: e,
+        }
     }
 }
