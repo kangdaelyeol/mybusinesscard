@@ -2,19 +2,46 @@ import React, { useRef, useContext } from 'react'
 import classNames from 'classnames'
 import { ThemeContext } from '../context/ThemeContext'
 import LoadingSpinner from './LoadingSpinner'
-export default function CardEditorForm({
-    buttonName,
-    card,
-    handlers,
-    fileLoading,
-}) {
+import useCardEditor from '../hooks/useCardEditor'
+import useCardMaker from '../hooks/useCardMaker'
+
+export default function CardEditorForm({ card }) {
+    const { theme } = useContext(ThemeContext)
+
     const fileInputRef = useRef()
 
+    let cardModule
+    let handlers
+    let buttonName
+
+    if (!card) {
+        cardModule = useCardMaker()
+        handlers = {
+            handleNameChange: cardModule.changeName,
+            handleThemeChange: cardModule.changeTheme,
+            handleDescriptionChange: cardModule.changeDescription,
+            handleFileInput: cardModule.uploadFile,
+            handleButtonClick: cardModule.saveCard,
+        }
+        buttonName = 'Save'
+        card = cardModule.cardState
+    } else {
+        cardModule = useCardEditor()
+        handlers = {
+            handleNameChange: (e) => cardModule.updateName(e, card.id),
+            handleThemeChange: (e) => cardModule.updateTheme(e, card.id),
+            handleDescriptionChange: (e) =>
+                cardModule.updateDescription(e, card.id),
+            handleFileInput: (e) => cardModule.updateProfile(e, card.id),
+            handleButtonClick: (e) => cardModule.deleteMyCard(e, card.id),
+        }
+        buttonName = 'Delete'
+    }
+
     const handleFileInputClick = () => {
-        if (fileLoading) return
+        if (cardModule.fileLoading) return
         fileInputRef && fileInputRef.current.click()
     }
-    const { theme } = useContext(ThemeContext)
 
     return (
         <div className="flex flex-1 justify-center items-center h-[230px]">
@@ -87,7 +114,7 @@ export default function CardEditorForm({
                             },
                         )}
                     >
-                        {fileLoading ? <LoadingSpinner /> : 'file'}
+                        {cardModule.fileLoading ? <LoadingSpinner /> : 'File'}
                     </button>
                     <button
                         onClick={handlers.handleButtonClick}
