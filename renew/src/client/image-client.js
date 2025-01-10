@@ -1,11 +1,9 @@
 import axios from 'axios'
-import { MAX_PROFILE_SIZE } from '../constants'
-
-const CLOUDINARY_UPLOAD_REQUEST_URL =
-    'https://api.cloudinary.com/v1_1/dfvqmpyji/image/upload'
-
-const CLOUDINARY_DELETE_REQUEST_URL =
-    'https://api.cloudinary.com/v1_1/dfvqmpyji/asset/destroy'
+import {
+    MAX_PROFILE_SIZE,
+    CLOUDINARY_DELETE_REQUEST_URL,
+    CLOUDINARY_UPLOAD_REQUEST_URL,
+} from '../constants'
 
 export const imageClient = {
     uploadInCloudinary: async (file) => {

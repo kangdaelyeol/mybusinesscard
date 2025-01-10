@@ -5,8 +5,7 @@ import useProfileDetail from '../hooks/useProfileDetail'
 import { useContext } from 'react'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
-
-const PROFILE_DETAIL_IMG_SIZE = 100
+import { PROFILE_DETAIL_IMG_SIZE } from '../constants'
 
 export default function ProfileDetail({ handleLogoutClick }) {
     const {

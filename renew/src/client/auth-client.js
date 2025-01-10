@@ -1,5 +1,5 @@
 import { db } from '../service/firebase'
-import { ref, set, get, child } from 'firebase/database'
+import { ref, get, child } from 'firebase/database'
 
 export const authClient = {
     signIn: async (username, password) => {
@@ -34,6 +34,4 @@ export const authClient = {
             return { status: 400, reason: 'error' }
         }
     },
-
-
 }
