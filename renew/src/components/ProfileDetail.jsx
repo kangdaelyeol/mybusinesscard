@@ -129,7 +129,7 @@ export default function ProfileDetail({ handleLogoutClick }) {
                     {
                         'bg-color-black hover:bg-color-black-bright':
                             theme === 'dark',
-                        'bg-color-black-light hover:bg-color-black-bright text-color-white':
+                        'bg-color-gray hover:bg-color-black-bright text-color-white':
                             theme === 'light',
                     },
                 )}

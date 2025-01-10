@@ -11,101 +11,100 @@ export default function useCardMaker() {
     const { userState } = useContext(UserContext)
     const dispatch = useDispatch()
     const [fileLoading, setFileLoading] = useState(false)
-    const changeDescription = (e) => {
-        cardDispatch({
-            type: CARD_ACTIONS.UPDATE_DESCRIPTION,
-            payload: { description: e.target.value },
-        })
-    }
 
-    const changeName = (e) => {
-        cardDispatch({
-            type: CARD_ACTIONS.UPDATE_NAME,
-            payload: { name: e.target.value },
-        })
-    }
+    const handlers = {
+        handleDescriptionChange: (e) => {
+            cardDispatch({
+                type: CARD_ACTIONS.UPDATE_DESCRIPTION,
+                payload: { description: e.target.value },
+            })
+        },
 
-    const changeTheme = (e) => {
-        cardDispatch({
-            type: CARD_ACTIONS.UPDATE_THEME,
-            payload: { theme: e.target.value },
-        })
-    }
+        handleNameChange: (e) => {
+            cardDispatch({
+                type: CARD_ACTIONS.UPDATE_NAME,
+                payload: { name: e.target.value },
+            })
+        },
 
-    const uploadFile = async (e) => {
-        setFileLoading(true)
+        handleThemeChange: (e) => {
+            cardDispatch({
+                type: CARD_ACTIONS.UPDATE_THEME,
+                payload: { theme: e.target.value },
+            })
+        },
 
-        const res = await imageClient.uploadInCloudinary(e.target.files[0])
+        handleFileInput: async (e) => {
+            setFileLoading(true)
 
-        if (res.status !== 200) {
-            console.log('Error - uploadInClodinary: ', res.message)
-            setFileLoading(false)
-            return
-        }
+            const res = await imageClient.uploadInCloudinary(e.target.files[0])
 
-        if (cardState.profile.url)
-            imageClient.deleteInCloudinary(
-                cardState.profile.signature,
-                cardState.profile.assetId,
-            )
+            if (res.status !== 200) {
+                console.log('Error - uploadInClodinary: ', res.message)
+                setFileLoading(false)
+                return
+            }
 
-        const {
-            url,
-            asset_id,
-            signature,
-            public_id,
-            timestamp,
-            width,
-            height,
-        } = res.data
+            if (cardState.profile.url)
+                imageClient.deleteInCloudinary(
+                    cardState.profile.signature,
+                    cardState.profile.assetId,
+                )
 
-        cardDispatch({
-            type: CARD_ACTIONS.UPDATE_PROFILE,
-            payload: {
-                profile: {
-                    url,
-                    assetId: asset_id,
-                    signature,
-                    publicId: public_id,
-                    timestamp,
-                    style: {
-                        scale: 1,
-                        transX: 0,
-                        transY: 0,
-                        rounded: 50,
-                        width,
-                        height,
+            const {
+                url,
+                asset_id,
+                signature,
+                public_id,
+                timestamp,
+                width,
+                height,
+            } = res.data
+
+            cardDispatch({
+                type: CARD_ACTIONS.UPDATE_PROFILE,
+                payload: {
+                    profile: {
+                        url,
+                        assetId: asset_id,
+                        signature,
+                        publicId: public_id,
+                        timestamp,
+                        style: {
+                            scale: 1,
+                            transX: 0,
+                            transY: 0,
+                            rounded: 50,
+                            width,
+                            height,
+                        },
                     },
                 },
-            },
-        })
-        setFileLoading(false)
-    }
+            })
+            setFileLoading(false)
+        },
 
-    const saveCard = async () => {
-        if (fileLoading) return
-        const cardID = Date.now()
+        handleCardSave: async () => {
+            if (fileLoading) return
+            const cardID = Date.now()
 
-        const newCard = {
-            ...cardState,
-            id: cardID,
-        }
-        const res = await cardClient.create(userState.username, newCard)
-        if (res.status !== 200) {
-            console.log('Error - setCard: ', res.reason)
-            return
-        }
-        dispatch(createCard({ card: newCard }))
-        cardDispatch({ type: CARD_ACTIONS.CLEAR_CARD })
+            const newCard = {
+                ...cardState,
+                id: cardID,
+            }
+            const res = await cardClient.create(userState.username, newCard)
+            if (res.status !== 200) {
+                console.log('Error - setCard: ', res.reason)
+                return
+            }
+            dispatch(createCard({ card: newCard }))
+            cardDispatch({ type: CARD_ACTIONS.CLEAR_CARD })
+        },
     }
 
     return {
         cardState,
-        changeDescription,
-        changeName,
-        changeTheme,
-        uploadFile,
-        saveCard,
+        handlers,
         fileLoading,
     }
 }

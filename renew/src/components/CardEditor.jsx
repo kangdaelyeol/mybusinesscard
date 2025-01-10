@@ -2,18 +2,17 @@ import { useRef, useContext } from 'react'
 import classNames from 'classnames'
 import { ThemeContext } from '../context/ThemeContext'
 import LoadingSpinner from './LoadingSpinner'
-import useCardEditorForm from '../hooks/useCardEditorForm'
+import useCardEditor from '../hooks/useCardEditor'
 
 export default function CardEditorForm({ card }) {
+    const { handlers, fileLoading } = useCardEditor(card)
+
     const { theme } = useContext(ThemeContext)
 
     const fileInputRef = useRef()
 
-    const { handlers, buttonName, cardState, cardModule } =
-        useCardEditorForm(card)
-
     const handleFileInputClick = () => {
-        if (cardModule.fileLoading) return
+        if (fileLoading) return
         fileInputRef && fileInputRef.current.click()
     }
 
@@ -33,7 +32,7 @@ export default function CardEditorForm({ card }) {
                                 'input-light': theme === 'light',
                             },
                         )}
-                        value={cardState.name}
+                        value={card.name}
                         onChange={handlers.handleNameChange}
                     />
                     <select
@@ -46,7 +45,7 @@ export default function CardEditorForm({ card }) {
                                 'input-light': theme === 'light',
                             },
                         )}
-                        value={cardState.theme}
+                        value={card.theme}
                         onChange={handlers.handleThemeChange}
                     >
                         <option value="black">black</option>
@@ -66,13 +65,13 @@ export default function CardEditorForm({ card }) {
                     id="description"
                     rows="3"
                     placeholder="description"
-                    value={cardState.description}
+                    value={card.description}
                     onChange={handlers.handleDescriptionChange}
                 ></textarea>
 
                 <div className="flex w-full gap-[10px]">
                     <input
-                        onChange={handlers.handleFileInput}
+                        onChange={handlers.handleProfileChange}
                         accept="image/*"
                         ref={fileInputRef}
                         type="file"
@@ -88,10 +87,10 @@ export default function CardEditorForm({ card }) {
                             },
                         )}
                     >
-                        {cardModule.fileLoading ? <LoadingSpinner /> : 'File'}
+                        {fileLoading ? <LoadingSpinner /> : 'File'}
                     </button>
                     <button
-                        onClick={handlers.handleButtonClick}
+                        onClick={handlers.handleCardDelete}
                         className={classNames(
                             'font-bold px-[15px] py-[10px] rounded-[5px] text-white select-none border-[1px] transition-all',
                             {
@@ -100,7 +99,7 @@ export default function CardEditorForm({ card }) {
                             },
                         )}
                     >
-                        {buttonName}
+                        Delete
                     </button>
                 </div>
             </div>

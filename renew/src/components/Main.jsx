@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux'
 import { CardProvider } from '../context/CardContext'
 import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
-import CardEditorForm from './CardEditorForm'
+import CardEditor from './CardEditor'
+import CardMaker from './CardMaker'
 export default function Main() {
     const { theme } = useContext(ThemeContext)
     const state = useSelector((state) => state.cards)
@@ -21,14 +22,14 @@ export default function Main() {
             <div className="max-w-[1100px] mx-auto flex flex-col">
                 {state.cards.map((card) => (
                     <div key={card.id} className="flex">
-                        <CardEditorForm card={card} />
+                        <CardEditor card={card} />
                         <CardDisplay card={card} />
                     </div>
                 ))}
 
                 <div className="flex">
                     <CardProvider>
-                        <CardEditorForm />
+                        <CardMaker />
                         <CardDisplay />
                     </CardProvider>
                 </div>
