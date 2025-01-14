@@ -2,9 +2,14 @@ import { useState, useContext } from 'react'
 import { userClient } from '../client'
 import { UserContext } from '../context/UserContext'
 import { USER_ACTIONS } from '../reducer/userReducer'
+import { useDispatch } from 'react-redux'
+import { initCards } from '../store/cardsSlice'
 
 export default function useSignup() {
     const { userDispatch } = useContext(UserContext)
+
+    const dispatch = useDispatch()
+
     const [signupInput, setSignupInput] = useState({
         username: '',
         password: '',
@@ -55,8 +60,9 @@ export default function useSignup() {
                 console.log(res.value)
                 userDispatch({
                     type: USER_ACTIONS.LOGIN,
-                    payload: { user: { username, profile, cards, nickname } },
+                    payload: { user: { username, profile, nickname } },
                 })
+                dispatch(initCards({ cards }))
             } else {
                 setErrorMessage(res.reason)
             }

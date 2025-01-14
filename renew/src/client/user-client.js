@@ -47,14 +47,14 @@ export const userClient = {
         }
 
         try {
-            const userRef = ref(db)
-            const snapshot = await get(child(userRef, `/users/${username}`))
+            const userRef = ref(db, `/users/${username}`)
+            const snapshot = await get(userRef)
 
             if (snapshot.exists()) {
                 return { status: 400, reason: 'username already exists.' }
             }
 
-            await set(child(userRef, `/users/${username}`), {
+            await set(userRef, {
                 username,
                 nickname,
                 password,
@@ -98,7 +98,7 @@ export const userClient = {
                 },
             }
         } catch (e) {
-            console.log(e)
+            // console.log(e)
             return { status: 400, reason: e }
         }
     },
