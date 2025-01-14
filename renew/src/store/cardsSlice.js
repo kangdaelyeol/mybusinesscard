@@ -11,8 +11,8 @@ const cardsSlice = createSlice({
             state.cards = cards
         },
 
-        clearCards: () => {
-            return []
+        clearCards: (state) => {
+            state.cards = []
         },
 
         updateCardName: (state, action) => {
