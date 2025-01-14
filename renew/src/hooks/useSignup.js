@@ -15,56 +15,58 @@ export default function useSignup() {
 
     const [loading, setLoading] = useState(false)
 
-    const handleUsernameInput = (e) => {
-        setErrorMessage('')
-        setSignupInput((prev) => ({ ...prev, username: e.target.value }))
-    }
+    const handlers = {
+        handleUsernameChange: (e) => {
+            setErrorMessage('')
+            setSignupInput((prev) => ({ ...prev, username: e.target.value }))
+        },
 
-    const handlePasswordInput = (e) => {
-        setErrorMessage('')
-        setSignupInput((prev) => ({ ...prev, password: e.target.value }))
-    }
+        handlePasswordChange: (e) => {
+            setErrorMessage('')
+            setSignupInput((prev) => ({ ...prev, password: e.target.value }))
+        },
 
-    const handleConfirmPasswordInput = (e) => {
-        setErrorMessage('')
-        setSignupInput((prev) => ({ ...prev, confirmPassword: e.target.value }))
-    }
+        handleConfirmPasswordChange: (e) => {
+            setErrorMessage('')
+            setSignupInput((prev) => ({
+                ...prev,
+                confirmPassword: e.target.value,
+            }))
+        },
 
-    const handleNicknameInput = (e) => {
-        setErrorMessage('')
-        setSignupInput((prev) => ({ ...prev, nickname: e.target.value }))
-    }
+        handleNicknameChange: (e) => {
+            setErrorMessage('')
+            setSignupInput((prev) => ({ ...prev, nickname: e.target.value }))
+        },
 
-    const handleSignupSubmit = async (e) => {
-        e.preventDefault()
-        setLoading(true)
-        const { username, password, confirmPassword, nickname } = signupInput
-        const res = await userClient.create(
-            username,
-            nickname,
-            password,
-            confirmPassword,
-        )
-        if (res.status === 200) {
-            const { username, profile, cards, nickname } = res.value
-            console.log(res.value)
-            userDispatch({
-                type: USER_ACTIONS.LOGIN,
-                payload: { user: { username, profile, cards, nickname } },
-            })
-        } else {
-            setErrorMessage(res.reason)
-        }
+        handleSignupSubmit: async (e) => {
+            e.preventDefault()
+            setLoading(true)
+            const { username, password, confirmPassword, nickname } =
+                signupInput
+            const res = await userClient.create(
+                username,
+                nickname,
+                password,
+                confirmPassword,
+            )
+            if (res.status === 200) {
+                const { username, profile, cards, nickname } = res.value
+                console.log(res.value)
+                userDispatch({
+                    type: USER_ACTIONS.LOGIN,
+                    payload: { user: { username, profile, cards, nickname } },
+                })
+            } else {
+                setErrorMessage(res.reason)
+            }
 
-        setLoading(false)
+            setLoading(false)
+        },
     }
 
     return {
-        handleUsernameInput,
-        handlePasswordInput,
-        handleConfirmPasswordInput,
-        handleSignupSubmit,
-        handleNicknameInput,
+        handlers,
         loading,
         signupInput,
         errorMessage,

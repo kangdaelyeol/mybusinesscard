@@ -7,20 +7,11 @@ import useSignup from '../hooks/useSignup'
 
 export default function Signup() {
     const { theme } = useContext(ThemeContext)
-    const {
-        handleUsernameInput,
-        handlePasswordInput,
-        handleConfirmPasswordInput,
-        handleSignupSubmit,
-        handleNicknameInput,
-        loading,
-        signupInput,
-        errorMessage,
-    } = useSignup()
+    const { handlers, loading, signupInput, errorMessage } = useSignup()
 
     return (
         <form
-            onSubmit={handleSignupSubmit}
+            onSubmit={handlers.handleSignupSubmit}
             className={classNames(
                 'min-h-[100vh] pt-header-height mb-footer-height',
                 {
@@ -38,15 +29,15 @@ export default function Signup() {
                     type="text"
                     placeholder="Username"
                     value={signupInput.username}
-                    onChange={handleUsernameInput}
+                    onChange={handlers.handleUsernameChange}
                 />
 
                 <input
-                    className="bg-transparent border-b-[1px] border-solid border-gray-light p-[5px] mt-[30px] text-[18px]"
+                    className="bg-transparent border-b-[1px] border-solid border-gray-light p-[5px] mt-[20px] text-[18px]"
                     type="text"
                     placeholder="Nickname"
                     value={signupInput.nickname}
-                    onChange={handleNicknameInput}
+                    onChange={handlers.handleNicknameChange}
                 />
 
                 <input
@@ -54,7 +45,7 @@ export default function Signup() {
                     type="password"
                     placeholder="Password"
                     value={signupInput.password}
-                    onChange={handlePasswordInput}
+                    onChange={handlers.handlePasswordChange}
                 />
 
                 <input
@@ -62,7 +53,7 @@ export default function Signup() {
                     type="password"
                     placeholder="Confirm Password"
                     value={signupInput.confirmPassword}
-                    onChange={handleConfirmPasswordInput}
+                    onChange={handlers.handleConfirmPasswordChange}
                 />
 
                 {errorMessage && (
