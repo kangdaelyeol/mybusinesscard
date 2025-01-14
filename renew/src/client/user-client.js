@@ -3,17 +3,22 @@ import { ref, set, get } from 'firebase/database'
 
 export const userClient = {
     get: async (username) => {
-        const userRef = ref(`users/${username}`)
-        const user = await get(db, userRef)
-        if (!user.exists()) {
+        const userRef = ref(db, `users/${username}`)
+        const snapshot = await get(userRef)
+        if (!snapshot.exists()) {
             return {
                 status: 400,
                 reason: "user doesn't exist!",
             }
         }
+
+        const userData = snapshot.val()
+
+        userData.cards = userData.cards ? Object.values(userData.cards) : []
+
         return {
             status: 200,
-            data: user,
+            data: userData,
         }
     },
 

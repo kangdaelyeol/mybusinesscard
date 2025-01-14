@@ -23,7 +23,6 @@ export default function ProfileDetail({ handleLogoutClick }) {
 
     const { theme } = useContext(ThemeContext)
 
-    console.log(theme)
     return (
         <div
             className={classNames(

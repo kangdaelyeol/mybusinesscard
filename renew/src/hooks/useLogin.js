@@ -4,6 +4,7 @@ import { UserContext } from '../context/UserContext'
 import { USER_ACTIONS } from '../reducer/userReducer'
 import { useDispatch } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function useLogin() {
     const { userDispatch } = useContext(UserContext)
@@ -11,6 +12,7 @@ export default function useLogin() {
     const [loading, setLoading] = useState(false)
     const [loginInput, setLoginInput] = useState({ username: '', password: '' })
     const [errorMessage, setErrorMessage] = useState('')
+    const navigate = useNavigate()
 
     const handleUserLogin = async (e) => {
         e.preventDefault()
@@ -26,13 +28,13 @@ export default function useLogin() {
         if (res.status === 200) {
             const { username, profile, cards = [], nickname } = res.data
 
-            console.log(res)
+            localStorage.setItem('USER_NAME_BUSINESS_CARD', username)
             userDispatch({
                 type: USER_ACTIONS.LOGIN,
                 payload: { user: { username, profile, nickname } },
             })
-
             dispatch(initCards({ cards }))
+            navigate('/')
         } else if (res.status === 400) {
             setErrorMessage(res.reason)
         }

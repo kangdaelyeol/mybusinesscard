@@ -57,7 +57,8 @@ export default function useSignup() {
             )
             if (res.status === 200) {
                 const { username, profile, cards, nickname } = res.value
-                console.log(res.value)
+
+                localStorage.setItem('USER_NAME_BUSINESS_CARD', username)
                 userDispatch({
                     type: USER_ACTIONS.LOGIN,
                     payload: { user: { username, profile, nickname } },

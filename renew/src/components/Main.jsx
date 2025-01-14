@@ -9,6 +9,8 @@ import CardMaker from './CardMaker'
 export default function Main() {
     const { theme } = useContext(ThemeContext)
     const state = useSelector((state) => state.cards)
+
+    console.log(state.cards)
     return (
         <div
             className={classNames(
