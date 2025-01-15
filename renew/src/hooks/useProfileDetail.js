@@ -17,7 +17,7 @@ export default function useProfileDetail() {
             style,
         )
         if (res.status !== 200) {
-            console.log('Error - updateUserProfileStyle: ', e)
+            console.error('Error - updateUserProfileStyle: ', e)
             setAvatarSizing(false)
             setAvatarOption(false)
             return
@@ -43,7 +43,7 @@ export default function useProfileDetail() {
         const res = await imageClient.uploadInCloudinary(e.target.files[0])
 
         if (res.status !== 200) {
-            console.log(res.reason)
+                console.error('Error - UploadCloudinaryImage: ', res.reason)
             setFileLoading(false)
             return
         }
@@ -71,7 +71,7 @@ export default function useProfileDetail() {
         )
 
         if (setProfileRes.status !== 200) {
-            console.log('Error - updateUserProfile: ', setProfileRes.reason)
+                console.error('Error - uploadInFirebase: ', firebaseRes.reason)
             imageClient.deleteInCloudinary(profile.signature, profile.assetId)
             setFileLoading(false)
             return

@@ -40,7 +40,7 @@ export default function useCardMaker() {
             const res = await imageClient.uploadInCloudinary(e.target.files[0])
 
             if (res.status !== 200) {
-                console.log('Error - uploadInClodinary: ', res.message)
+                console.error('Error - uploadInClodinary: ', res.message)
                 setFileLoading(false)
                 return
             }
@@ -94,7 +94,7 @@ export default function useCardMaker() {
             }
             const res = await cardClient.create(userState.username, newCard)
             if (res.status !== 200) {
-                console.log('Error - setCard: ', res.reason)
+                console.error('Error - setCard: ', res.reason)
                 return
             }
             dispatch(createCard({ card: newCard }))

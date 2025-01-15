@@ -80,7 +80,7 @@ export default function CardEditorForm({ card }) {
                     <button
                         onClick={handleFileInputClick}
                         className={classNames(
-                            'btn-black font-bold py-[10px] rounded-[5px] select-none grow transition-all border-[1px]',
+                            'font-bold py-[10px] rounded-[5px] select-none grow transition-all border-[1px]',
                             {
                                 'btn-light': theme === 'light',
                                 'btn-dark': theme === 'dark',
