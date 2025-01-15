@@ -7,19 +7,16 @@ import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
 import { PROFILE_DETAIL_IMG_SIZE } from '../constants'
 
-export default function ProfileDetail({ handleLogoutClick }) {
+export default function ProfileDetail({ hideProfileDetail }) {
     const {
         fileInputRef,
-        handleNewFileClick,
+        handlers,
         saveProfileStyle,
-        handleEditPositionClick,
-        handleEditProfileClick,
-        handleFileInput,
         userState,
         avatarSizing,
         avatarOption,
         fileLoading,
-    } = useProfileDetail()
+    } = useProfileDetail(hideProfileDetail)
 
     const { theme } = useContext(ThemeContext)
 
@@ -48,7 +45,7 @@ export default function ProfileDetail({ handleLogoutClick }) {
                                 theme === 'light',
                         },
                     )}
-                    onClick={handleEditProfileClick}
+                    onClick={handlers.handleEditProfileClick}
                 >
                     <span className="material-symbols-outlined text-[20px]">
                         edit
@@ -66,7 +63,7 @@ export default function ProfileDetail({ handleLogoutClick }) {
                         )}
                     >
                         <div
-                            onClick={handleNewFileClick}
+                            onClick={handlers.handleNewFileClick}
                             className={classNames(
                                 'text-center py-[5px] cursor-pointer',
                                 {
@@ -83,7 +80,7 @@ export default function ProfileDetail({ handleLogoutClick }) {
                             ref={fileInputRef}
                             type="file"
                             className="hidden"
-                            onInput={handleFileInput}
+                            onInput={handlers.handleFileInput}
                         />
                         <div
                             className={classNames(
@@ -95,7 +92,7 @@ export default function ProfileDetail({ handleLogoutClick }) {
                                         theme === 'light',
                                 },
                             )}
-                            onClick={handleEditPositionClick}
+                            onClick={handlers.handleEditPositionClick}
                         >
                             Position
                         </div>
@@ -107,6 +104,7 @@ export default function ProfileDetail({ handleLogoutClick }) {
             </div>
 
             <div
+                onClick={handlers.handleManageAccountClick}
                 className={classNames(
                     'py-[7px] w-[150px] font-bold text-center border-solid border-[1px] rounded-[9999px] cursor-pointer',
                     {
@@ -121,7 +119,7 @@ export default function ProfileDetail({ handleLogoutClick }) {
             </div>
 
             <div
-                onClick={handleLogoutClick}
+                onClick={handlers.handleLogoutClick}
                 className={classNames(
                     'py-[10px] w-[300px] font-bold text-center cursor-pointer rounded-[8px]',
                     {

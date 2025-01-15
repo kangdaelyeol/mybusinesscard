@@ -2,14 +2,21 @@ import { useContext, useRef, useState } from 'react'
 import { imageClient, userClient } from '../client'
 import { USER_ACTIONS } from '../reducer/userReducer'
 import { UserContext } from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { clearCards } from '../store/cardsSlice'
 
-export default function useProfileDetail() {
+export default function useProfileDetail(hideProfileDetail) {
     const { userState, userDispatch } = useContext(UserContext)
     const [avatarSizing, setAvatarSizing] = useState(false)
     const [avatarOption, setAvatarOption] = useState(false)
     const [fileLoading, setFileLoading] = useState(false)
 
     const fileInputRef = useRef()
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
 
     const saveProfileStyle = async (style) => {
         const res = await userClient.updateProfileStyle(
@@ -30,73 +37,96 @@ export default function useProfileDetail() {
         setAvatarOption(false)
     }
 
-    const handleEditPositionClick = () => {
-        setAvatarSizing(true)
-    }
+    const handlers = {
+        handleEditPositionClick: () => {
+            setAvatarSizing(true)
+        },
 
-    const handleEditProfileClick = () => {
-        setAvatarOption((prev) => !prev)
-    }
+        handleEditProfileClick: () => {
+            setAvatarOption((prev) => !prev)
+        },
 
-    const handleFileInput = async (e) => {
-        setFileLoading(true)
-        const res = await imageClient.uploadInCloudinary(e.target.files[0])
+        handleFileInput: async (e) => {
+            setFileLoading(true)
+            const res = await imageClient.uploadInCloudinary(e.target.files[0])
 
-        if (res.status !== 200) {
+            if (res.status !== 200) {
                 console.error('Error - UploadCloudinaryImage: ', res.reason)
-            setFileLoading(false)
-            return
-        }
+                setFileLoading(false)
+                return
+            }
 
-        const { url, asset_id, signature, public_id, width, height } = res.data
+            const { url, asset_id, signature, public_id, width, height } =
+                res.data
 
-        const profile = {
-            url,
-            assetId: asset_id,
-            signature,
-            publicId: public_id,
-            style: {
-                scale: 1,
-                transX: 0,
-                transY: 0,
-                rounded: 50,
-                width,
-                height,
-            },
-        }
+            const newProfile = {
+                url,
+                assetId: asset_id,
+                signature,
+                publicId: public_id,
+                style: {
+                    scale: 1,
+                    transX: 0,
+                    transY: 0,
+                    rounded: 50,
+                    width,
+                    height,
+                },
+            }
 
-        const setProfileRes = await userClient.updateProfile(
-            userState.username,
-            profile,
-        )
+            const firebaseRes = await userClient.updateProfile(
+                userState.username,
+                newProfile,
+            )
 
-        if (setProfileRes.status !== 200) {
+            if (firebaseRes.status !== 200) {
                 console.error('Error - uploadInFirebase: ', firebaseRes.reason)
-            imageClient.deleteInCloudinary(profile.signature, profile.assetId)
+                imageClient.deleteInCloudinary(
+                    newProfile.signature,
+                    newProfile.assetId,
+                )
+                setFileLoading(false)
+                return
+            }
+
+            if (userState.profile.url) {
+                imageClient.deleteInCloudinary(
+                    userState.profile.signature,
+                    userState.profile.assetId,
+                )
+            }
+
+            userDispatch({
+                type: USER_ACTIONS.UPDATE_PROFILE,
+                payload: { profile: newProfile },
+            })
+
             setFileLoading(false)
-            return
-        }
+            setAvatarSizing(true)
+        },
 
-        userDispatch({
-            type: USER_ACTIONS.UPDATE_PROFILE,
-            payload: { profile },
-        })
+        handleNewFileClick: () => {
+            fileInputRef.current.click()
+        },
 
-        setFileLoading(false)
-        setAvatarSizing(true)
-    }
+        handleManageAccountClick: () => {
+            hideProfileDetail()
+            navigate('/account')
+        },
 
-    const handleNewFileClick = () => {
-        fileInputRef.current.click()
+        handleLogoutClick: () => {
+            userDispatch({ type: USER_ACTIONS.LOGOUT })
+            localStorage.removeItem('USER_NAME_BUSINESS_CARD')
+            hideProfileDetail()
+            dispatch(clearCards())
+            navigate('/login')
+        },
     }
 
     return {
         fileInputRef,
-        handleNewFileClick,
+        handlers,
         saveProfileStyle,
-        handleEditPositionClick,
-        handleEditProfileClick,
-        handleFileInput,
         userState,
         avatarSizing,
         avatarOption,

@@ -6,8 +6,13 @@ import ImgDisplay from './ImgDisplay'
 import useHeader from '../hooks/useHeader'
 
 export default function Header() {
-    const { profileDetail, handleProfileClick, handleLogoutClick, userState } =
-        useHeader()
+    const {
+        profileDetail,
+        handleProfileClick,
+        userState,
+        hideProfileDetail,
+        handleTitleClick,
+    } = useHeader()
     const { theme, toggleTheme } = useContext(ThemeContext)
 
     return (
@@ -18,7 +23,10 @@ export default function Header() {
             })}
         >
             <div className="max-w-[1100px] relative mx-auto h-header-height flex">
-                <span className="inset-0 m-auto font-medium text-[1.8rem]">
+                <span
+                    onClick={handleTitleClick}
+                    className="inset-0 m-auto font-medium text-[1.8rem] cursor-pointer"
+                >
                     Create Business Card
                 </span>
 
@@ -47,7 +55,7 @@ export default function Header() {
                     <ImgDisplay size={50} profile={userState.profile} />
                 </div>
                 {userState.username && profileDetail && (
-                    <ProfileDetail handleLogoutClick={handleLogoutClick} />
+                    <ProfileDetail hideProfileDetail={hideProfileDetail} />
                 )}
             </div>
         </header>
