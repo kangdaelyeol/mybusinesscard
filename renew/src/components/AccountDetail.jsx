@@ -18,11 +18,12 @@ export default function AccountDetail() {
         fileInputRef,
         userState,
         saveLoading,
+        errorMessage,
     } = useAccountDetail()
     return (
         <div
             className={classNames(
-                'py-header-height min-h-[100vh] mb-footer-height mx-auto',
+                'py-header-height mb-footer-height min-h-[100vh] mx-auto',
                 {
                     'bg-color-white': theme === 'light',
                     'bg-color-black-semilight text-color-white':
@@ -36,6 +37,7 @@ export default function AccountDetail() {
 
             <div className="relative mt-[20px] mx-auto w-[150px]">
                 <ImgDisplay size={150} profile={userState.profile} />
+
                 <div
                     className={classNames(
                         'absolute bottom-[-8px] right-[-8px] flex justify-center items-center w-[30px] h-[30px] rounded-[50%] cursor-pointer',
@@ -52,6 +54,7 @@ export default function AccountDetail() {
                         edit
                     </span>
                 </div>
+
                 {profileOption && (
                     <div
                         className={classNames(
@@ -77,12 +80,14 @@ export default function AccountDetail() {
                         >
                             {fileLoading ? <LoadingSpinner /> : 'New File'}
                         </div>
+
                         <input
                             ref={fileInputRef}
                             type="file"
                             className="hidden"
                             onInput={handlers.handleFileInput}
                         />
+
                         <div
                             className={classNames(
                                 'text-center py-[5px] cursor-pointer',
@@ -107,14 +112,17 @@ export default function AccountDetail() {
                         <div className="text-[15px] text-color-gray">
                             username
                         </div>
+
                         <div className="font-semibold text-[20px] pl-[2px]">
                             {userState.username}
                         </div>
                     </div>
+
                     <label htmlFor="nickname" className="block mt-[10px]">
                         <div className="text-[15px] text-color-gray">
                             nickname
                         </div>
+
                         <input
                             type="text"
                             id="nickname"
@@ -129,6 +137,7 @@ export default function AccountDetail() {
                             )}
                         />
                     </label>
+
                     <div className="cursor-pointer mt-[10px] text-color-blue hover:text-color-blue-light">
                         Change Password
                     </div>
@@ -147,8 +156,21 @@ export default function AccountDetail() {
                     >
                         {saveLoading ? <LoadingSpinner /> : 'Save'}
                     </div>
+
+                    <div
+                        className={classNames(
+                            'w-[300px] text-center mt-[20px] leading-[1.6]',
+                            {
+                                'text-color-blue-light': theme === 'dark',
+                                'text-red-400': theme === 'light',
+                            },
+                        )}
+                    >
+                        {errorMessage}
+                    </div>
                 </div>
             </div>
+
             {profileSizing && (
                 <AvatarSizing
                     {...userState.profile}

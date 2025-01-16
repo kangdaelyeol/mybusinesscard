@@ -139,6 +139,13 @@ export const userClient = {
     },
 
     updateNickname: async (username, nickname) => {
+        if (!/^[가-힣a-zA-Z0-9]{2,20}$/.test(nickname)) {
+            return {
+                status: 400,
+                reason: "nickname should have 2 to 20 characters, shouldn't contain blank(nbsp) and special symbols.",
+            }
+        }
+
         const userNicknameRef = ref(db, `users/${username}/nickname`)
         try {
             await set(userNicknameRef, nickname)

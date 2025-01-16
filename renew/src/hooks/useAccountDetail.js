@@ -12,6 +12,7 @@ const useAccountDetail = () => {
     const [saveLoading, setSaveLoading] = useState(false)
     const [profileOption, setProfileOption] = useState(false)
     const [profileSizing, setProfileSizing] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [nickname, setNickname] = useState(userState.nickname)
 
     const navigate = useNavigate()
@@ -37,6 +38,7 @@ const useAccountDetail = () => {
 
     const handlers = {
         handleNicknameChange: (e) => {
+            setErrorMessage('')
             setNickname(e.target.value)
         },
         handleEditProfileClick: () => {
@@ -120,6 +122,7 @@ const useAccountDetail = () => {
 
             if (res.status !== 200) {
                 console.error('Error - userClient-updateNickname:', res.reason)
+                setErrorMessage(res.reason)
                 setSaveLoading(false)
                 return
             }
@@ -143,6 +146,7 @@ const useAccountDetail = () => {
         fileInputRef,
         userState,
         saveLoading,
+        errorMessage,
     }
 }
 
