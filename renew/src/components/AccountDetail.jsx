@@ -138,7 +138,10 @@ export default function AccountDetail() {
                         />
                     </label>
 
-                    <div className="cursor-pointer mt-[10px] text-color-blue hover:text-color-blue-light">
+                    <div
+                        className="cursor-pointer mt-[10px] text-color-blue hover:text-color-blue-light"
+                        onClick={handlers.handleChangePasswordClick}
+                    >
                         Change Password
                     </div>
 

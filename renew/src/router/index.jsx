@@ -6,6 +6,7 @@ import HomePage from '../pages/HomePage'
 import Main from '../components/Main'
 import Login from '../components/Login'
 import AccountDetail from '../components/AccountDetail'
+import ChangePassword from '../components/ChangePassword'
 
 export const router = createBrowserRouter([
     {
@@ -41,6 +42,14 @@ export const router = createBrowserRouter([
                 element: (
                     <LoggedInOnly>
                         <AccountDetail />
+                    </LoggedInOnly>
+                ),
+            },
+            {
+                path: 'change-password',
+                element: (
+                    <LoggedInOnly>
+                        <ChangePassword />
                     </LoggedInOnly>
                 ),
             },

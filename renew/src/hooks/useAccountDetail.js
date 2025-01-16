@@ -134,6 +134,9 @@ const useAccountDetail = () => {
             })
             navigate('/')
         },
+        handleChangePasswordClick: () => {
+            navigate('/change-password')
+        },
     }
 
     return {
