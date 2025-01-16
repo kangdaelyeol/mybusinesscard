@@ -137,4 +137,19 @@ export const userClient = {
             }
         }
     },
+
+    updateNickname: async (username, nickname) => {
+        const userNicknameRef = ref(db, `users/${username}/nickname`)
+        try {
+            await set(userNicknameRef, nickname)
+            return {
+                status: 200,
+            }
+        } catch (e) {
+            return {
+                status: 400,
+                reason: e,
+            }
+        }
+    },
 }
