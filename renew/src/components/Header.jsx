@@ -6,6 +6,8 @@ import ImgDisplay from './ImgDisplay'
 import useHeader from '../hooks/useHeader'
 
 export default function Header() {
+    const { theme, toggleTheme } = useContext(ThemeContext)
+
     const {
         profileDetail,
         handleProfileClick,
@@ -13,7 +15,8 @@ export default function Header() {
         hideProfileDetail,
         handleTitleClick,
     } = useHeader()
-    const { theme, toggleTheme } = useContext(ThemeContext)
+
+    console.log(userState)
 
     return (
         <header
@@ -22,10 +25,13 @@ export default function Header() {
                 'bg-color-black text-color-white-light': theme === 'dark',
             })}
         >
+            <div className="absolute h-full flex items-center left-[30px] text-[20px] font-semibold">
+                {userState.nickname}
+            </div>
             <div className="max-w-[1100px] relative mx-auto h-header-height flex">
                 <span
                     onClick={handleTitleClick}
-                    className="inset-0 m-auto font-medium text-[1.8rem] cursor-pointer"
+                    className="inset-0 m-auto font-bold text-[1.8rem] cursor-pointer"
                 >
                     Create Business Card
                 </span>
