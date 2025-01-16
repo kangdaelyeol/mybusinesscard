@@ -5,6 +5,7 @@ export const USER_ACTIONS = Object.freeze({
     LOGOUT: Symbol.for('USER_LOGOUT'),
     UPDATE_PROFILE: Symbol.for('USER_UPDATE_PROFILE'),
     UPDATE_PROFILE_STYLE: Symbol.for('USER_UPDATE_PROFILE_STYLE'),
+    UPDATE_NICKNAME: Symbol.for('USER_UPDATE_NICKNAME'),
 })
 
 const reducer = (state, action) => {
@@ -32,6 +33,11 @@ const reducer = (state, action) => {
                     ...state.profile,
                     style: { ...action.payload.style },
                 },
+            }
+        case USER_ACTIONS.UPDATE_NICKNAME:
+            return {
+                ...state,
+                nickname: action.payload.nickname,
             }
     }
 }

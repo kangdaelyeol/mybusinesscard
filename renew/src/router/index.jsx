@@ -5,6 +5,7 @@ import Signup from '../components/Signup'
 import HomePage from '../pages/HomePage'
 import Main from '../components/Main'
 import Login from '../components/Login'
+import AccountDetail from '../components/AccountDetail'
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,14 @@ export const router = createBrowserRouter([
                     <GuestOnly>
                         <Signup />
                     </GuestOnly>
+                ),
+            },
+            {
+                path: 'account',
+                element: (
+                    <LoggedInOnly>
+                        <AccountDetail />
+                    </LoggedInOnly>
                 ),
             },
         ],
