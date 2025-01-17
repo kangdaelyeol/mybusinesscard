@@ -52,6 +52,10 @@ const useChangePassword = () => {
             navigate('/')
             setSaveLoading(false)
         },
+
+        handleAccountSettingsClick: () => {
+            navigate('/account')
+        },
     }
 
     return { handlers, saveLoading, errorMessage, passwordState }
