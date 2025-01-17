@@ -103,7 +103,6 @@ export const userClient = {
                 },
             }
         } catch (e) {
-            // console.log(e)
             return { status: 400, reason: e }
         }
     },

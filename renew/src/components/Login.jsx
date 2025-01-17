@@ -6,18 +6,11 @@ import useLogin from '../hooks/useLogin'
 import { ThemeContext } from '../context/ThemeContext'
 export default function Login() {
     const { theme } = useContext(ThemeContext)
-    const {
-        loading,
-        handleUserLogin,
-        handleUsernameInput,
-        handlePasswordInput,
-        loginInput,
-        errorMessage,
-    } = useLogin()
+    const { loading, handlers, loginInput, errorMessage } = useLogin()
 
     return (
         <form
-            onSubmit={handleUserLogin}
+            onSubmit={handlers.handleUserLogin}
             className={classNames(
                 'min-h-[100vh] pt-header-height mb-footer-height',
                 {
@@ -30,19 +23,21 @@ export default function Login() {
                 <div className="text-[30px] font-bold text-center text-color-black-light">
                     LOG IN
                 </div>
+
                 <input
                     className="bg-transparent border-b-[1px] border-solid border-gray-light p-[5px] mt-[30px] text-[18px]"
                     type="text"
                     placeholder="Username"
                     value={loginInput.username}
-                    onChange={handleUsernameInput}
+                    onChange={handlers.handleUsernameInput}
                 />
+
                 <input
                     className="bg-transparent border-b-[1px] border-solid border-gray-light p-[5px] mt-[20px] text-[18px]"
                     type="password"
                     placeholder="Password"
                     value={loginInput.password}
-                    onChange={handlePasswordInput}
+                    onChange={handlers.handlePasswordInput}
                 />
 
                 {errorMessage && (
@@ -70,12 +65,16 @@ export default function Login() {
                         id="remember"
                         type="checkbox"
                         className="mr-[5px] border-solid border-gray-300"
+                        onChange={handlers.handleRememberMeChange}
+                        checked={loginInput.remember}
                     />
+
                     <span className="cursor-pointer select-none text-color-gray">
                         Remember me
                     </span>
                 </label>
             </div>
+
             <Link
                 className={classNames(
                     'block mx-auto w-[400px] text-center mt-[15px] hover:underline',

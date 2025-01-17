@@ -14,6 +14,8 @@ export default function LoggedInOnly({ children }) {
 
     useEffect(() => {
         ;(async () => {
+            if (userState?.username) return
+
             const storageUsername = localStorage.getItem(
                 'USER_NAME_BUSINESS_CARD',
             )
@@ -22,8 +24,6 @@ export default function LoggedInOnly({ children }) {
                 navigate('/login', { replace: true })
                 return
             }
-
-            if (userState?.username === storageUsername) return
 
             const res = await userClient.get(storageUsername)
 

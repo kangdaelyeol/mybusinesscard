@@ -10,51 +10,60 @@ export default function useLogin() {
     const { userDispatch } = useContext(UserContext)
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
-    const [loginInput, setLoginInput] = useState({ username: '', password: '' })
+    const [loginInput, setLoginInput] = useState({
+        username: '',
+        password: '',
+        remember: false,
+    })
     const [errorMessage, setErrorMessage] = useState('')
     const navigate = useNavigate()
 
-    const handleUserLogin = async (e) => {
-        e.preventDefault()
-        if (loading) return
+    const handlers = {
+        handleUserLogin: async (e) => {
+            e.preventDefault()
+            if (loading) return
 
-        setLoading(true)
+            setLoading(true)
 
-        const res = await authClient.signIn(
-            loginInput.username,
-            loginInput.password,
-        )
+            const res = await authClient.signIn(
+                loginInput.username,
+                loginInput.password,
+            )
 
-        if (res.status === 200) {
-            const { username, profile, cards = [], nickname } = res.data
+            if (res.status === 200) {
+                const { username, profile, cards = [], nickname } = res.data
+                if (loginInput.remember)
+                    localStorage.setItem('USER_NAME_BUSINESS_CARD', username)
+                userDispatch({
+                    type: USER_ACTIONS.LOGIN,
+                    payload: { user: { username, profile, nickname } },
+                })
+                dispatch(initCards({ cards }))
 
-            localStorage.setItem('USER_NAME_BUSINESS_CARD', username)
-            userDispatch({
-                type: USER_ACTIONS.LOGIN,
-                payload: { user: { username, profile, nickname } },
-            })
-            dispatch(initCards({ cards }))
-            navigate('/')
-        } else if (res.status === 400) {
-            setErrorMessage(res.reason)
-        }
-        setLoading(false)
-    }
+                navigate('/')
+            } else if (res.status === 400) {
+                setErrorMessage(res.reason)
+            }
+            setLoading(false)
+        },
 
-    const handleUsernameInput = (e) => {
-        setErrorMessage('')
-        setLoginInput((prev) => ({ ...prev, username: e.target.value }))
-    }
+        handleUsernameInput: (e) => {
+            setErrorMessage('')
+            setLoginInput((prev) => ({ ...prev, username: e.target.value }))
+        },
 
-    const handlePasswordInput = (e) => {
-        setErrorMessage('')
-        setLoginInput((prev) => ({ ...prev, password: e.target.value }))
+        handlePasswordInput: (e) => {
+            setErrorMessage('')
+            setLoginInput((prev) => ({ ...prev, password: e.target.value }))
+        },
+
+        handleRememberMeChange: () => {
+            setLoginInput((prev) => ({ ...prev, remember: !prev.remember }))
+        },
     }
 
     return {
-        handleUserLogin,
-        handleUsernameInput,
-        handlePasswordInput,
+        handlers,
         loading,
         loginInput,
         errorMessage,

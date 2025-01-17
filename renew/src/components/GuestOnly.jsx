@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { UserContext } from '../context/UserContext'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { userClient } from '../client'
 import { USER_ACTIONS } from '../reducer/userReducer'
 import { useDispatch } from 'react-redux'
@@ -13,21 +13,21 @@ export default function GuestOnly({ children }) {
 
     useEffect(() => {
         ;(async () => {
+            if (userState.username) {
+                navigate('/')
+                return
+            }
+
             const storageUsername = localStorage.getItem(
                 'USER_NAME_BUSINESS_CARD',
             )
 
             if (!storageUsername) {
-                userDispatch({ type: USER_ACTIONS.LOGOUT })
-                return
-            }
-
-            if (userState.username === storageUsername) {
-                navigate('/')
                 return
             }
 
             const res = await userClient.get(storageUsername)
+
             const { username, nickname, profile, cards } = res.data
 
             userDispatch({
@@ -37,7 +37,7 @@ export default function GuestOnly({ children }) {
             dispatch(initCards({ cards }))
             navigate('/')
         })()
-    }, [])
+    }, [userState])
 
     return children
 }
