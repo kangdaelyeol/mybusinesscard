@@ -31,7 +31,7 @@ export default function AccountDetail() {
                 },
             )}
         >
-            <div className="text-[18px] text-center mt-[20px]">
+            <div className="text-[25px] font-semibold text-center mt-[25px]">
                 Account Settings
             </div>
 
@@ -139,7 +139,7 @@ export default function AccountDetail() {
                     </label>
 
                     <div
-                        className="cursor-pointer mt-[10px] text-color-blue hover:text-color-blue-light"
+                        className="cursor-pointer mt-[20px] text-color-blue hover:text-color-blue-light"
                         onClick={handlers.handleChangePasswordClick}
                     >
                         Change Password
@@ -147,7 +147,7 @@ export default function AccountDetail() {
 
                     <div
                         className={classNames(
-                            'py-[10px] w-[300px] font-bold text-center cursor-pointer rounded-[8px] mt-[10px]',
+                            'py-[10px] w-[300px] font-bold text-center cursor-pointer rounded-[8px] mt-[20px]',
                             {
                                 'bg-color-black hover:bg-color-black-bright':
                                     theme === 'dark',

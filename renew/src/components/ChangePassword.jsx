@@ -9,7 +9,7 @@ export default function ChangePassword() {
     const { theme } = useContext(ThemeContext)
     const { handlers, saveLoading, errorMessage, passwordState } =
         useChangePassword()
-        
+
     return (
         <div
             className={classNames(
@@ -21,7 +21,7 @@ export default function ChangePassword() {
                 },
             )}
         >
-            <div className="w-full text-center mt-[50px] text-[20px] font-semibold">
+            <div className="w-full text-center mt-[25px] text-[25px] font-semibold">
                 Change Password
             </div>
 
@@ -81,8 +81,15 @@ export default function ChangePassword() {
                 </label>
 
                 <div
+                    className="cursor-pointer mt-[15px] text-color-blue hover:text-color-blue-light"
+                    onClick={handlers.handleAccountSettingsClick}
+                >
+                    Account Settings
+                </div>
+
+                <div
                     className={classNames(
-                        'py-[10px] w-[300px] mx-auto mt-[30px] font-bold text-center cursor-pointer rounded-[8px] mt-[10px]',
+                        'py-[10px] w-[300px] mx-auto mt-[25px] font-bold text-center cursor-pointer rounded-[8px] mt-[10px]',
                         {
                             'bg-color-black hover:bg-color-black-bright':
                                 theme === 'dark',

@@ -16,8 +16,6 @@ export default function Header() {
         handleTitleClick,
     } = useHeader()
 
-    console.log(userState)
-
     return (
         <header
             className={classNames('fixed w-[100%] z-10', {
@@ -25,10 +23,10 @@ export default function Header() {
                 'bg-color-black text-color-white-light': theme === 'dark',
             })}
         >
-            <div className="absolute h-full flex items-center left-[30px] text-[20px] font-semibold">
-                {userState.nickname}
-            </div>
             <div className="max-w-[1100px] relative mx-auto h-header-height flex">
+                <div className="absolute h-full flex items-center left-[30px] text-[20px] font-semibold">
+                    {userState.nickname}
+                </div>
                 <span
                     onClick={handleTitleClick}
                     className="inset-0 m-auto font-bold text-[1.8rem] cursor-pointer"
