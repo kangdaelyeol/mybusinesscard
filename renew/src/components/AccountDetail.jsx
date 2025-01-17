@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import ImgDisplay from './ImgDisplay'
 import LoadingSpinner from './LoadingSpinner'
 import classNames from 'classnames'
-import AvatarSizing from './AvatarSizing'
+import AvatarSizing from './ImageStyling'
 import { ThemeContext } from '../context/ThemeContext'
 import useAccountDetail from '../hooks/useAccountDetail'
 

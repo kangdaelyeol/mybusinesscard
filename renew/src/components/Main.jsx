@@ -20,15 +20,18 @@ export default function Main() {
                 },
             )}
         >
-            <div className="max-w-[1100px] mx-auto flex flex-col">
+            <div className="max-w-[1100px] mx-auto flex flex-col gap-[20px] mt-[20px]">
                 {state.cards.map((card) => (
-                    <div key={card.id} className="flex">
+                    <div
+                        key={card.id}
+                        className="flex gap-[20px] max-medium:flex-col-reverse"
+                    >
                         <CardEditor card={card} />
                         <CardDisplay card={card} />
                     </div>
                 ))}
 
-                <div className="flex">
+                <div className="flex gap-[20px] max-medium:flex-col-reverse">
                     <CardProvider>
                         <CardMaker />
                         <CardDisplay />

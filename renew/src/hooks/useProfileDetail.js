@@ -8,8 +8,8 @@ import { clearCards } from '../store/cardsSlice'
 
 export default function useProfileDetail(hideProfileDetail) {
     const { userState, userDispatch } = useContext(UserContext)
-    const [avatarSizing, setAvatarSizing] = useState(false)
-    const [avatarOption, setAvatarOption] = useState(false)
+    const [imageStyling, setImageStyling] = useState(false)
+    const [imageOption, setImageOption] = useState(false)
     const [fileLoading, setFileLoading] = useState(false)
 
     const fileInputRef = useRef()
@@ -25,25 +25,25 @@ export default function useProfileDetail(hideProfileDetail) {
         )
         if (res.status !== 200) {
             console.error('Error - updateUserProfileStyle: ', e)
-            setAvatarSizing(false)
-            setAvatarOption(false)
+            setImageStyling(false)
+            setImageOption(false)
             return
         }
         userDispatch({
             type: USER_ACTIONS.UPDATE_PROFILE_STYLE,
             payload: { style },
         })
-        setAvatarSizing(false)
-        setAvatarOption(false)
+        setImageStyling(false)
+        setImageOption(false)
     }
 
     const handlers = {
         handleEditPositionClick: () => {
-            setAvatarSizing(true)
+            setImageStyling(true)
         },
 
         handleEditProfileClick: () => {
-            setAvatarOption((prev) => !prev)
+            setImageOption((prev) => !prev)
         },
 
         handleFileInput: async (e) => {
@@ -102,7 +102,7 @@ export default function useProfileDetail(hideProfileDetail) {
             })
 
             setFileLoading(false)
-            setAvatarSizing(true)
+            setImageStyling(true)
         },
 
         handleNewFileClick: () => {
@@ -128,8 +128,8 @@ export default function useProfileDetail(hideProfileDetail) {
         handlers,
         saveProfileStyle,
         userState,
-        avatarSizing,
-        avatarOption,
+        imageStyling,
+        imageOption,
         fileLoading,
     }
 }

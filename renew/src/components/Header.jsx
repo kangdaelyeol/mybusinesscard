@@ -24,22 +24,24 @@ export default function Header() {
             })}
         >
             <div className="max-w-[1100px] relative mx-auto h-header-height flex">
-                <div className="absolute h-full flex items-center left-[30px] text-[20px] font-semibold">
+                <div className="absolute h-full flex items-center left-[30px] text-[20px] font-semibold max-small:text-[18px] max-small:left-[15px]">
                     {userState.nickname}
                 </div>
                 <span
                     onClick={handleTitleClick}
-                    className="inset-0 m-auto font-bold text-[1.8rem] cursor-pointer"
+                    className="inset-0 m-auto font-bold text-[1.8rem] max-small:text-[22px] cursor-pointer"
                 >
                     Create Business Card
                 </span>
 
                 <div
                     className={classNames(
-                        'absolute top-0 bottom-0 my-auto h-[24px] cursor-pointer select-none',
+                        'absolute top-0 bottom-0 my-auto h-[24px] cursor-pointer select-none ',
                         {
-                            'right-[110px]': userState.username,
-                            'right-[30px]': !userState.username,
+                            'right-[110px] max-small:right-[80px]':
+                                userState.username,
+                            'right-[30px] max-small:right-[15px]':
+                                !userState.username,
                         },
                     )}
                     onClick={toggleTheme}
@@ -53,7 +55,7 @@ export default function Header() {
                     </span>
                 </div>
                 <div
-                    className="absolute inset-y-0 my-auto right-[30px] h-[50px] w-[50px] cursor-pointer"
+                    className="absolute inset-y-0 my-auto right-[30px] h-[50px] w-[50px] cursor-pointer max-small:right-[15px]"
                     onClick={handleProfileClick}
                 >
                     <ImgDisplay size={50} profile={userState.profile} />

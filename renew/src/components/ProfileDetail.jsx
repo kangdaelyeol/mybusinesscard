@@ -1,4 +1,4 @@
-import AvatarSizing from './AvatarSizing'
+import ImageStyling from './ImageStyling'
 import ImgDisplay from './ImgDisplay'
 import LoadingSpinner from './LoadingSpinner'
 import useProfileDetail from '../hooks/useProfileDetail'
@@ -13,8 +13,8 @@ export default function ProfileDetail({ hideProfileDetail }) {
         handlers,
         saveProfileStyle,
         userState,
-        avatarSizing,
-        avatarOption,
+        imageStyling,
+        imageOption,
         fileLoading,
     } = useProfileDetail(hideProfileDetail)
 
@@ -51,7 +51,7 @@ export default function ProfileDetail({ hideProfileDetail }) {
                         edit
                     </span>
                 </div>
-                {avatarOption && (
+                {imageOption && (
                     <div
                         className={classNames(
                             'flex flex-col absolute bottom-[-8px] right-[-110px] w-[100px] rounded-[10px] overflow-hidden font-semibold',
@@ -159,8 +159,8 @@ export default function ProfileDetail({ hideProfileDetail }) {
                 </div>
             </div>
 
-            {avatarSizing && (
-                <AvatarSizing
+            {imageStyling && (
+                <ImageStyling
                     {...userState.profile}
                     saveProfileStyle={saveProfileStyle}
                 />

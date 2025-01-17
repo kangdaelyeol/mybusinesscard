@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import AvatarSizing from './AvatarSizing'
+import AvatarSizing from './ImageStyling'
 import { CARD_IMAGE_SIZE } from '../constants'
 import ImgDisplay from './ImgDisplay'
 import useCardDisplay from '../hooks/useCardDisplay'

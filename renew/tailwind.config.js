@@ -2,6 +2,10 @@
 export default {
     content: ['./index.html', './src/**/*.{js,jsx}'],
     theme: {
+        screens: {
+            medium: '900px',
+            small: '600px',
+        },
         extend: {
             colors: {
                 'color-cyan': '#203340',

@@ -1,13 +1,14 @@
 import ControlBar from './ControlBar'
 import {
-    PICTURE_BOX_SIZE,
     MAX_SCALE_VALUE,
     DEFAULT_PROFILE,
+    RATE_BAR_WIDTH,
+    RATE_BAR_WIDTH_MEDIUM,
 } from '../constants'
-import useAvatarSizing from '../hooks/useAvatarSizing'
+import useImageStyling from '../hooks/useImageStyling'
 import calculateImageSize from '../utils/calculateImageSize'
 
-export default function AvatarSizing({ url, style, saveProfileStyle }) {
+export default function ImageStyling({ url, style, saveProfileStyle }) {
     const {
         imgStyle,
         setScaleRate,
@@ -15,15 +16,18 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
         setTransXRate,
         setTransYRate,
         handleSaveStyle,
-    } = useAvatarSizing(style, saveProfileStyle)
+        pictureSize,
+    } = useImageStyling(style, saveProfileStyle)
 
     const { width, height, scale, rounded, transX, transY } = imgStyle
 
     const { newHeight, newWidth, minTransX, minTransY } = calculateImageSize(
         width,
         height,
-        PICTURE_BOX_SIZE,
+        pictureSize,
     )
+
+    console.log(pictureSize)
 
     const controlBarOptionList = [
         {
@@ -66,7 +70,7 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                     <div
                         className="relative w-[var(--img-size)] h-[var(--img-size)] overflow-hidden border-[5px] border-gray-900 border-solid"
                         style={{
-                            '--img-size': `${PICTURE_BOX_SIZE}px`,
+                            '--img-size': `${pictureSize}px`,
                         }}
                     >
                         <img
@@ -81,6 +85,7 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                                 '--img-translateY': `-${transY}%`,
                             }}
                         />
+
                         <div
                             className="absolute top-0 left-0 w-full h-full rounded-[var(--picture-rounded)] overflow-hidden"
                             style={{
@@ -101,7 +106,14 @@ export default function AvatarSizing({ url, style, saveProfileStyle }) {
                             />
                         </div>
                     </div>
-                    <div className="flex flex-col h-[400px] w-[400px]">
+
+                    <div
+                        className="flex flex-col h-[400px] w-[var(--bar-width)] max-medium:w-[var(--bar-width-md)]"
+                        style={{
+                            '--bar-width': `${RATE_BAR_WIDTH}px`,
+                            '--bar-width-md': `${RATE_BAR_WIDTH_MEDIUM}px`,
+                        }}
+                    >
                         {controlBarOptionList.map((option) => (
                             <ControlBar key={option.title} {...option} />
                         ))}

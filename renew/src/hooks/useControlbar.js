@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react'
+import { RATE_BAR_WIDTH, RATE_BAR_WIDTH_MEDIUM } from '../constants'
 
-export default function useControlBar(
-    minVal,
-    maxVal,
-    setRate,
-    value,
-    barWidth,
-) {
+export default function useControlBar(minVal, maxVal, setRate, value) {
     useEffect(() => {
         const rate =
             minVal + ((maxVal - minVal) * (value - minVal)) / (maxVal - minVal)
@@ -18,6 +13,26 @@ export default function useControlBar(
     }, [maxVal])
 
     const [mouseDown, setMouseDown] = useState(false)
+
+    const [barWidth, setBarWidth] = useState(
+        innerWidth <= 900 ? RATE_BAR_WIDTH_MEDIUM : RATE_BAR_WIDTH,
+    )
+
+    const onResizeWindow = () => {
+        if (innerWidth <= 900) {
+            setBarWidth(RATE_BAR_WIDTH_MEDIUM)
+        } else {
+            setBarWidth(RATE_BAR_WIDTH)
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', onResizeWindow)
+
+        return () => {
+            window.removeEventListener('resize', onResizeWindow)
+        }
+    }, [])
 
     const handleBarMove = (e) => {
         if (!mouseDown) return
@@ -44,5 +59,12 @@ export default function useControlBar(
         isDisable = true
     }
 
-    return { handleBarMove, handleMouseClear, handleMouseDown, barRate, isDisable }
+    return {
+        handleBarMove,
+        handleMouseClear,
+        handleMouseDown,
+        barRate,
+        isDisable,
+        barWidth
+    }
 }
