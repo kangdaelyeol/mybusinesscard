@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { RATE_BAR_WIDTH, RATE_BAR_WIDTH_MEDIUM } from '../constants'
-
+import { throttle } from 'lodash'
 export default function useControlBar(minVal, maxVal, setRate, value) {
     useEffect(() => {
         const rate =
@@ -18,25 +18,24 @@ export default function useControlBar(minVal, maxVal, setRate, value) {
         innerWidth <= 900 ? RATE_BAR_WIDTH_MEDIUM : RATE_BAR_WIDTH,
     )
 
-    const onResizeWindow = () => {
-        if (innerWidth <= 900) {
-            setBarWidth(RATE_BAR_WIDTH_MEDIUM)
-        } else {
-            setBarWidth(RATE_BAR_WIDTH)
-        }
-    }
-
     useEffect(() => {
+        const onResizeWindow = throttle(() => {
+            if (innerWidth <= 900) {
+                setBarWidth(RATE_BAR_WIDTH_MEDIUM)
+            } else {
+                setBarWidth(RATE_BAR_WIDTH)
+            }
+        }, 150)
+
         window.addEventListener('resize', onResizeWindow)
 
         return () => {
             window.removeEventListener('resize', onResizeWindow)
         }
-    }, [])
+    }, [setBarWidth])
 
     const handleBarMove = (e) => {
         if (!mouseDown) return
-
         const rate =
             (maxVal - minVal) * (e.nativeEvent.offsetX / barWidth) + minVal
 
@@ -65,6 +64,6 @@ export default function useControlBar(minVal, maxVal, setRate, value) {
         handleMouseDown,
         barRate,
         isDisable,
-        barWidth
+        barWidth,
     }
 }

@@ -27,8 +27,6 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
         pictureSize,
     )
 
-    console.log(pictureSize)
-
     const controlBarOptionList = [
         {
             title: 'Scale',
