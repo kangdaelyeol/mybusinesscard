@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { RATE_BAR_WIDTH, RATE_BAR_WIDTH_MEDIUM } from '../constants'
 import { throttle } from 'lodash'
-export default function useControlBar(minVal, maxVal, setRate, value) {
+export default function useSettingBar(minVal, maxVal, setRate, value) {
     useEffect(() => {
         const rate =
             minVal + ((maxVal - minVal) * (value - minVal)) / (maxVal - minVal)
