@@ -27,7 +27,13 @@ export default function ChangePassword() {
 
             <div className="w-full max-w-[400px] mx-auto mt-[40px]">
                 <label className="block mt-[15px]" htmlFor="password-current">
-                    <div className="">Current Password</div>
+                    <div
+                        className={classNames({
+                            'text-color-black-bright': theme === 'light',
+                        })}
+                    >
+                        Current Password
+                    </div>
 
                     <input
                         className={classNames(
@@ -45,7 +51,13 @@ export default function ChangePassword() {
                 </label>
 
                 <label className="block mt-[15px]" htmlFor="password-new">
-                    <div>New Password</div>
+                    <div
+                        className={classNames({
+                            'text-color-black-bright': theme === 'light',
+                        })}
+                    >
+                        New Password
+                    </div>
 
                     <input
                         className={classNames(
@@ -63,7 +75,13 @@ export default function ChangePassword() {
                 </label>
 
                 <label className="block mt-[15px]" htmlFor="password-confirm">
-                    <div>Confirm Password</div>
+                    <div
+                        className={classNames({
+                            'text-color-black-bright': theme === 'light',
+                        })}
+                    >
+                        Confirm Password
+                    </div>
 
                     <input
                         className={classNames(
