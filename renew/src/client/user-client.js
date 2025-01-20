@@ -99,7 +99,7 @@ export const userClient = {
                             height: 120,
                         },
                     },
-                    cards: {},
+                    cards: [],
                 },
             }
         } catch (e) {
