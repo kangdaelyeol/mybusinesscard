@@ -1,13 +1,11 @@
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import { authClient } from '../client'
-import { UserContext } from '../context/UserContext'
-import { USER_ACTIONS } from '../reducer/userReducer'
 import { useDispatch } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
 import { useNavigate } from 'react-router-dom'
+import { loginUser } from '../store/userSlice'
 
 export default function useLogin() {
-    const { userDispatch } = useContext(UserContext)
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const [loginInput, setLoginInput] = useState({
@@ -34,10 +32,7 @@ export default function useLogin() {
                 const { username, profile, cards = [], nickname } = res.data
                 if (loginInput.remember)
                     localStorage.setItem('USER_NAME_BUSINESS_CARD', username)
-                userDispatch({
-                    type: USER_ACTIONS.LOGIN,
-                    payload: { user: { username, profile, nickname } },
-                })
+                dispatch(loginUser({ username, profile, nickname }))
                 dispatch(initCards({ cards }))
 
                 navigate('/')

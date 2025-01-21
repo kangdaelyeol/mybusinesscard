@@ -1,11 +1,16 @@
-import { useContext, useRef, useState } from 'react'
-import { UserContext } from '../context/UserContext'
-import { USER_ACTIONS } from '../reducer/userReducer'
+import { useRef, useState } from 'react'
 import { imageClient, userClient } from '../client'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    updateUserNickname,
+    updateUserProfile,
+    updateUserProfileStyle,
+} from '../store/userSlice'
 
 const useAccountDetail = () => {
-    const { userState, userDispatch } = useContext(UserContext)
+    const userState = useSelector((state) => state.user)
+    const dispatch = useDispatch()
 
     const fileInputRef = useRef()
     const [fileLoading, setFileLoading] = useState(false)
@@ -28,10 +33,7 @@ const useAccountDetail = () => {
             setProfileOption(false)
             return
         }
-        userDispatch({
-            type: USER_ACTIONS.UPDATE_PROFILE_STYLE,
-            payload: { style },
-        })
+        dispatch(updateUserProfileStyle({ style }))
         setProfileSizing(false)
         setProfileOption(false)
     }
@@ -105,10 +107,7 @@ const useAccountDetail = () => {
                 )
             }
 
-            userDispatch({
-                type: USER_ACTIONS.UPDATE_PROFILE,
-                payload: { profile: newProfile },
-            })
+            dispatch(updateUserProfile({ profile: newProfile }))
             setFileLoading(false)
             setProfileSizing(true)
         },
@@ -128,10 +127,7 @@ const useAccountDetail = () => {
             }
 
             setSaveLoading(false)
-            userDispatch({
-                type: USER_ACTIONS.UPDATE_NICKNAME,
-                payload: { nickname },
-            })
+            dispatch(updateUserNickname({ nickname }))
             navigate('/')
         },
         handleChangePasswordClick: () => {

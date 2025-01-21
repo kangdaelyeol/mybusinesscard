@@ -1,13 +1,16 @@
-import { useContext, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { imageClient, userClient } from '../client'
-import { USER_ACTIONS } from '../reducer/userReducer'
-import { UserContext } from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { clearCards } from '../store/cardsSlice'
+import {
+    logoutUser,
+    updateUserProfile,
+    updateUserProfileStyle,
+} from '../store/userSlice'
 
 export default function useProfileDetail(hideProfileDetail) {
-    const { userState, userDispatch } = useContext(UserContext)
+    const userState = useSelector((state) => state.user)
     const [imageStyling, setImageStyling] = useState(false)
     const [imageOption, setImageOption] = useState(false)
     const [fileLoading, setFileLoading] = useState(false)
@@ -29,10 +32,7 @@ export default function useProfileDetail(hideProfileDetail) {
             setImageOption(false)
             return
         }
-        userDispatch({
-            type: USER_ACTIONS.UPDATE_PROFILE_STYLE,
-            payload: { style },
-        })
+        dispatch(updateUserProfileStyle({ style }))
         setImageStyling(false)
         setImageOption(false)
     }
@@ -96,10 +96,7 @@ export default function useProfileDetail(hideProfileDetail) {
                 )
             }
 
-            userDispatch({
-                type: USER_ACTIONS.UPDATE_PROFILE,
-                payload: { profile: newProfile },
-            })
+            dispatch(updateUserProfile({ profile: newProfile }))
 
             setFileLoading(false)
             setImageStyling(true)
@@ -115,9 +112,9 @@ export default function useProfileDetail(hideProfileDetail) {
         },
 
         handleLogoutClick: () => {
-            userDispatch({ type: USER_ACTIONS.LOGOUT })
             localStorage.removeItem('USER_NAME_BUSINESS_CARD')
             hideProfileDetail()
+            dispatch(logoutUser())
             dispatch(clearCards())
             navigate('/login')
         },

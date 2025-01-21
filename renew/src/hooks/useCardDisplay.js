@@ -1,15 +1,14 @@
 import { useContext, useState } from 'react'
 import { CardContext } from '../context/CardContext'
 import { CARD_ACTIONS } from '../reducer/cardReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { updateCardProfileStyle } from '../store/cardsSlice'
 import { cardClient } from '../client'
-import { UserContext } from '../context/UserContext'
 
 export default function useCardDisplay(card) {
     let data, saveProfileStyle
     const [editPicture, setEditPicture] = useState(false)
-    const { userState } = useContext(UserContext)
+    const userState = useSelector(state => state.user)
 
     if (!card) {
         const { cardState, cardDispatch } = useContext(CardContext)

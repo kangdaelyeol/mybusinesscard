@@ -1,13 +1,12 @@
-import { useContext, useEffect } from 'react'
-import { UserContext } from '../context/UserContext'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { userClient } from '../client'
-import { USER_ACTIONS } from '../reducer/userReducer'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
+import { loginUser } from '../store/userSlice'
 
 export default function GuestOnly({ children }) {
-    const { userDispatch, userState } = useContext(UserContext)
+    const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -30,10 +29,7 @@ export default function GuestOnly({ children }) {
 
             const { username, nickname, profile, cards } = res.data
 
-            userDispatch({
-                type: USER_ACTIONS.LOGIN,
-                payload: { user: { username, nickname, profile } },
-            })
+            dispatch(loginUser({ username, nickname, profile }))
             dispatch(initCards({ cards }))
             navigate('/')
         })()

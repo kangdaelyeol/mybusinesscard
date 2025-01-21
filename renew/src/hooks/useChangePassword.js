@@ -1,10 +1,10 @@
 import { authClient } from '../client'
 import { useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
-import { UserContext } from '../context/UserContext'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 const useChangePassword = () => {
-    const { userState } = useContext(UserContext)
+    const userState = useSelector((state) => state.user)
 
     const navigate = useNavigate()
 

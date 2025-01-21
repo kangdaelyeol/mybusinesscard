@@ -5,9 +5,11 @@ import { ThemeContext } from '../context/ThemeContext'
 import LoadingSpinner from './LoadingSpinner'
 import useSignup from '../hooks/useSignup'
 
+
 export default function Signup() {
     const { theme } = useContext(ThemeContext)
     const { handlers, loading, signupInput, errorMessage } = useSignup()
+    
 
     return (
         <form

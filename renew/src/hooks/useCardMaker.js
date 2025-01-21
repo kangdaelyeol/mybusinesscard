@@ -2,13 +2,12 @@ import { useContext, useState } from 'react'
 import { CardContext } from '../context/CardContext'
 import { CARD_ACTIONS } from '../reducer/cardReducer'
 import { cardClient, imageClient } from '../client'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
-import { UserContext } from '../context/UserContext'
 
 export default function useCardMaker() {
     const { cardState, cardDispatch } = useContext(CardContext)
-    const { userState } = useContext(UserContext)
+    const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
     const [fileLoading, setFileLoading] = useState(false)
 

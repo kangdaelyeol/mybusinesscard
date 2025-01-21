@@ -1,5 +1,5 @@
-import { useContext, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     updateCardDescription,
     updateCardName,
@@ -9,13 +9,10 @@ import {
 } from '../store/cardsSlice'
 
 import { imageClient, cardClient } from '../client'
-import { UserContext } from '../context/UserContext'
 
 export default function useCardEditor(card) {
     const [fileLoading, setFileLoading] = useState(false)
-    const {
-        userState: { username },
-    } = useContext(UserContext)
+    const userState = useSelector((state) => state.user)
 
     const dispatch = useDispatch()
 
@@ -55,7 +52,7 @@ export default function useCardEditor(card) {
             }
 
             const firebaseRes = await cardClient.updateProfile(
-                username,
+                userState.username,
                 id,
                 newProfile,
             )
@@ -75,25 +72,29 @@ export default function useCardEditor(card) {
         },
 
         handleNameChange: (e) => {
-            cardClient.updateName(username, card.id, e.target.value)
+            cardClient.updateName(userState.username, card.id, e.target.value)
             dispatch(updateCardName({ id: card.id, value: e.target.value }))
         },
 
         handleDescriptionChange: (e) => {
-            cardClient.updateDescription(username, card.id, e.target.value)
+            cardClient.updateDescription(
+                userState.username,
+                card.id,
+                e.target.value,
+            )
             dispatch(
                 updateCardDescription({ id: card.id, value: e.target.value }),
             )
         },
 
         handleThemeChange: (e) => {
-            cardClient.updateTheme(username, card.id, e.target.value)
+            cardClient.updateTheme(userState.username, card.id, e.target.value)
             dispatch(updateCardTheme({ id: card.id, value: e.target.value }))
         },
 
         handleCardDelete: () => {
             if (fileLoading) return
-            cardClient.remove(username, card.id)
+            cardClient.remove(userState.username, card.id)
             dispatch(deleteCard({ id: card.id }))
         },
     }

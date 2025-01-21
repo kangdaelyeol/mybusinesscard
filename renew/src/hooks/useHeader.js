@@ -1,12 +1,12 @@
-import { useState, useContext } from 'react'
-import { UserContext } from '../context/UserContext'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 export default function useHeader() {
-    const { userState } = useContext(UserContext)
+    const userState = useSelector((state) => state.user)
     const [profileDetail, setProfileDetail] = useState(false)
 
     const navigate = useNavigate()
-    
+
     const hideProfileDetail = () => {
         setProfileDetail(false)
     }

@@ -1,13 +1,10 @@
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import { userClient } from '../client'
-import { UserContext } from '../context/UserContext'
-import { USER_ACTIONS } from '../reducer/userReducer'
 import { useDispatch } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
+import { loginUser } from '../store/userSlice'
 
 export default function useSignup() {
-    const { userDispatch } = useContext(UserContext)
-
     const dispatch = useDispatch()
 
     const [signupInput, setSignupInput] = useState({
@@ -49,20 +46,20 @@ export default function useSignup() {
             setLoading(true)
             const { username, password, confirmPassword, nickname } =
                 signupInput
+
             const res = await userClient.create(
                 username,
                 nickname,
                 password,
                 confirmPassword,
             )
+
             if (res.status === 200) {
                 const { username, profile, cards, nickname } = res.value
 
                 localStorage.setItem('USER_NAME_BUSINESS_CARD', username)
-                userDispatch({
-                    type: USER_ACTIONS.LOGIN,
-                    payload: { user: { username, profile, nickname } },
-                })
+
+                dispatch(loginUser({ username, profile, nickname }))
                 dispatch(initCards({ cards }))
             } else {
                 setErrorMessage(res.reason)

@@ -16,6 +16,8 @@ export default function Header() {
         handleTitleClick,
     } = useHeader()
 
+    console.log(userState)
+
     return (
         <header
             className={classNames('fixed w-[100%] z-10', {
