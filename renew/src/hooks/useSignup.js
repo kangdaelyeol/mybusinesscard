@@ -3,6 +3,7 @@ import { userClient } from '../client'
 import { useDispatch } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
 import { loginUser } from '../store/userSlice'
+import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
 
 export default function useSignup() {
     const dispatch = useDispatch()
@@ -57,7 +58,7 @@ export default function useSignup() {
             if (res.status === 200) {
                 const { username, profile, cards, nickname } = res.value
 
-                localStorage.setItem('USER_NAME_BUSINESS_CARD', username)
+                localStorage.setItem(LOCALSTORAGE_TOKEN_NAME, username)
 
                 dispatch(loginUser({ username, profile, nickname }))
                 dispatch(initCards({ cards }))

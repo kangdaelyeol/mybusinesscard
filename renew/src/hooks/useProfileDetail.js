@@ -9,6 +9,7 @@ import {
     updateUserProfileStyle,
 } from '../store/userSlice'
 import { createUserProfile } from '../factory/userFactory'
+import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
 
 export default function useProfileDetail(hideProfileDetail) {
     const userState = useSelector((state) => state.user)
@@ -109,7 +110,7 @@ export default function useProfileDetail(hideProfileDetail) {
         },
 
         handleLogoutClick: () => {
-            localStorage.removeItem('USER_NAME_BUSINESS_CARD')
+            localStorage.removeItem(LOCALSTORAGE_TOKEN_NAME)
             hideProfileDetail()
             dispatch(logoutUser())
             dispatch(clearCards())

@@ -4,6 +4,7 @@ import { userClient } from '../client'
 import { useDispatch, useSelector } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
 import { loginUser } from '../store/userSlice'
+import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
 export default function LoggedInOnly({ children }) {
     const userState = useSelector((state) => state.user)
 
@@ -16,7 +17,7 @@ export default function LoggedInOnly({ children }) {
             if (userState?.username) return
 
             const storageUsername = localStorage.getItem(
-                'USER_NAME_BUSINESS_CARD',
+                LOCALSTORAGE_TOKEN_NAME,
             )
 
             if (!storageUsername) {
