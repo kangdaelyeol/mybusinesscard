@@ -1,16 +1,17 @@
 import classNames from 'classnames'
 import useSettingBar from '../hooks/useSettingBar'
 import { RATE_BAR_WIDTH, RATE_BAR_WIDTH_MEDIUM } from '../constants'
+import useResponsive from '../hooks/useResponsive'
 
-export default function ControlBar({ setRate, title, minVal, maxVal, value }) {
+export default function SettingBar({ setRate, title, minVal, maxVal, value }) {
+    const { barWidth } = useResponsive()
     const {
         handleBarMove,
         handleMouseClear,
         handleMouseDown,
         barRate,
         isDisable,
-        barWidth,
-    } = useSettingBar(minVal, maxVal, setRate, value)
+    } = useSettingBar(minVal, maxVal, setRate, value, barWidth)
 
     return (
         <div className="relative mb-[30px] max-medium:mb-[20px]">

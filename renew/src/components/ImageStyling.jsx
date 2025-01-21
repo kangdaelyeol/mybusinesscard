@@ -1,11 +1,14 @@
-import ControlBar from './ControlBar'
+import SettingBar from './SettingBar'
 import {
     MAX_SCALE_VALUE,
+    PICTURE_BOX_SIZE,
+    PICTURE_BOX_SIZE_MEDIUM,
     RATE_BAR_WIDTH,
     RATE_BAR_WIDTH_MEDIUM,
 } from '../constants'
 import useImageStyling from '../hooks/useImageStyling'
 import calculateImageSize from '../utils/calculateImageSize'
+import useResponsive from '../hooks/useResponsive'
 
 export default function ImageStyling({ url, style, saveProfileStyle }) {
     const {
@@ -15,8 +18,9 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
         setTransXRate,
         setTransYRate,
         handleSaveStyle,
-        pictureSize,
     } = useImageStyling(style, saveProfileStyle)
+
+    const { pictureSize } = useResponsive()
 
     const { width, height, scale, rounded, transX, transY } = imgStyle
 
@@ -26,7 +30,7 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
         pictureSize,
     )
 
-    const controlBarOptionList = [
+    const settingBarOptionList = [
         {
             title: 'Scale',
             setRate: setScaleRate,
@@ -65,9 +69,10 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
                 </div>
                 <div className="flex gap-[30px]">
                     <div
-                        className="relative w-[var(--img-size)] h-[var(--img-size)] overflow-hidden border-[5px] border-gray-900 border-solid"
+                        className="relative w-[var(--img-size)] h-[var(--img-size)] max-medium:w-[var(--img-size-md)] max-medium:h-[var(--img-size-md)] overflow-hidden border-[5px] border-gray-900 border-solid"
                         style={{
-                            '--img-size': `${pictureSize}px`,
+                            '--img-size': `${PICTURE_BOX_SIZE}px`,
+                            '--img-size-md': `${PICTURE_BOX_SIZE_MEDIUM}px`,
                         }}
                     >
                         <img
@@ -111,8 +116,8 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
                             '--bar-width-md': `${RATE_BAR_WIDTH_MEDIUM}px`,
                         }}
                     >
-                        {controlBarOptionList.map((option) => (
-                            <ControlBar key={option.title} {...option} />
+                        {settingBarOptionList.map((option) => (
+                            <SettingBar key={option.title} {...option} />
                         ))}
 
                         <button

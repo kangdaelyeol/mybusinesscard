@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
-import { RATE_BAR_WIDTH, RATE_BAR_WIDTH_MEDIUM } from '../constants'
-import { throttle } from 'lodash'
-export default function useSettingBar(minVal, maxVal, setRate, value) {
+export default function useSettingBar(
+    minVal,
+    maxVal,
+    setRate,
+    value,
+    barWidth,
+) {
     useEffect(() => {
         const rate =
             minVal + ((maxVal - minVal) * (value - minVal)) / (maxVal - minVal)
@@ -13,26 +17,6 @@ export default function useSettingBar(minVal, maxVal, setRate, value) {
     }, [maxVal])
 
     const [mouseDown, setMouseDown] = useState(false)
-
-    const [barWidth, setBarWidth] = useState(
-        innerWidth <= 900 ? RATE_BAR_WIDTH_MEDIUM : RATE_BAR_WIDTH,
-    )
-
-    useEffect(() => {
-        const onResizeWindow = throttle(() => {
-            if (innerWidth <= 900) {
-                setBarWidth(RATE_BAR_WIDTH_MEDIUM)
-            } else {
-                setBarWidth(RATE_BAR_WIDTH)
-            }
-        }, 150)
-
-        window.addEventListener('resize', onResizeWindow)
-
-        return () => {
-            window.removeEventListener('resize', onResizeWindow)
-        }
-    }, [setBarWidth])
 
     const handleBarMove = (e) => {
         if (!mouseDown) return
@@ -64,6 +48,5 @@ export default function useSettingBar(minVal, maxVal, setRate, value) {
         handleMouseDown,
         barRate,
         isDisable,
-        barWidth,
     }
 }
