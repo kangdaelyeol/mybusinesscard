@@ -1,11 +1,5 @@
 import SettingBar from './SettingBar'
-import {
-    MAX_SCALE_VALUE,
-    PICTURE_BOX_SIZE,
-    PICTURE_BOX_SIZE_MEDIUM,
-    RATE_BAR_WIDTH,
-    RATE_BAR_WIDTH_MEDIUM,
-} from '../constants'
+import { MAX_SCALE_VALUE } from '../constants'
 import useImageStyling from '../hooks/useImageStyling'
 import calculateImageSize from '../utils/calculateImageSize'
 import useResponsive from '../hooks/useResponsive'
@@ -69,10 +63,9 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
                 </div>
                 <div className="flex gap-[30px]">
                     <div
-                        className="relative w-[var(--img-size)] h-[var(--img-size)] max-medium:w-[var(--img-size-md)] max-medium:h-[var(--img-size-md)] overflow-hidden border-[5px] border-gray-900 border-solid"
+                        className="relative w-[var(--img-size)] h-[var(--img-size)] overflow-hidden border-[5px] border-gray-900 border-solid"
                         style={{
-                            '--img-size': `${PICTURE_BOX_SIZE}px`,
-                            '--img-size-md': `${PICTURE_BOX_SIZE_MEDIUM}px`,
+                            '--img-size': `${pictureSize}px`,
                         }}
                     >
                         <img
@@ -110,10 +103,9 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
                     </div>
 
                     <div
-                        className="flex flex-col h-[400px] w-[var(--bar-width)] max-medium:w-[var(--bar-width-md)]"
+                        className="flex flex-col h-[400px] w-[var(--bar-width)]"
                         style={{
-                            '--bar-width': `${RATE_BAR_WIDTH}px`,
-                            '--bar-width-md': `${RATE_BAR_WIDTH_MEDIUM}px`,
+                            '--bar-width': `${pictureSize}px`,
                         }}
                     >
                         {settingBarOptionList.map((option) => (

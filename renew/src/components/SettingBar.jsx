@@ -1,6 +1,5 @@
 import classNames from 'classnames'
 import useSettingBar from '../hooks/useSettingBar'
-import { RATE_BAR_WIDTH, RATE_BAR_WIDTH_MEDIUM } from '../constants'
 import useResponsive from '../hooks/useResponsive'
 
 export default function SettingBar({ setRate, title, minVal, maxVal, value }) {
@@ -20,15 +19,14 @@ export default function SettingBar({ setRate, title, minVal, maxVal, value }) {
             </div>
             <div
                 className={classNames(
-                    'absolute w-[var(--bar-width)] max-medium:w-[var(--bar-width-md)] h-[10px] my-auto border-1px border-solid border-color-black box-border',
+                    'absolute w-[var(--bar-width)] h-[10px] my-auto border-1px border-solid border-color-black box-border',
                     {
                         'bg-color-white': isDisable === false,
                         'bg-gray-900': isDisable === true,
                     },
                 )}
                 style={{
-                    '--bar-width': `${RATE_BAR_WIDTH}px`,
-                    '--bar-width-md': `${RATE_BAR_WIDTH_MEDIUM}px`,
+                    '--bar-width': `${barWidth}px`,
                 }}
             >
                 {!isDisable && (
