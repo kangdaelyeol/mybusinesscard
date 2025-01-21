@@ -1,28 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { DEFAULT_PROFILE } from '../constants'
-
-export const initialUserState = {
-    username: '',
-    nickname: '',
-    profile: {
-        url: DEFAULT_PROFILE,
-        assetId: '',
-        signature: '',
-        publicId: '',
-        style: {
-            scale: 1,
-            transX: 0,
-            transY: 0,
-            rounded: 50,
-            width: 120,
-            height: 120,
-        },
-    },
-}
+import { createUser } from '../factory/userFactory'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: initialUserState,
+    initialState: createUser(),
     reducers: {
         loginUser: (state, action) => {
             const { username, profile, nickname } = action.payload
@@ -33,7 +14,7 @@ const userSlice = createSlice({
         },
 
         logoutUser: (state, _) => {
-            const { username, profile, nickname } = initialUserState
+            const { username, profile, nickname } = createUser()
 
             state.username = username
             state.profile = profile
@@ -41,11 +22,11 @@ const userSlice = createSlice({
         },
 
         updateUserProfile: (state, action) => {
-            state.profile = { ...action.payload }
+            state.profile = action.payload
         },
 
         updateUserProfileStyle: (state, action) => {
-            state.profile.style = { ...action.payload }
+            state.profile.style = action.payload
         },
 
         updateUserNickname: (state, action) => {

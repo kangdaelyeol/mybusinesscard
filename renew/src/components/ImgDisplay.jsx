@@ -1,4 +1,4 @@
-import { DEFAULT_PROFILE } from '../constants'
+import { DEFAULT_PROFILE_URL } from '../constants'
 import calculateImageSize from '../utils/calculateImageSize'
 
 export default function ImgDisplay({ size, profile }) {
@@ -15,7 +15,7 @@ export default function ImgDisplay({ size, profile }) {
             }}
         >
             <img
-                src={profile.url || DEFAULT_PROFILE}
+                src={profile.url || DEFAULT_PROFILE_URL}
                 alt="profile"
                 width={newWidth}
                 height={newHeight}

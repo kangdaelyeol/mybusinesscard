@@ -4,6 +4,7 @@ import { CARD_ACTIONS } from '../reducer/cardReducer'
 import { cardClient, imageClient } from '../client'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
+import { createCardProfile } from '../factory/cardFactory'
 
 export default function useCardMaker() {
     const { cardState, cardDispatch } = useContext(CardContext)
@@ -63,21 +64,17 @@ export default function useCardMaker() {
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_PROFILE,
                 payload: {
-                    profile: {
+                    profile: createCardProfile({
                         url,
                         assetId: asset_id,
                         signature,
                         publicId: public_id,
                         timestamp,
                         style: {
-                            scale: 1,
-                            transX: 0,
-                            transY: 0,
-                            rounded: 50,
                             width,
                             height,
                         },
-                    },
+                    }),
                 },
             })
             setFileLoading(false)

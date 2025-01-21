@@ -1,3 +1,4 @@
+import { createUser } from '../factory/userFactory'
 import { db } from '../service/firebase'
 import { ref, set, get } from 'firebase/database'
 
@@ -59,46 +60,18 @@ export const userClient = {
                 return { status: 400, reason: 'username already exists.' }
             }
 
-            await set(userRef, {
+            const newUser = createUser({
                 username,
                 nickname,
                 password,
-                profile: {
-                    url: '',
-                    assetId: '',
-                    signature: '',
-                    publicId: '',
-                    style: {
-                        scale: 1,
-                        transX: 0,
-                        transY: 0,
-                        rounded: 50,
-                        width: 120,
-                        height: 120,
-                    },
-                },
-                cards: {},
             })
+
+            await set(userRef, newUser)
 
             return {
                 status: 200,
                 value: {
-                    username,
-                    nickname,
-                    profile: {
-                        url: '',
-                        assetId: '',
-                        signature: '',
-                        publicId: '',
-                        style: {
-                            scale: 1,
-                            transX: 0,
-                            transY: 0,
-                            rounded: 50,
-                            width: 120,
-                            height: 120,
-                        },
-                    },
+                    ...newUser,
                     cards: [],
                 },
             }

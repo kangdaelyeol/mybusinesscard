@@ -9,6 +9,7 @@ import {
 } from '../store/cardsSlice'
 
 import { imageClient, cardClient } from '../client'
+import { createCardProfile } from '../factory/cardFactory'
 
 export default function useCardEditor(card) {
     const [fileLoading, setFileLoading] = useState(false)
@@ -36,24 +37,20 @@ export default function useCardEditor(card) {
             const { url, asset_id, signature, public_id, width, height } =
                 cloudinaryRes.data
 
-            const newProfile = {
+            const newProfile = createCardProfile({
                 url,
                 assetId: asset_id,
                 signature,
                 publicId: public_id,
                 style: {
-                    scale: 1,
-                    transX: 0,
-                    transY: 0,
-                    rounded: 50,
                     width,
                     height,
                 },
-            }
+            })
 
             const firebaseRes = await cardClient.updateProfile(
                 userState.username,
-                id,
+                card.id,
                 newProfile,
             )
 

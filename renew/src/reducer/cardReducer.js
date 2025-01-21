@@ -1,4 +1,4 @@
-import { initialCardState } from '../context/CardContext'
+import { createCard } from '../factory/cardFactory'
 
 export const CARD_ACTIONS = Object.freeze({
     UPDATE_NAME: Symbol.for('UPDATE_NAME'),
@@ -32,9 +32,7 @@ const reducer = (state, action) => {
                 theme: action.payload.theme,
             }
         case CARD_ACTIONS.CLEAR_CARD:
-            return {
-                ...initialCardState,
-            }
+            return createCard()
         case CARD_ACTIONS.UPDATE_PROFILE_STYLE:
             return {
                 ...state,

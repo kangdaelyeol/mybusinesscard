@@ -81,7 +81,6 @@ export const cardClient = {
     },
 
     updateProfileStyle: async (username, cardId, value) => {
-        console.log(username, cardId, value)
         try {
             const cardRef = ref(
                 db,

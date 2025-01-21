@@ -1,7 +1,6 @@
 import ControlBar from './ControlBar'
 import {
     MAX_SCALE_VALUE,
-    DEFAULT_PROFILE,
     RATE_BAR_WIDTH,
     RATE_BAR_WIDTH_MEDIUM,
 } from '../constants'
@@ -73,7 +72,7 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
                     >
                         <img
                             className="absolute filter scale-[var(--img-scale)] origin-top-left translate-x-[var(--img-translateX)] translate-y-[var(--img-translateY)]"
-                            src={url || DEFAULT_PROFILE}
+                            src={url}
                             alt="resized picture"
                             width={newWidth}
                             height={newHeight}
@@ -92,7 +91,7 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
                         >
                             <img
                                 className="absolute scale-[var(--img-scale)] translate-x-[var(--img-translateX)] translate-y-[var(--img-translateY)] origin-top-left"
-                                src={url || DEFAULT_PROFILE}
+                                src={url}
                                 alt="resized picture"
                                 width={newWidth}
                                 height={newHeight}

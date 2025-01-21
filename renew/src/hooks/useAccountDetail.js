@@ -7,6 +7,7 @@ import {
     updateUserProfile,
     updateUserProfileStyle,
 } from '../store/userSlice'
+import { createUserProfile } from '../factory/userFactory'
 
 const useAccountDetail = () => {
     const userState = useSelector((state) => state.user)
@@ -33,7 +34,7 @@ const useAccountDetail = () => {
             setProfileOption(false)
             return
         }
-        dispatch(updateUserProfileStyle({ style }))
+        dispatch(updateUserProfileStyle(style))
         setProfileSizing(false)
         setProfileOption(false)
     }
@@ -43,15 +44,19 @@ const useAccountDetail = () => {
             setErrorMessage('')
             setNickname(e.target.value)
         },
+
         handleEditProfileClick: () => {
             setProfileOption((prev) => !prev)
         },
+
         handleEditPositionClick: () => {
             setProfileSizing(true)
         },
+
         handleNewFileClick: () => {
             fileInputRef.current.click()
         },
+
         handleFileInput: async (e) => {
             setFileLoading(true)
 
@@ -71,20 +76,16 @@ const useAccountDetail = () => {
             const { url, asset_id, signature, public_id, width, height } =
                 cloudinaryRes.data
 
-            const newProfile = {
+            const newProfile = createUserProfile({
                 url,
                 assetId: asset_id,
                 signature,
                 publicId: public_id,
                 style: {
-                    scale: 1,
-                    transX: 0,
-                    transY: 0,
-                    rounded: 50,
                     width,
                     height,
                 },
-            }
+            })
 
             const firebaseRes = await userClient.updateProfile(
                 userState.username,
@@ -100,6 +101,7 @@ const useAccountDetail = () => {
                 setFileLoading(false)
                 return
             }
+
             if (userState.profile.url) {
                 imageClient.deleteInCloudinary(
                     userState.profile.signature,
@@ -107,10 +109,11 @@ const useAccountDetail = () => {
                 )
             }
 
-            dispatch(updateUserProfile({ profile: newProfile }))
+            dispatch(updateUserProfile(newProfile))
             setFileLoading(false)
             setProfileSizing(true)
         },
+
         handleSaveButtonClick: async () => {
             setSaveLoading(true)
 
@@ -127,9 +130,10 @@ const useAccountDetail = () => {
             }
 
             setSaveLoading(false)
-            dispatch(updateUserNickname({ nickname }))
+            dispatch(updateUserNickname(nickname))
             navigate('/')
         },
+
         handleChangePasswordClick: () => {
             navigate('/change-password')
         },

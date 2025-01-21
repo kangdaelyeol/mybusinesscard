@@ -8,6 +8,7 @@ import {
     updateUserProfile,
     updateUserProfileStyle,
 } from '../store/userSlice'
+import { createUserProfile } from '../factory/userFactory'
 
 export default function useProfileDetail(hideProfileDetail) {
     const userState = useSelector((state) => state.user)
@@ -32,7 +33,7 @@ export default function useProfileDetail(hideProfileDetail) {
             setImageOption(false)
             return
         }
-        dispatch(updateUserProfileStyle({ style }))
+        dispatch(updateUserProfileStyle(style))
         setImageStyling(false)
         setImageOption(false)
     }
@@ -59,20 +60,16 @@ export default function useProfileDetail(hideProfileDetail) {
             const { url, asset_id, signature, public_id, width, height } =
                 res.data
 
-            const newProfile = {
+            const newProfile = createUserProfile({
                 url,
                 assetId: asset_id,
                 signature,
                 publicId: public_id,
                 style: {
-                    scale: 1,
-                    transX: 0,
-                    transY: 0,
-                    rounded: 50,
                     width,
                     height,
                 },
-            }
+            })
 
             const firebaseRes = await userClient.updateProfile(
                 userState.username,
@@ -96,7 +93,7 @@ export default function useProfileDetail(hideProfileDetail) {
                 )
             }
 
-            dispatch(updateUserProfile({ profile: newProfile }))
+            dispatch(updateUserProfile(newProfile))
 
             setFileLoading(false)
             setImageStyling(true)

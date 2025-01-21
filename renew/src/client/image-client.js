@@ -26,10 +26,14 @@ export const imageClient = {
 
     deleteInCloudinary: (signature, assetId) => {
         const formData = new FormData()
+        const timestamp = Math.round(new Date().getTime() / 1000)
+
+        console.log(signature, assetId)
 
         formData.append('api_key', import.meta.env.VITE_API_KEY)
         formData.append('signature', signature)
         formData.append('asset_id', assetId)
+        formData.append('timeStamp', timestamp)
 
         axios.post(CLOUDINARY_DELETE_REQUEST_URL, formData).then(console.log)
     },
