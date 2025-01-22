@@ -4,13 +4,16 @@ import { store } from './store'
 import { ThemeProvider } from './context/ThemeContext'
 
 import { router } from './router/index.jsx'
+import { ResponsiveProvider } from './context/ResponsiveContext.jsx'
 
 function App() {
     return (
         <ThemeProvider>
-            <Provider store={store}>
-                <RouterProvider router={router} />
-            </Provider>
+            <ResponsiveProvider>
+                <Provider store={store}>
+                    <RouterProvider router={router} />
+                </Provider>
+            </ResponsiveProvider>
         </ThemeProvider>
     )
 }

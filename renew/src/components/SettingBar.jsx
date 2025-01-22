@@ -1,9 +1,10 @@
 import classNames from 'classnames'
 import useSettingBar from '../hooks/useSettingBar'
-import useResponsive from '../hooks/useResponsive'
+import { useContext } from 'react'
+import { ResponsiveContext } from '../context/ResponsiveContext'
 
 export default function SettingBar({ setRate, title, minVal, maxVal, value }) {
-    const { barWidth } = useResponsive()
+    const { barWidth } = useContext(ResponsiveContext)
     const {
         handleBarMove,
         handleMouseClear,

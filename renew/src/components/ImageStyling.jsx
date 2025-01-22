@@ -2,7 +2,8 @@ import SettingBar from './SettingBar'
 import { MAX_SCALE_VALUE } from '../constants'
 import useImageStyling from '../hooks/useImageStyling'
 import calculateImageSize from '../utils/calculateImageSize'
-import useResponsive from '../hooks/useResponsive'
+import { ResponsiveContext } from '../context/ResponsiveContext'
+import { useContext } from 'react'
 
 export default function ImageStyling({ url, style, saveProfileStyle }) {
     const {
@@ -14,7 +15,7 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
         handleSaveStyle,
     } = useImageStyling(style, saveProfileStyle)
 
-    const { pictureSize } = useResponsive()
+    const { pictureSize } = useContext(ResponsiveContext)
 
     const { width, height, scale, rounded, transX, transY } = imgStyle
 
