@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { imageClient, userClient } from '../client'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,8 +8,10 @@ import {
     updateUserProfileStyle,
 } from '../store/userSlice'
 import { createUserProfile } from '../factory/userFactory'
+import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
 
 const useAccountDetail = () => {
+    const { publish } = useContext(PubSubContext)
     const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
@@ -24,6 +26,7 @@ const useAccountDetail = () => {
     const navigate = useNavigate()
 
     const saveProfileStyle = async (style) => {
+        publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
         const res = await userClient.updateProfileStyle(
             userState.username,
             style,
@@ -41,15 +44,18 @@ const useAccountDetail = () => {
 
     const handlers = {
         handleNicknameChange: (e) => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setErrorMessage('')
             setNickname(e.target.value)
         },
 
         handleEditProfileClick: () => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setProfileOption((prev) => !prev)
         },
 
         handleEditPositionClick: () => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setProfileSizing(true)
         },
 
@@ -58,6 +64,7 @@ const useAccountDetail = () => {
         },
 
         handleFileInput: async (e) => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setFileLoading(true)
 
             const cloudinaryRes = await imageClient.uploadInCloudinary(
@@ -115,6 +122,7 @@ const useAccountDetail = () => {
         },
 
         handleSaveButtonClick: async () => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setSaveLoading(true)
 
             const res = await userClient.updateNickname(
@@ -135,6 +143,7 @@ const useAccountDetail = () => {
         },
 
         handleChangePasswordClick: () => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             navigate('/change-password')
         },
     }

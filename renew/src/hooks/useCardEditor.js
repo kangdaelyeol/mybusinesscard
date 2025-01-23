@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     updateCardDescription,
@@ -10,8 +10,10 @@ import {
 
 import { imageClient, cardClient } from '../client'
 import { createCardProfile } from '../factory/cardFactory'
+import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 
 export default function useCardEditor(card) {
+    const { publish } = useContext(PubSubContext)
     const [fileLoading, setFileLoading] = useState(false)
     const userState = useSelector((state) => state.user)
 
@@ -69,11 +71,13 @@ export default function useCardEditor(card) {
         },
 
         handleNameChange: (e) => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardClient.updateName(userState.username, card.id, e.target.value)
             dispatch(updateCardName({ id: card.id, value: e.target.value }))
         },
 
         handleDescriptionChange: (e) => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardClient.updateDescription(
                 userState.username,
                 card.id,
@@ -85,11 +89,13 @@ export default function useCardEditor(card) {
         },
 
         handleThemeChange: (e) => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardClient.updateTheme(userState.username, card.id, e.target.value)
             dispatch(updateCardTheme({ id: card.id, value: e.target.value }))
         },
 
         handleCardDelete: () => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             if (fileLoading) return
             cardClient.remove(userState.username, card.id)
             dispatch(deleteCard({ id: card.id }))

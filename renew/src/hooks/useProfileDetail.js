@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useContext, useRef, useState } from 'react'
 import { imageClient, userClient } from '../client'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,8 +10,10 @@ import {
 } from '../store/userSlice'
 import { createUserProfile } from '../factory/userFactory'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
+import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 
-export default function useProfileDetail(hideProfileDetail) {
+export default function useProfileDetail() {
+    const { publish } = useContext(PubSubContext)
     const userState = useSelector((state) => state.user)
     const [imageStyling, setImageStyling] = useState(false)
     const [imageOption, setImageOption] = useState(false)
@@ -105,13 +107,13 @@ export default function useProfileDetail(hideProfileDetail) {
         },
 
         handleManageAccountClick: () => {
-            hideProfileDetail()
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             navigate('/account')
         },
 
         handleLogoutClick: () => {
             localStorage.removeItem(LOCALSTORAGE_TOKEN_NAME)
-            hideProfileDetail()
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             dispatch(logoutUser())
             dispatch(clearCards())
             navigate('/login')

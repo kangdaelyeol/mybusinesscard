@@ -7,7 +7,7 @@ import { ThemeContext } from '../context/ThemeContext'
 import classNames from 'classnames'
 import { PROFILE_DETAIL_IMG_SIZE } from '../constants'
 
-export default function ProfileDetail({ hideProfileDetail }) {
+export default function ProfileDetail() {
     const {
         fileInputRef,
         handlers,
@@ -16,7 +16,7 @@ export default function ProfileDetail({ hideProfileDetail }) {
         imageStyling,
         imageOption,
         fileLoading,
-    } = useProfileDetail(hideProfileDetail)
+    } = useProfileDetail()
 
     const { theme } = useContext(ThemeContext)
 

@@ -5,8 +5,10 @@ import { cardClient, imageClient } from '../client'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
 import { createCardProfile } from '../factory/cardFactory'
+import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 
 export default function useCardMaker() {
+    const { publish } = useContext(PubSubContext)
     const { cardState, cardDispatch } = useContext(CardContext)
     const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
@@ -14,6 +16,7 @@ export default function useCardMaker() {
 
     const handlers = {
         handleDescriptionChange: (e) => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_DESCRIPTION,
                 payload: { description: e.target.value },
@@ -21,6 +24,7 @@ export default function useCardMaker() {
         },
 
         handleNameChange: (e) => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_NAME,
                 payload: { name: e.target.value },
@@ -28,6 +32,7 @@ export default function useCardMaker() {
         },
 
         handleThemeChange: (e) => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_THEME,
                 payload: { theme: e.target.value },
@@ -81,6 +86,7 @@ export default function useCardMaker() {
         },
 
         handleCardSave: async () => {
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             if (fileLoading) return
             const cardID = Date.now()
 
