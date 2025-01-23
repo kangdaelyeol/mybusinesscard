@@ -8,9 +8,10 @@ export const CardContext = createContext({
 })
 
 export const CardProvider = ({ children }) => {
-    const [cardState, cardDispatch] = useReducer(reducers.cardReducer, {
-        ...createCard(),
-    })
+    const [cardState, cardDispatch] = useReducer(
+        reducers.cardReducer,
+        createCard(),
+    )
     return (
         <CardContext.Provider value={{ cardState, cardDispatch }}>
             {children}

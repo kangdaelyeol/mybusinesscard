@@ -38,7 +38,7 @@ const reducer = (state, action) => {
                 ...state,
                 profile: {
                     ...state.profile,
-                    style: { ...state.profile.style, ...action.payload.style },
+                    style: { ...action.payload.style },
                 },
             }
     }
