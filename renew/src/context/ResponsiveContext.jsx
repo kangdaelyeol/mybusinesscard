@@ -34,6 +34,8 @@ export const ResponsiveProvider = ({ children }) => {
             }
         }, 150)
 
+        onResizeWindow()
+
         window.addEventListener('resize', onResizeWindow)
         return () => {
             window.removeEventListener('resize', onResizeWindow)
