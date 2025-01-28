@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { imageClient, userClient } from '../client'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,11 +13,21 @@ import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 
 export default function useProfileDetail() {
-    const { publish } = useContext(PubSubContext)
+    const { subscribe, unSubscribe, publish } = useContext(PubSubContext)
     const userState = useSelector((state) => state.user)
     const [imageStyling, setImageStyling] = useState(false)
     const [imageOption, setImageOption] = useState(false)
     const [fileLoading, setFileLoading] = useState(false)
+
+    useEffect(() => {
+        const hideImageStyling = () => {
+            setImageStyling(false)
+        }
+        subscribe(EVENT_TYPES.HIDE_IMAGE_STYLING, hideImageStyling)
+        return () => {
+            unSubscribe(EVENT_TYPES.HIDE_IMAGE_STYLING, hideImageStyling)
+        }
+    }, [])
 
     const fileInputRef = useRef()
 

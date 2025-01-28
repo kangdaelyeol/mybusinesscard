@@ -2,6 +2,7 @@ import { createContext, useCallback, useState } from 'react'
 
 export const EVENT_TYPES = Object.freeze({
     HIDE_PROFILE_DETAIL: Symbol.for('HIDE_PROFILE_DETAIL'),
+    HIDE_IMAGE_STYLING: Symbol.for('HIDE_IMAGE_STYLING'),
 })
 
 export const PubSubContext = createContext({

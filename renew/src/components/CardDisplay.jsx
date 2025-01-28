@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import AvatarSizing from './ImageStyling'
+import ImageStyling from './ImageStyling'
 import { CARD_IMAGE_SIZE } from '../constants'
 import ImgDisplay from './ImgDisplay'
 import useCardDisplay from '../hooks/useCardDisplay'
@@ -51,7 +51,7 @@ export default function CardDisplay({ card }) {
                 </div>
             </div>
             {editPicture && (
-                <AvatarSizing
+                <ImageStyling
                     {...data.profile}
                     saveProfileStyle={saveProfileStyle}
                 />

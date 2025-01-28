@@ -1,14 +1,27 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { CardContext } from '../context/CardContext'
 import { CARD_ACTIONS } from '../reducer/cardReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { updateCardProfileStyle } from '../store/cardsSlice'
 import { cardClient } from '../client'
+import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
 
 export default function useCardDisplay(card) {
     let data, saveProfileStyle
     const [editPicture, setEditPicture] = useState(false)
-    const userState = useSelector(state => state.user)
+    const userState = useSelector((state) => state.user)
+    const { subscribe, unSubscribe } = useContext(PubSubContext)
+
+    useEffect(() => {
+        const hideEditPicture = () => {
+            setEditPicture(false)
+        }
+
+        subscribe(EVENT_TYPES.HIDE_IMAGE_STYLING, hideEditPicture)
+        return () => {
+            unSubscribe(EVENT_TYPES.HIDE_IMAGE_STYLING, hideEditPicture)
+        }
+    }, [])
 
     if (!card) {
         const { cardState, cardDispatch } = useContext(CardContext)

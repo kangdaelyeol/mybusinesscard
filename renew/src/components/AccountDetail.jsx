@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import ImgDisplay from './ImgDisplay'
 import LoadingSpinner from './LoadingSpinner'
 import classNames from 'classnames'
-import AvatarSizing from './ImageStyling'
+import ImageStyling from './ImageStyling'
 import { ThemeContext } from '../context/ThemeContext'
 import useAccountDetail from '../hooks/useAccountDetail'
 
@@ -11,7 +11,7 @@ export default function AccountDetail() {
     const {
         fileLoading,
         profileOption,
-        profileSizing,
+        profileStyling,
         nickname,
         handlers,
         saveProfileStyle,
@@ -174,8 +174,8 @@ export default function AccountDetail() {
                 </div>
             </div>
 
-            {profileSizing && (
-                <AvatarSizing
+            {profileStyling && (
+                <ImageStyling
                     {...userState.profile}
                     saveProfileStyle={saveProfileStyle}
                 />

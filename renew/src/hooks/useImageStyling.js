@@ -1,6 +1,8 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
 export default function useAvatarSizing(style, saveProfileStyle) {
     const [imgStyle, setStyle] = useState({ ...style })
+    const { publish } = useContext(PubSubContext)
 
     const setScaleRate = (value) => {
         setStyle((prev) => ({ ...prev, scale: value }))
@@ -18,10 +20,14 @@ export default function useAvatarSizing(style, saveProfileStyle) {
         setStyle((prev) => ({ ...prev, transY: value }))
     }
 
-    const handleSaveStyle = () => {
+    const handleStyleSave = () => {
         saveProfileStyle({
             ...imgStyle,
         })
+    }
+
+    const handleExitClick = () => {
+        publish(EVENT_TYPES.HIDE_IMAGE_STYLING)
     }
 
     return {
@@ -30,6 +36,7 @@ export default function useAvatarSizing(style, saveProfileStyle) {
         setRoundedRate,
         setTransXRate,
         setTransYRate,
-        handleSaveStyle,
+        handleStyleSave,
+        handleExitClick,
     }
 }

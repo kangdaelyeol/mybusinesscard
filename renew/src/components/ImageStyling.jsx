@@ -12,7 +12,8 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
         setRoundedRate,
         setTransXRate,
         setTransYRate,
-        handleSaveStyle,
+        handleStyleSave,
+        handleExitClick,
     } = useImageStyling(style, saveProfileStyle)
 
     const { pictureSize } = useContext(ResponsiveContext)
@@ -62,7 +63,11 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
                 <div className="text-[30px] font-bold text-color-white text-center mb-[20px]">
                     Set your picture display!
                 </div>
-                <div className="flex gap-[30px]">
+                <div className="flex gap-[30px] relative">
+                    <div
+                        onClick={handleExitClick}
+                        className="absolute top-[-51px] right-0 rounded-[50%] w-[25px] h-[25px] bg-red-400 hover:bg-red-500 cursor-pointer"
+                    ></div>
                     <div
                         className="relative w-[var(--img-size)] h-[var(--img-size)] overflow-hidden border-[5px] border-gray-900 border-solid"
                         style={{
@@ -114,7 +119,7 @@ export default function ImageStyling({ url, style, saveProfileStyle }) {
                         ))}
 
                         <button
-                            onClick={handleSaveStyle}
+                            onClick={handleStyleSave}
                             className="btn-light p-[10px] mt-[20px]"
                         >
                             Save

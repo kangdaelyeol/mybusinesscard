@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { imageClient, userClient } from '../client'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,7 +11,7 @@ import { createUserProfile } from '../factory/userFactory'
 import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
 
 const useAccountDetail = () => {
-    const { publish } = useContext(PubSubContext)
+    const { publish, subscribe, unSubscribe } = useContext(PubSubContext)
     const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
@@ -19,11 +19,23 @@ const useAccountDetail = () => {
     const [fileLoading, setFileLoading] = useState(false)
     const [saveLoading, setSaveLoading] = useState(false)
     const [profileOption, setProfileOption] = useState(false)
-    const [profileSizing, setProfileSizing] = useState(false)
+    const [profileStyling, setProfileStyling] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [nickname, setNickname] = useState(userState.nickname)
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const hideProfileStyling = () => {
+            setProfileStyling(false)
+        }
+
+        subscribe(EVENT_TYPES.HIDE_IMAGE_STYLING, hideProfileStyling)
+
+        return () => {
+            unSubscribe(EVENT_TYPES.HIDE_IMAGE_STYLING, hideProfileStyling)
+        }
+    }, [])
 
     const saveProfileStyle = async (style) => {
         publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
@@ -33,12 +45,12 @@ const useAccountDetail = () => {
         )
         if (res.status !== 200) {
             console.error('Error - updateUserProfileStyle: ', e)
-            setProfileSizing(false)
+            setProfileStyling(false)
             setProfileOption(false)
             return
         }
         dispatch(updateUserProfileStyle(style))
-        setProfileSizing(false)
+        setProfileStyling(false)
         setProfileOption(false)
     }
 
@@ -56,7 +68,7 @@ const useAccountDetail = () => {
 
         handleEditPositionClick: () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
-            setProfileSizing(true)
+            setProfileStyling(true)
         },
 
         handleNewFileClick: () => {
@@ -118,7 +130,7 @@ const useAccountDetail = () => {
 
             dispatch(updateUserProfile(newProfile))
             setFileLoading(false)
-            setProfileSizing(true)
+            setProfileStyling(true)
         },
 
         handleSaveButtonClick: async () => {
@@ -151,7 +163,7 @@ const useAccountDetail = () => {
     return {
         fileLoading,
         profileOption,
-        profileSizing,
+        profileStyling,
         nickname,
         handlers,
         saveProfileStyle,
