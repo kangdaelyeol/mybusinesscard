@@ -27,6 +27,7 @@ export default function Header() {
                 <div className="absolute h-full flex items-center left-[30px] text-[20px] font-semibold max-small:text-[18px] max-small:left-[15px]">
                     {userState.nickname}
                 </div>
+                
                 <span
                     onClick={handleTitleClick}
                     className="inset-0 m-auto font-bold text-[1.8rem] max-small:text-[22px] cursor-pointer"
@@ -54,12 +55,16 @@ export default function Header() {
                         {theme === 'dark' ? 'light_mode' : 'dark_mode'}
                     </span>
                 </div>
-                <div
-                    className="absolute inset-y-0 my-auto right-[30px] h-[50px] w-[50px] cursor-pointer max-small:right-[15px]"
-                    onClick={handleProfileClick}
-                >
-                    <ImgDisplay size={50} profile={userState.profile} />
-                </div>
+
+                {userState.username && (
+                    <div
+                        className="absolute inset-y-0 my-auto right-[30px] h-[50px] w-[50px] cursor-pointer max-small:right-[15px]"
+                        onClick={handleProfileClick}
+                    >
+                        <ImgDisplay size={50} profile={userState.profile} />
+                    </div>
+                )}
+
                 {userState.username && profileDetail && (
                     <ProfileDetail hideProfileDetail={hideProfileDetail} />
                 )}

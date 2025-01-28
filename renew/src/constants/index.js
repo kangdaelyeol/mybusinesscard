@@ -29,3 +29,5 @@ export const CLOUDINARY_DELETE_REQUEST_URL =
     'https://api.cloudinary.com/v1_1/dfvqmpyji/asset/destroy'
 
 export const LOCALSTORAGE_TOKEN_NAME = 'USER_NAME_BUSINESS_CARD'
+
+export const TOAST_MESSAGE_TIMER = 1000

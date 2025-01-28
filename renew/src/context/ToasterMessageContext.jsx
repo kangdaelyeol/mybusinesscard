@@ -1,6 +1,5 @@
 import { createContext, useState } from 'react'
-
-const TOAST_MESSAGE_TIMER = 1000
+import { TOAST_MESSAGE_TIMER } from '../constants'
 
 export const ToasterMessageContext = createContext({
     toasterMessage: '',
