@@ -73,7 +73,7 @@ export const authClient = {
                 }
             }
 
-            await set(userPasswordRef, password)
+            await set(userPasswordRef, newPassword)
             return { status: 200 }
         } catch (e) {
             return { status: 400, reason: e }
