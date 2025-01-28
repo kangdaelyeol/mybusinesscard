@@ -6,12 +6,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
 import { createCardProfile } from '../factory/cardFactory'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
+import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
 export default function useCardMaker() {
     const { publish } = useContext(PubSubContext)
     const { cardState, cardDispatch } = useContext(CardContext)
+    const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
+
     const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
+
     const [fileLoading, setFileLoading] = useState(false)
 
     const handlers = {
@@ -101,6 +105,7 @@ export default function useCardMaker() {
             }
             dispatch(createCard({ card: newCard }))
             cardDispatch({ type: CARD_ACTIONS.CLEAR_CARD })
+            setToasterMessageTimeOut('New card has been added successfully!!')
         },
     }
 

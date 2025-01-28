@@ -11,13 +11,21 @@ import {
 import { createUserProfile } from '../factory/userFactory'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
+import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
 export default function useProfileDetail() {
     const { subscribe, unSubscribe, publish } = useContext(PubSubContext)
+    const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
+
     const userState = useSelector((state) => state.user)
+    const dispatch = useDispatch()
+
     const [imageStyling, setImageStyling] = useState(false)
     const [imageOption, setImageOption] = useState(false)
     const [fileLoading, setFileLoading] = useState(false)
+
+    const fileInputRef = useRef()
+    const navigate = useNavigate()
 
     useEffect(() => {
         const hideImageStyling = () => {
@@ -28,12 +36,6 @@ export default function useProfileDetail() {
             unSubscribe(EVENT_TYPES.HIDE_IMAGE_STYLING, hideImageStyling)
         }
     }, [])
-
-    const fileInputRef = useRef()
-
-    const navigate = useNavigate()
-
-    const dispatch = useDispatch()
 
     const saveProfileStyle = async (style) => {
         const res = await userClient.updateProfileStyle(
@@ -46,6 +48,7 @@ export default function useProfileDetail() {
             setImageOption(false)
             return
         }
+        setToasterMessageTimeOut('Profile style has changed successfully!!')
         dispatch(updateUserProfileStyle(style))
         setImageStyling(false)
         setImageOption(false)
@@ -126,6 +129,7 @@ export default function useProfileDetail() {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             dispatch(logoutUser())
             dispatch(clearCards())
+            setToasterMessageTimeOut('Logged out successfully!!')
             navigate('/login')
         },
     }

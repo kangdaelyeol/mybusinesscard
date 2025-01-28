@@ -3,21 +3,23 @@ import { useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
+import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
 const useChangePassword = () => {
-    const userState = useSelector((state) => state.user)
     const { publish } = useContext(PubSubContext)
+    const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
 
-    const navigate = useNavigate()
+    const userState = useSelector((state) => state.user)
 
     const [errorMessage, setErrorMessage] = useState()
+    const [saveLoading, setSaveLoading] = useState(false)
     const [passwordState, setPasswordState] = useState({
         current: '',
         new: '',
         confirm: '',
     })
 
-    const [saveLoading, setSaveLoading] = useState(false)
+    const navigate = useNavigate()
 
     const handlers = {
         handleCurrentPasswordChange: (e) => {
@@ -57,6 +59,7 @@ const useChangePassword = () => {
 
             navigate('/')
             setSaveLoading(false)
+            setToasterMessageTimeOut('Password has been changed successfully!!')
         },
 
         handleAccountSettingsClick: () => {

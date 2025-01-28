@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 export default function useHeader() {
-    const userState = useSelector((state) => state.user)
-    const [profileDetail, setProfileDetail] = useState(false)
     const { subscribe, unSubscribe, publish } = useContext(PubSubContext)
+
+    const userState = useSelector((state) => state.user)
+
+    const [profileDetail, setProfileDetail] = useState(false)
 
     useEffect(() => {
         const hideProfileDetail = () => {

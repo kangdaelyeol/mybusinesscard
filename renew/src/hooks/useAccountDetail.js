@@ -9,19 +9,24 @@ import {
 } from '../store/userSlice'
 import { createUserProfile } from '../factory/userFactory'
 import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
+import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
 const useAccountDetail = () => {
     const { publish, subscribe, unSubscribe } = useContext(PubSubContext)
+    const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
+    
     const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
-    const fileInputRef = useRef()
     const [fileLoading, setFileLoading] = useState(false)
     const [saveLoading, setSaveLoading] = useState(false)
     const [profileOption, setProfileOption] = useState(false)
     const [profileStyling, setProfileStyling] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [nickname, setNickname] = useState(userState.nickname)
+
+
+    const fileInputRef = useRef()
 
     const navigate = useNavigate()
 
@@ -130,6 +135,9 @@ const useAccountDetail = () => {
 
             dispatch(updateUserProfile(newProfile))
             setFileLoading(false)
+            setToasterMessageTimeOut(
+                'Your account image has been updated successfully!!',
+            )
             setProfileStyling(true)
         },
 
@@ -151,6 +159,9 @@ const useAccountDetail = () => {
 
             setSaveLoading(false)
             dispatch(updateUserNickname(nickname))
+            setToasterMessageTimeOut(
+                'Your account info has been updated successfully!!',
+            )
             navigate('/')
         },
 

@@ -5,15 +5,18 @@ import { ThemeProvider } from './context/ThemeContext'
 import { router } from './router/index.jsx'
 import { ResponsiveProvider } from './context/ResponsiveContext.jsx'
 import PubSubProvider from './context/PubSubContext.jsx'
+import { ToasterMessageProvider } from './context/ToasterMessageContext.jsx'
 
 function App() {
     return (
         <ThemeProvider>
             <PubSubProvider>
                 <ResponsiveProvider>
-                    <Provider store={store}>
-                        <RouterProvider router={router} />
-                    </Provider>
+                    <ToasterMessageProvider>
+                        <Provider store={store}>
+                            <RouterProvider router={router} />
+                        </Provider>
+                    </ToasterMessageProvider>
                 </ResponsiveProvider>
             </PubSubProvider>
         </ThemeProvider>

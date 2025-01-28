@@ -1,20 +1,25 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { authClient } from '../client'
 import { useDispatch } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../store/userSlice'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
+import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
 export default function useLogin() {
+    const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
+
     const dispatch = useDispatch()
+
     const [loading, setLoading] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
     const [loginInput, setLoginInput] = useState({
         username: '',
         password: '',
         remember: false,
     })
-    const [errorMessage, setErrorMessage] = useState('')
+
     const navigate = useNavigate()
 
     const handlers = {
@@ -35,7 +40,7 @@ export default function useLogin() {
                     localStorage.setItem(LOCALSTORAGE_TOKEN_NAME, username)
                 dispatch(loginUser({ username, profile, nickname }))
                 dispatch(initCards({ cards }))
-
+                setToasterMessageTimeOut('Logged in successfully!!')
                 navigate('/')
             } else if (res.status === 400) {
                 setErrorMessage(res.reason)

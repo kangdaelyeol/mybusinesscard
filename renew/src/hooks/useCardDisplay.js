@@ -7,10 +7,11 @@ import { cardClient } from '../client'
 import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
 
 export default function useCardDisplay(card) {
-    let data, saveProfileStyle
-    const [editPicture, setEditPicture] = useState(false)
-    const userState = useSelector((state) => state.user)
     const { subscribe, unSubscribe } = useContext(PubSubContext)
+
+    const userState = useSelector((state) => state.user)
+
+    const [editPicture, setEditPicture] = useState(false)
 
     useEffect(() => {
         const hideEditPicture = () => {
@@ -22,6 +23,8 @@ export default function useCardDisplay(card) {
             unSubscribe(EVENT_TYPES.HIDE_IMAGE_STYLING, hideEditPicture)
         }
     }, [])
+
+    let data, saveProfileStyle
 
     if (!card) {
         const { cardState, cardDispatch } = useContext(CardContext)

@@ -1,22 +1,24 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { userClient } from '../client'
 import { useDispatch } from 'react-redux'
 import { initCards } from '../store/cardsSlice'
 import { loginUser } from '../store/userSlice'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
+import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
 export default function useSignup() {
+    const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
+
     const dispatch = useDispatch()
 
+    const [errorMessage, setErrorMessage] = useState('')
+    const [loading, setLoading] = useState(false)
     const [signupInput, setSignupInput] = useState({
         username: '',
         password: '',
         nickname: '',
         confirmPassword: '',
     })
-    const [errorMessage, setErrorMessage] = useState('')
-
-    const [loading, setLoading] = useState(false)
 
     const handlers = {
         handleUsernameChange: (e) => {
@@ -62,10 +64,11 @@ export default function useSignup() {
 
                 dispatch(loginUser({ username, profile, nickname }))
                 dispatch(initCards({ cards }))
+                setToasterMessageTimeOut('Sign up sucessfully!!')
             } else {
                 setErrorMessage(res.reason)
+                setLoading(false)
             }
-
             setLoading(false)
         },
     }

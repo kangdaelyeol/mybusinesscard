@@ -11,13 +11,17 @@ import {
 import { imageClient, cardClient } from '../client'
 import { createCardProfile } from '../factory/cardFactory'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
+import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
 export default function useCardEditor(card) {
     const { publish } = useContext(PubSubContext)
-    const [fileLoading, setFileLoading] = useState(false)
+    const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
+    
     const userState = useSelector((state) => state.user)
-
     const dispatch = useDispatch()
+
+    const [fileLoading, setFileLoading] = useState(false)
+
 
     const handlers = {
         handleProfileChange: async (e) => {
@@ -99,6 +103,7 @@ export default function useCardEditor(card) {
             if (fileLoading) return
             cardClient.remove(userState.username, card.id)
             dispatch(deleteCard({ id: card.id }))
+            setToasterMessageTimeOut('Card has been deleted successfully!!')
         },
     }
 
