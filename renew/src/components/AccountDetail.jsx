@@ -19,6 +19,8 @@ export default function AccountDetail() {
         userState,
         saveLoading,
         errorMessage,
+        deleteAccountModal,
+        deleteAccountLoading,
     } = useAccountDetail()
     return (
         <div
@@ -159,6 +161,78 @@ export default function AccountDetail() {
                     >
                         {saveLoading ? <LoadingSpinner /> : 'Save'}
                     </div>
+
+                    <div
+                        onClick={handlers.handleDeleteAccountClick}
+                        className="cursor-pointer text-red-600 hover:text-red-500 mt-[20px]"
+                    >
+                        Delete Account
+                    </div>
+
+                    {deleteAccountModal && (
+                        <div
+                            className={classNames(
+                                'fixed top-0 left-0 w-full h-full flex justify-center items-center',
+                                {
+                                    'bg-color-black/90': theme === 'dark',
+                                    'bg-color-white-light/90':
+                                        theme === 'light',
+                                },
+                            )}
+                        >
+                            <div
+                                className={classNames(
+                                    'h-[300px] w-[500px] rounded-[20px] flex flex-col justify-center items-center gap-[30px]',
+                                    {
+                                        'bg-color-black-semilight':
+                                            theme === 'dark',
+                                        'bg-color-white': theme === 'light',
+                                    },
+                                )}
+                            >
+                                <div className="text-[20px] font-bold">
+                                    Are you sure to delete Account?
+                                </div>
+                                <div className="flex justify-center gap-[30px]">
+                                    <div
+                                        onClick={
+                                            handlers.handleDeleteAccountInModalClick
+                                        }
+                                        className={classNames(
+                                            'px-[15px] py-[10px] rounded-[5px]',
+                                            {
+                                                'btn-dark text-red-500 hover:text-red-400':
+                                                    theme === 'dark',
+                                                'bg-red-500 hover:bg-red-400 text-white cursor-pointer':
+                                                    theme === 'light',
+                                            },
+                                        )}
+                                    >
+                                        {deleteAccountLoading ? (
+                                            <LoadingSpinner />
+                                        ) : (
+                                            'Delete'
+                                        )}
+                                    </div>
+                                    <div
+                                        onClick={
+                                            handlers.handleDeleteAccountCancelClick
+                                        }
+                                        className={classNames(
+                                            ' px-[15px] py-[10px] rounded-[5px]',
+                                            {
+                                                'btn-dark text-color-white':
+                                                    theme === 'dark',
+                                                'btn-light': theme === 'light',
+                                            },
+                                        )}
+                                    >
+                                        Cancel
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
 
                     <div
                         className={classNames(

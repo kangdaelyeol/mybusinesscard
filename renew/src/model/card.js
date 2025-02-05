@@ -24,6 +24,3 @@ export const DEFAULT_CARD = {
     theme: 'black',
     profile: DEFAULT_CARD_PROFILE,
 }
-
-
-

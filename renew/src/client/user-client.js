@@ -1,6 +1,6 @@
 import { createUser } from '../factory/userFactory'
 import { db } from '../service/firebase'
-import { ref, set, get } from 'firebase/database'
+import { ref, set, get, remove } from 'firebase/database'
 
 export const userClient = {
     get: async (username) => {
@@ -77,6 +77,22 @@ export const userClient = {
             }
         } catch (e) {
             return { status: 400, reason: e }
+        }
+    },
+
+    remove: async (username) => {
+        const userRef = ref(db, `/users/${username}`)
+        try {
+            await remove(userRef, null)
+
+            return {
+                status: 200,
+            }
+        } catch (e) {
+            return {
+                status: 400,
+                reason: e,
+            }
         }
     },
 

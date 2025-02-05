@@ -3,6 +3,7 @@ import { imageClient, userClient } from '../client'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
+    logoutUser,
     updateUserNickname,
     updateUserProfile,
     updateUserProfileStyle,
@@ -10,21 +11,24 @@ import {
 import { createUserProfile } from '../factory/userFactory'
 import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
+import { clearCards } from '../store/cardsSlice'
+import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
 
 const useAccountDetail = () => {
     const { publish, subscribe, unSubscribe } = useContext(PubSubContext)
     const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
-    
+
     const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
     const [fileLoading, setFileLoading] = useState(false)
     const [saveLoading, setSaveLoading] = useState(false)
+    const [deleteAccountLoading, setDeleteAccountLoading] = useState(false)
     const [profileOption, setProfileOption] = useState(false)
     const [profileStyling, setProfileStyling] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [nickname, setNickname] = useState(userState.nickname)
-
+    const [deleteAccountModal, setDeleteAccountModal] = useState(false)
 
     const fileInputRef = useRef()
 
@@ -97,14 +101,22 @@ const useAccountDetail = () => {
                 return
             }
 
-            const { url, asset_id, signature, public_id, width, height } =
-                cloudinaryRes.data
+            const {
+                url,
+                asset_id,
+                signature,
+                public_id,
+                width,
+                height,
+                created_at,
+            } = cloudinaryRes.data
 
             const newProfile = createUserProfile({
                 url,
                 assetId: asset_id,
                 signature,
                 publicId: public_id,
+                createdAt: created_at,
                 style: {
                     width,
                     height,
@@ -119,8 +131,8 @@ const useAccountDetail = () => {
             if (firebaseRes.status !== 200) {
                 console.error('Error - uploadInFirebase: ', firebaseRes.reason)
                 imageClient.deleteInCloudinary(
-                    newProfile.signature,
                     newProfile.assetId,
+                    newProfile.publicId,
                 )
                 setFileLoading(false)
                 return
@@ -128,8 +140,8 @@ const useAccountDetail = () => {
 
             if (userState.profile.url) {
                 imageClient.deleteInCloudinary(
-                    userState.profile.signature,
                     userState.profile.assetId,
+                    userState.profile.publicId,
                 )
             }
 
@@ -169,6 +181,36 @@ const useAccountDetail = () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             navigate('/change-password')
         },
+
+        handleDeleteAccountClick: () => {
+            setDeleteAccountModal(true)
+        },
+
+        handleDeleteAccountCancelClick: () => {
+            setDeleteAccountModal(false)
+        },
+
+        handleDeleteAccountInModalClick: async () => {
+            if (deleteAccountLoading) return
+
+            setDeleteAccountLoading(true)
+            const removeUserRes = await userClient.remove(userState.username)
+
+            if (removeUserRes.status === 200) {
+                localStorage.removeItem(LOCALSTORAGE_TOKEN_NAME)
+                publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
+                dispatch(logoutUser())
+                dispatch(clearCards())
+                setToasterMessageTimeOut('Account is removed successfully!!')
+                navigate('/login')
+            } else {
+                setToasterMessageTimeOut(
+                    'failed - remove account: ',
+                    removeUserRes.message,
+                )
+                setDeleteAccountLoading(false)
+            }
+        },
     }
 
     return {
@@ -182,6 +224,8 @@ const useAccountDetail = () => {
         userState,
         saveLoading,
         errorMessage,
+        deleteAccountModal,
+        deleteAccountLoading,
     }
 }
 
