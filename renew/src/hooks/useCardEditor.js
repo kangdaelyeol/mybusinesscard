@@ -16,12 +16,11 @@ import { ToasterMessageContext } from '../context/ToasterMessageContext'
 export default function useCardEditor(card) {
     const { publish } = useContext(PubSubContext)
     const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
-    
+
     const userState = useSelector((state) => state.user)
     const dispatch = useDispatch()
 
     const [fileLoading, setFileLoading] = useState(false)
-
 
     const handlers = {
         handleProfileChange: async (e) => {
@@ -40,13 +39,12 @@ export default function useCardEditor(card) {
                 return
             }
 
-            const { url, asset_id, signature, public_id, width, height } =
+            const { url, asset_id, public_id, width, height } =
                 cloudinaryRes.data
 
             const newProfile = createCardProfile({
                 url,
                 assetId: asset_id,
-                signature,
                 publicId: public_id,
                 style: {
                     width,
@@ -62,12 +60,12 @@ export default function useCardEditor(card) {
 
             if (firebaseRes.status !== 200) {
                 console.log('Error - uploadInFirebase: ', firebaseRes.reason)
-                imageClient.deleteInCloudinary(signature, asset_id)
+                imageClient.deleteInCloudinary(asset_id, public_id)
                 setFileLoading(false)
                 return
             }
             if (card.profile.url) {
-                imageClient.deleteInCloudinary(card.signature, card.assetId)
+                imageClient.deleteInCloudinary(card.assetId, card.publicId)
             }
 
             dispatch(updateCardProfile({ id: card.id, value: newProfile }))

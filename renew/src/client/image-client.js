@@ -21,11 +21,11 @@ export const imageClient = {
         formData.append('upload_preset', import.meta.env.VITE_UPLOAD_PRESET)
 
         const res = await axios.post(CLOUDINARY_UPLOAD_REQUEST_URL, formData)
-        console.log(res)
+
         return { status: res.status, data: res.data }
     },
 
-    deleteInCloudinary: async ({ assetId, publicId }) => {
+    deleteInCloudinary: async (assetId, publicId) => {
         const formData = new FormData()
 
         const sigSHA1 = generateSignatureSHA1(
@@ -43,6 +43,7 @@ export const imageClient = {
                 CLOUDINARY_DELETE_REQUEST_URL,
                 formData,
             )
+            console.log(res)
             return {
                 status: 200,
             }

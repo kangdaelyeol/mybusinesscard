@@ -12,7 +12,6 @@ export const DEFAULT_USER_PROFILE_STYLE = {
 export const DEFAULT_USER_PROFILE = {
     url: DEFAULT_PROFILE_URL,
     assetId: '',
-    signature: '',
     publicId: '',
     style: DEFAULT_USER_PROFILE_STYLE,
 }

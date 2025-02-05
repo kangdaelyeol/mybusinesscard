@@ -101,22 +101,13 @@ const useAccountDetail = () => {
                 return
             }
 
-            const {
-                url,
-                asset_id,
-                signature,
-                public_id,
-                width,
-                height,
-                created_at,
-            } = cloudinaryRes.data
+            const { url, asset_id, public_id, width, height } =
+                cloudinaryRes.data
 
             const newProfile = createUserProfile({
                 url,
                 assetId: asset_id,
-                signature,
                 publicId: public_id,
-                createdAt: created_at,
                 style: {
                     width,
                     height,

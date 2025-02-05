@@ -11,10 +11,9 @@ export const DEFAULT_CARD_PROFILE_STYLE = {
 
 export const DEFAULT_CARD_PROFILE = {
     url: DEFAULT_CARD_PROFILE_URL,
-    assetId: '',
-    signature: '',
-    publicId: '',
     style: DEFAULT_CARD_PROFILE_STYLE,
+    assetId: '',
+    publicId: '',
 }
 
 export const DEFAULT_CARD = {

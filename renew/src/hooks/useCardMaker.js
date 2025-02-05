@@ -56,19 +56,11 @@ export default function useCardMaker() {
 
             if (cardState.profile.url)
                 imageClient.deleteInCloudinary(
-                    cardState.profile.signature,
                     cardState.profile.assetId,
+                    cardState.profile.publicId,
                 )
 
-            const {
-                url,
-                asset_id,
-                signature,
-                public_id,
-                timestamp,
-                width,
-                height,
-            } = res.data
+            const { url, asset_id, public_id, width, height } = res.data
 
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_PROFILE,
@@ -76,9 +68,7 @@ export default function useCardMaker() {
                     profile: createCardProfile({
                         url,
                         assetId: asset_id,
-                        signature,
                         publicId: public_id,
-                        timestamp,
                         style: {
                             width,
                             height,

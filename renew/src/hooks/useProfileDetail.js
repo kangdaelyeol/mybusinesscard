@@ -73,13 +73,11 @@ export default function useProfileDetail() {
                 return
             }
 
-            const { url, asset_id, signature, public_id, width, height } =
-                res.data
+            const { url, asset_id, public_id, width, height } = res.data
 
             const newProfile = createUserProfile({
                 url,
                 assetId: asset_id,
-                signature,
                 publicId: public_id,
                 style: {
                     width,
@@ -94,18 +92,18 @@ export default function useProfileDetail() {
 
             if (firebaseRes.status !== 200) {
                 console.error('Error - uploadInFirebase: ', firebaseRes.reason)
-                imageClient.deleteInCloudinary(
-                    newProfile.signature,
+                await imageClient.deleteInCloudinary(
                     newProfile.assetId,
+                    newProfile.publicId,
                 )
                 setFileLoading(false)
                 return
             }
 
             if (userState.profile.url) {
-                imageClient.deleteInCloudinary(
-                    userState.profile.signature,
+                await imageClient.deleteInCloudinary(
                     userState.profile.assetId,
+                    userState.profile.publicId,
                 )
             }
 

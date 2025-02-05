@@ -26,7 +26,7 @@ export const CLOUDINARY_UPLOAD_REQUEST_URL =
     'https://api.cloudinary.com/v1_1/dfvqmpyji/image/upload'
 
 export const CLOUDINARY_DELETE_REQUEST_URL =
-    'https://api.cloudinary.com/v1_1/dfvqmpyji/asset/destroy'
+    'https://api.cloudinary.com/v1_1/dfvqmpyji/image/destroy'
 
 export const LOCALSTORAGE_TOKEN_NAME = 'USER_NAME_BUSINESS_CARD'
 
