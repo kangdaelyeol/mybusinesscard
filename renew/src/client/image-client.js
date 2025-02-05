@@ -4,6 +4,7 @@ import {
     CLOUDINARY_DELETE_REQUEST_URL,
     CLOUDINARY_UPLOAD_REQUEST_URL,
 } from '../constants'
+import generateSignatureSHA1 from '../utils/generateSignatureSHA1'
 
 export const imageClient = {
     uploadInCloudinary: async (file) => {
@@ -20,21 +21,33 @@ export const imageClient = {
         formData.append('upload_preset', import.meta.env.VITE_UPLOAD_PRESET)
 
         const res = await axios.post(CLOUDINARY_UPLOAD_REQUEST_URL, formData)
-
+        console.log(res)
         return { status: res.status, data: res.data }
     },
 
-    deleteInCloudinary: (signature, assetId) => {
+    deleteInCloudinary: async ({ assetId, publicId }) => {
         const formData = new FormData()
-        const timestamp = Math.round(new Date().getTime() / 1000)
 
-        console.log(signature, assetId)
+        const sigSHA1 = generateSignatureSHA1(
+            publicId,
+            import.meta.env.VITE_CLOUDINARY_API_SECRET,
+        )
 
-        formData.append('api_key', import.meta.env.VITE_API_KEY)
-        formData.append('signature', signature)
         formData.append('asset_id', assetId)
-        formData.append('timeStamp', timestamp)
-
-        axios.post(CLOUDINARY_DELETE_REQUEST_URL, formData).then(console.log)
+        formData.append('public_id', publicId)
+        formData.append('timestamp', new Date().getTime())
+        formData.append('api_key', import.meta.env.VITE_API_KEY)
+        formData.append('signature', sigSHA1)
+        try {
+            const res = await axios.post(
+                CLOUDINARY_DELETE_REQUEST_URL,
+                formData,
+            )
+            return {
+                status: 200,
+            }
+        } catch (e) {
+            console.log(e)
+        }
     },
 }
