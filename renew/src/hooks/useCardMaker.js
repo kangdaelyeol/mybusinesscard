@@ -4,7 +4,7 @@ import { CARD_ACTIONS } from '../reducer/cardReducer'
 import { cardClient, imageClient } from '../client'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
-import { createCardProfile } from '../factory/cardFactory'
+import cardFactory from '../factory/cardFactory'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
@@ -65,7 +65,7 @@ export default function useCardMaker() {
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_PROFILE,
                 payload: {
-                    profile: createCardProfile({
+                    profile: cardFactory.createCardProfile({
                         url,
                         assetId: asset_id,
                         publicId: public_id,
@@ -81,18 +81,22 @@ export default function useCardMaker() {
 
         handleCardSave: async () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
+
             if (fileLoading) return
+
             const cardID = Date.now()
 
-            const newCard = {
+            const newCard = cardFactory.createCard({
                 ...cardState,
                 id: cardID,
-            }
+            })
+
             const res = await cardClient.create(userState.username, newCard)
             if (res.status !== 200) {
                 console.error('Error - setCard: ', res.reason)
                 return
             }
+
             dispatch(createCard({ card: newCard }))
             cardDispatch({ type: CARD_ACTIONS.CLEAR_CARD })
             setToasterMessageTimeOut('New card has been added successfully!!')

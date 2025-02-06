@@ -9,7 +9,7 @@ import {
 } from '../store/cardsSlice'
 
 import { imageClient, cardClient } from '../client'
-import { createCardProfile } from '../factory/cardFactory'
+import cardFactory from '../factory/cardFactory'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
@@ -42,7 +42,7 @@ export default function useCardEditor(card) {
             const { url, asset_id, public_id, width, height } =
                 cloudinaryRes.data
 
-            const newProfile = createCardProfile({
+            const newProfile = cardFactory.createCardProfile({
                 url,
                 assetId: asset_id,
                 publicId: public_id,

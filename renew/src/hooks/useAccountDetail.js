@@ -8,7 +8,7 @@ import {
     updateUserProfile,
     updateUserProfileStyle,
 } from '../store/userSlice'
-import { createUserProfile } from '../factory/userFactory'
+import userFactory from '../factory/userFactory'
 import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
 import { clearCards } from '../store/cardsSlice'
@@ -104,7 +104,7 @@ const useAccountDetail = () => {
             const { url, asset_id, public_id, width, height } =
                 cloudinaryRes.data
 
-            const newProfile = createUserProfile({
+            const newProfile = userFactory.createUserProfile({
                 url,
                 assetId: asset_id,
                 publicId: public_id,

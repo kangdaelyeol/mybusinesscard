@@ -4,19 +4,29 @@ import {
     DEFAULT_USER_PROFILE_STYLE,
 } from '../model/user'
 
-export const createUserProfileStyle = (overrides = {}) => ({
-    ...DEFAULT_USER_PROFILE_STYLE,
-    ...overrides,
-})
+const userFactory = {
+    createUserProfileStyle(overrides = {}) {
+        return {
+            ...DEFAULT_USER_PROFILE_STYLE,
+            ...overrides,
+        }
+    },
 
-export const createUserProfile = (overrides = {}) => ({
-    ...DEFAULT_USER_PROFILE,
-    ...overrides,
-    style: createUserProfileStyle(overrides.style),
-})
+    createUserProfile(overrides = {}) {
+        return {
+            ...DEFAULT_USER_PROFILE,
+            ...overrides,
+            style: this.createUserProfileStyle(overrides.style),
+        }
+    },
 
-export const createUser = (overrides = {}) => ({
-    ...DEFAULT_USER,
-    ...overrides,
-    profile: createUserProfile(overrides.profile),
-})
+    createUser(overrides = {}) {
+        return {
+            ...DEFAULT_USER,
+            ...overrides,
+            profile: this.createUserProfile(overrides.profile),
+        }
+    },
+}
+
+export default userFactory

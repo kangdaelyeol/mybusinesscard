@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { createUser } from '../factory/userFactory'
+import userFactory from '../factory/userFactory'
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: createUser(),
+    initialState: userFactory.createUser(),
     reducers: {
         loginUser: (state, action) => {
             const { username, profile, nickname } = action.payload
@@ -14,7 +14,7 @@ const userSlice = createSlice({
         },
 
         logoutUser: (state, _) => {
-            const { username, profile, nickname } = createUser()
+            const { username, profile, nickname } = userFactory.createUser()
 
             state.username = username
             state.profile = profile

@@ -1,4 +1,4 @@
-import { createUser } from '../factory/userFactory'
+import userFactory from '../factory/userFactory'
 import { db } from '../service/firebase'
 import { ref, set, get, remove } from 'firebase/database'
 
@@ -60,7 +60,7 @@ export const userClient = {
                 return { status: 400, reason: 'username already exists.' }
             }
 
-            const newUser = createUser({
+            const newUser = userFactory.createUser({
                 username,
                 nickname,
                 password,

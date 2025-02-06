@@ -4,19 +4,29 @@ import {
     DEFAULT_CARD_PROFILE_STYLE,
 } from '../model/card'
 
-export const createCardProfileStyle = (overrides = {}) => ({
-    ...DEFAULT_CARD_PROFILE_STYLE,
-    ...overrides,
-})
+const cardFactory = {
+    createCardProfileStyle(overrides = {}) {
+        return {
+            ...DEFAULT_CARD_PROFILE_STYLE,
+            ...overrides,
+        }
+    },
 
-export const createCardProfile = (overrides = {}) => ({
-    ...DEFAULT_CARD_PROFILE,
-    ...overrides,
-    style: createCardProfileStyle(overrides.style),
-})
+    createCardProfile(overrides = {}) {
+        return {
+            ...DEFAULT_CARD_PROFILE,
+            ...overrides,
+            style: this.createCardProfileStyle(overrides.style),
+        }
+    },
 
-export const createCard = (overrides = {}) => ({
-    ...DEFAULT_CARD,
-    ...overrides,
-    profile: createCardProfile(overrides.profile),
-})
+    createCard(overrides = {}) {
+        return {
+            ...DEFAULT_CARD,
+            ...overrides,
+            profile: this.createCardProfile(overrides.profile),
+        }
+    },
+}
+
+export default cardFactory

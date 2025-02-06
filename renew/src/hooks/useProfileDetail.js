@@ -8,7 +8,7 @@ import {
     updateUserProfile,
     updateUserProfileStyle,
 } from '../store/userSlice'
-import { createUserProfile } from '../factory/userFactory'
+import userFactory from '../factory/userFactory'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
@@ -75,7 +75,7 @@ export default function useProfileDetail() {
 
             const { url, asset_id, public_id, width, height } = res.data
 
-            const newProfile = createUserProfile({
+            const newProfile = userFactory.createUserProfile({
                 url,
                 assetId: asset_id,
                 publicId: public_id,
