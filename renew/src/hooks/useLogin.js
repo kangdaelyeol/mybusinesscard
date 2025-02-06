@@ -1,11 +1,11 @@
 import { useContext, useState } from 'react'
-import { authClient } from '../client'
 import { useDispatch } from 'react-redux'
-import { initCards } from '../store/cardsSlice'
 import { useNavigate } from 'react-router-dom'
-import { loginUser } from '../store/userSlice'
-import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
-import { ToasterMessageContext } from '../context'
+import { authClient } from '@/client'
+import { LOCALSTORAGE_TOKEN_NAME } from '@/constants'
+import { ToasterMessageContext } from '@/context'
+import { initCards } from '@/store/cardsSlice'
+import { loginUser } from '@/store/userSlice'
 
 export default function useLogin() {
     const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)

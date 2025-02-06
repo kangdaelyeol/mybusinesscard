@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { userClient } from '../client'
 import { useDispatch, useSelector } from 'react-redux'
-import { initCards } from '../store/cardsSlice'
-import { loginUser } from '../store/userSlice'
-import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
+import { userClient } from '@/client'
+import { initCards } from '@/store/cardsSlice'
+import { loginUser } from '@/store/userSlice'
+import { LOCALSTORAGE_TOKEN_NAME } from '@/constants'
+
 export default function LoggedInOnly({ children }) {
     const userState = useSelector((state) => state.user)
 

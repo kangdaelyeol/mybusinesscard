@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react'
-import { EVENT_TYPES, PubSubContext } from '../context'
+import { EVENT_TYPES, PubSubContext } from '@/context'
+
 export default function useAvatarSizing(style, saveProfileStyle) {
     const { publish } = useContext(PubSubContext)
 

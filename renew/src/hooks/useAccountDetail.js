@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { imageClient, userClient } from '../client'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -7,12 +6,13 @@ import {
     updateUserNickname,
     updateUserProfile,
     updateUserProfileStyle,
-} from '../store/userSlice'
-import { userFactory } from '../factory'
-import { EVENT_TYPES, PubSubContext } from '../context'
-import { ToasterMessageContext } from '../context/ToasterMessageContext'
-import { clearCards } from '../store/cardsSlice'
-import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
+} from '@/store/userSlice'
+import { imageClient, userClient } from '@/client'
+import { userFactory } from '@/factory'
+import { EVENT_TYPES, PubSubContext } from '@/context'
+import { ToasterMessageContext } from '@/context/ToasterMessageContext'
+import { clearCards } from '@/store/cardsSlice'
+import { LOCALSTORAGE_TOKEN_NAME } from '@/constants'
 
 const useAccountDetail = () => {
     const { publish, subscribe, unSubscribe } = useContext(PubSubContext)

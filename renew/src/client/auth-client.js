@@ -1,4 +1,4 @@
-import { db } from '../service/firebase'
+import { db } from '@/service/firebase'
 import { ref, get, child, set } from 'firebase/database'
 
 export const authClient = {

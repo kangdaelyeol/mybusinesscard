@@ -1,2 +1,2 @@
-export * from './cardFactory'
-export * from './userFactory'
+export * from '@/factory/cardFactory'
+export * from '@/factory/userFactory'

@@ -1,7 +1,8 @@
 import { useContext } from 'react'
-import { ThemeContext } from '../context'
+import { ThemeContext } from '@/context'
 import classNames from 'classnames'
-import { GITHUB_URL } from '../constants'
+import { GITHUB_URL } from '@/constants'
+
 export default function Footer() {
     const { theme } = useContext(ThemeContext)
     return (

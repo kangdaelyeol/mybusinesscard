@@ -4,7 +4,7 @@ import {
     PICTURE_BOX_SIZE_MEDIUM,
     RATE_BAR_WIDTH,
     RATE_BAR_WIDTH_MEDIUM,
-} from '../constants'
+} from '@/constants'
 
 import { throttle } from 'lodash'
 

@@ -1,8 +1,8 @@
 import classNames from 'classnames'
-import ImageStyling from './ImageStyling'
-import { CARD_IMAGE_SIZE } from '../constants'
-import ImgDisplay from './ImgDisplay'
-import useCardDisplay from '../hooks/useCardDisplay'
+import { CARD_IMAGE_SIZE } from '@/constants'
+import useCardDisplay from '@/hooks/useCardDisplay'
+import ImageStyling from '@/components/ImageStyling'
+import ImgDisplay from '@/components/ImgDisplay'
 
 export default function CardDisplay({ card }) {
     const { data, saveProfileStyle, editPicture, handlePictureEdit } =

@@ -1,9 +1,9 @@
 import { useContext } from 'react'
-import { ThemeContext } from '../context'
 import classNames from 'classnames'
-import ProfileDetail from './ProfileDetail'
-import ImgDisplay from './ImgDisplay'
-import useHeader from '../hooks/useHeader'
+import { ThemeContext } from '@/context'
+import useHeader from '@/hooks/useHeader'
+import ProfileDetail from '@/components/ProfileDetail'
+import ImgDisplay from '@/components/ImgDisplay'
 
 export default function Header() {
     const { theme, toggleTheme } = useContext(ThemeContext)

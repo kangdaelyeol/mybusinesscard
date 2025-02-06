@@ -1,16 +1,16 @@
 import { useContext, useEffect, useRef, useState } from 'react'
-import { imageClient, userClient } from '../client'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { clearCards } from '../store/cardsSlice'
+import { imageClient, userClient } from '@/client'
+import { userFactory } from '@/factory'
+import { LOCALSTORAGE_TOKEN_NAME } from '@/constants'
+import { PubSubContext, EVENT_TYPES, ToasterMessageContext } from '@/context'
+import { clearCards } from '@/store/cardsSlice'
 import {
     logoutUser,
     updateUserProfile,
     updateUserProfileStyle,
-} from '../store/userSlice'
-import { userFactory } from '../factory'
-import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
-import { PubSubContext, EVENT_TYPES, ToasterMessageContext } from '../context'
+} from '@/store/userSlice'
 
 export default function useProfileDetail() {
     const { subscribe, unSubscribe, publish } = useContext(PubSubContext)

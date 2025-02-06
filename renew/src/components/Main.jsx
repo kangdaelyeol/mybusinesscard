@@ -1,10 +1,11 @@
 import { useContext } from 'react'
-import CardDisplay from './CardDisplay'
 import { useSelector } from 'react-redux'
-import { CardProvider, ThemeContext } from '../context'
 import classNames from 'classnames'
-import CardEditor from './CardEditor'
-import CardMaker from './CardMaker'
+import { CardProvider, ThemeContext } from '@/context'
+import CardDisplay from '@/components/CardDisplay'
+import CardEditor from '@/components/CardEditor'
+import CardMaker from '@/components/CardMaker'
+
 export default function Main() {
     const { theme } = useContext(ThemeContext)
     const state = useSelector((state) => state.cards)

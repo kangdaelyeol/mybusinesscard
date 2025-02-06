@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import classNames from 'classnames'
-import { ThemeContext } from '../context'
-import LoadingSpinner from './LoadingSpinner'
-import useSignup from '../hooks/useSignup'
+import { ThemeContext } from '@/context'
+import useSignup from '@/hooks/useSignup'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function Signup() {
     const { theme } = useContext(ThemeContext)

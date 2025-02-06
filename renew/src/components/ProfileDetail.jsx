@@ -1,11 +1,11 @@
-import ImageStyling from './ImageStyling'
-import ImgDisplay from './ImgDisplay'
-import LoadingSpinner from './LoadingSpinner'
-import useProfileDetail from '../hooks/useProfileDetail'
 import { useContext } from 'react'
-import { ThemeContext } from '../context'
 import classNames from 'classnames'
-import { PROFILE_DETAIL_IMG_SIZE } from '../constants'
+import { ThemeContext } from '@/context'
+import { PROFILE_DETAIL_IMG_SIZE } from '@/constants'
+import useProfileDetail from '@/hooks/useProfileDetail'
+import ImageStyling from '@/components/ImageStyling'
+import ImgDisplay from '@/components/ImgDisplay'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function ProfileDetail() {
     const {

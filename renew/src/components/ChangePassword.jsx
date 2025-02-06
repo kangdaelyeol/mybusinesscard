@@ -1,9 +1,8 @@
 import classNames from 'classnames'
 import { useContext } from 'react'
-import { ThemeContext } from '../context'
-import LoadingSpinner from './LoadingSpinner'
-
-import useChangePassword from '../hooks/useChangePassword'
+import { ThemeContext } from '@/context'
+import LoadingSpinner from '@/components/LoadingSpinner'
+import useChangePassword from '@/hooks/useChangePassword'
 
 export default function ChangePassword() {
     const { theme } = useContext(ThemeContext)

@@ -1,10 +1,10 @@
 import { useContext } from 'react'
-import ImgDisplay from './ImgDisplay'
-import LoadingSpinner from './LoadingSpinner'
 import classNames from 'classnames'
-import ImageStyling from './ImageStyling'
-import { ThemeContext } from '../context'
-import useAccountDetail from '../hooks/useAccountDetail'
+import { ThemeContext } from '@/context'
+import useAccountDetail from '@/hooks/useAccountDetail'
+import ImageStyling from '@/components/ImageStyling'
+import ImgDisplay from '@/components/ImgDisplay'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function AccountDetail() {
     const { theme } = useContext(ThemeContext)

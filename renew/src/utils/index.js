@@ -1,2 +1,2 @@
-export * from './calculateImageSize'
-export * from './generateSignatureSHA1'
+export * from '@/utils/calculateImageSize'
+export * from '@/utils/generateSignatureSHA1'

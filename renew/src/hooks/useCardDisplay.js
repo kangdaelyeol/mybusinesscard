@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState } from 'react'
-import { CARD_ACTIONS } from '../reducer'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateCardProfileStyle } from '../store/cardsSlice'
-import { cardClient } from '../client'
-import { EVENT_TYPES, PubSubContext, CardContext } from '../context'
+import { updateCardProfileStyle } from '@/store/cardsSlice'
+import { CARD_ACTIONS } from '@/reducer'
+import { cardClient } from '@/client'
+import { EVENT_TYPES, PubSubContext, CardContext } from '@/context'
 
 export default function useCardDisplay(card) {
     const { subscribe, unSubscribe } = useContext(PubSubContext)

@@ -1,10 +1,10 @@
 import axios from 'axios'
+import { generateSignatureSHA1 } from '@/utils'
 import {
     MAX_PROFILE_SIZE,
     CLOUDINARY_DELETE_REQUEST_URL,
     CLOUDINARY_UPLOAD_REQUEST_URL,
-} from '../constants'
-import { generateSignatureSHA1 } from '../utils'
+} from '@/constants'
 
 export const imageClient = {
     uploadInCloudinary: async (file) => {

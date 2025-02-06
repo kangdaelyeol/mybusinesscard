@@ -1,12 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom'
-import LoggedInOnly from '../components/LoggedInOnly'
-import GuestOnly from '../components/GuestOnly'
-import Signup from '../components/Signup'
-import HomePage from '../pages/HomePage'
-import Main from '../components/Main'
-import Login from '../components/Login'
-import AccountDetail from '../components/AccountDetail'
-import ChangePassword from '../components/ChangePassword'
+import LoggedInOnly from '@/components/LoggedInOnly'
+import GuestOnly from '@/components/GuestOnly'
+import Signup from '@/components/Signup'
+import HomePage from '@/pages/HomePage'
+import Main from '@/components/Main'
+import Login from '@/components/Login'
+import AccountDetail from '@/components/AccountDetail'
+import ChangePassword from '@/components/ChangePassword'
 
 export const router = createBrowserRouter([
     {

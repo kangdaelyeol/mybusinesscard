@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
-import { ThemeContext } from '../context'
+import { useContext } from 'react'
 import classNames from 'classnames'
+import { ThemeContext } from '@/context'
 
 export default function ToasterMessage({ message }) {
     const { theme } = useContext(ThemeContext)

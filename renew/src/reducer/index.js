@@ -1,1 +1,1 @@
-export * from './cardReducer'
+export * from '@/reducer/cardReducer'

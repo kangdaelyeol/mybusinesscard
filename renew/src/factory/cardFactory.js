@@ -2,7 +2,7 @@ import {
     DEFAULT_CARD,
     DEFAULT_CARD_PROFILE,
     DEFAULT_CARD_PROFILE_STYLE,
-} from '../model/card'
+} from '@/model/card'
 
 export const cardFactory = {
     createCardProfileStyle(overrides = {}) {

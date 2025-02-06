@@ -1,5 +1,5 @@
-import { userFactory } from '../factory'
-import { db } from '../service/firebase'
+import { userFactory } from '@/factory'
+import { db } from '@/service/firebase'
 import { ref, set, get, remove } from 'firebase/database'
 
 export const userClient = {

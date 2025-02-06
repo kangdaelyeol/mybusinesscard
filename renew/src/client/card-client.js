@@ -1,4 +1,4 @@
-import { db } from '../service/firebase'
+import { db } from '@/service/firebase'
 import { ref, set, remove } from 'firebase/database'
 
 export const cardClient = {

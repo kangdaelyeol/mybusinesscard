@@ -1,6 +1,6 @@
 import { createContext, useReducer } from 'react'
-import { cardReducer } from '../reducer'
-import { cardFactory } from '../factory'
+import { cardReducer } from '@/reducer'
+import { cardFactory } from '@/factory'
 
 export const CardContext = createContext({
     state: cardFactory.createCard(),

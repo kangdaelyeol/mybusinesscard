@@ -1,13 +1,13 @@
 import { RouterProvider } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import { store } from './store'
-import { router } from './router/index.jsx'
+import { store } from '@/store'
+import { router } from '@/router'
 import {
     ToasterMessageProvider,
     ResponsiveProvider,
     PubSubProvider,
     ThemeProvider,
-} from './context'
+} from '@/context'
 
 function App() {
     return (

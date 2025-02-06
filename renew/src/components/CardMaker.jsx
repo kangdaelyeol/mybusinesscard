@@ -1,8 +1,8 @@
 import { useRef, useContext } from 'react'
 import classNames from 'classnames'
-import { ThemeContext } from '../context'
-import LoadingSpinner from './LoadingSpinner'
-import useCardMaker from '../hooks/useCardMaker'
+import { ThemeContext } from '@/context'
+import useCardMaker from '@/hooks/useCardMaker'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function CardMaker() {
     const { cardState, handlers, fileLoading } = useCardMaker()

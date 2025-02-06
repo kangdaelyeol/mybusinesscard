@@ -1,8 +1,8 @@
 import { useRef, useContext } from 'react'
 import classNames from 'classnames'
-import { ThemeContext } from '../context'
-import LoadingSpinner from './LoadingSpinner'
-import useCardEditor from '../hooks/useCardEditor'
+import { ThemeContext } from '@/context'
+import useCardEditor from '@/hooks/useCardEditor'
+import LoadingSpinner from '@/components/LoadingSpinner'
 
 export default function CardEditorForm({ card }) {
     const { handlers, fileLoading } = useCardEditor(card)

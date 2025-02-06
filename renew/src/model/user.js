@@ -1,4 +1,4 @@
-import { DEFAULT_PROFILE_URL } from '../constants'
+import { DEFAULT_PROFILE_URL } from '@/constants'
 
 export const DEFAULT_USER_PROFILE_STYLE = {
     scale: 1,

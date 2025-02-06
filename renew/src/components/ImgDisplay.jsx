@@ -1,5 +1,5 @@
-import { DEFAULT_PROFILE_URL } from '../constants'
-import { calculateImageSize } from '../utils'
+import { DEFAULT_PROFILE_URL } from '@/constants'
+import { calculateImageSize } from '@/utils'
 
 export default function ImgDisplay({ size, profile }) {
     const { width, height, rounded, transX, transY, scale } = profile.style
