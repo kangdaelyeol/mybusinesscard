@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import userFactory from '../factory/userFactory'
+import { userFactory } from '../factory'
 
 const userSlice = createSlice({
     name: 'user',

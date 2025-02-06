@@ -4,7 +4,7 @@ import { CARD_ACTIONS } from '../reducer/cardReducer'
 import { cardClient, imageClient } from '../client'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
-import cardFactory from '../factory/cardFactory'
+import { cardFactory } from '../factory'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
 

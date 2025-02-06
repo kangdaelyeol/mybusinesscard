@@ -8,7 +8,7 @@ import {
     updateUserProfile,
     updateUserProfileStyle,
 } from '../store/userSlice'
-import userFactory from '../factory/userFactory'
+import { userFactory } from '../factory'
 import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
 import { clearCards } from '../store/cardsSlice'

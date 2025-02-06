@@ -8,7 +8,7 @@ import {
     updateUserProfile,
     updateUserProfileStyle,
 } from '../store/userSlice'
-import userFactory from '../factory/userFactory'
+import { userFactory } from '../factory'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'

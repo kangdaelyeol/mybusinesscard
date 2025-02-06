@@ -1,4 +1,4 @@
-import userFactory from '../factory/userFactory'
+import { userFactory } from '../factory'
 import { db } from '../service/firebase'
 import { ref, set, get, remove } from 'firebase/database'
 

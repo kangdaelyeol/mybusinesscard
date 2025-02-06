@@ -1,4 +1,4 @@
-import cardFactory from '../factory/cardFactory'
+import { cardFactory } from '../factory'
 
 export const CARD_ACTIONS = Object.freeze({
     UPDATE_NAME: Symbol.for('UPDATE_NAME'),

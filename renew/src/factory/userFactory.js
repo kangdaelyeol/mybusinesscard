@@ -4,7 +4,7 @@ import {
     DEFAULT_USER_PROFILE_STYLE,
 } from '../model/user'
 
-const userFactory = {
+export const userFactory = {
     createUserProfileStyle(overrides = {}) {
         return {
             ...DEFAULT_USER_PROFILE_STYLE,
@@ -28,5 +28,3 @@ const userFactory = {
         }
     },
 }
-
-export default userFactory

@@ -4,7 +4,7 @@ import {
     DEFAULT_CARD_PROFILE_STYLE,
 } from '../model/card'
 
-const cardFactory = {
+export const cardFactory = {
     createCardProfileStyle(overrides = {}) {
         return {
             ...DEFAULT_CARD_PROFILE_STYLE,
@@ -28,5 +28,3 @@ const cardFactory = {
         }
     },
 }
-
-export default cardFactory

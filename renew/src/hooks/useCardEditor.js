@@ -9,7 +9,7 @@ import {
 } from '../store/cardsSlice'
 
 import { imageClient, cardClient } from '../client'
-import cardFactory from '../factory/cardFactory'
+import { cardFactory } from '../factory'
 import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
 
