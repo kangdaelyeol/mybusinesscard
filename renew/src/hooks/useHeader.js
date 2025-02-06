@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
+import { PubSubContext, EVENT_TYPES } from '../context'
 export default function useHeader() {
     const { subscribe, unSubscribe, publish } = useContext(PubSubContext)
 

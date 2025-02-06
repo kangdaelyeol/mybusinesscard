@@ -1,6 +1,6 @@
 import { useRef, useContext } from 'react'
 import classNames from 'classnames'
-import { ThemeContext } from '../context/ThemeContext'
+import { ThemeContext } from '../context'
 import LoadingSpinner from './LoadingSpinner'
 import useCardMaker from '../hooks/useCardMaker'
 

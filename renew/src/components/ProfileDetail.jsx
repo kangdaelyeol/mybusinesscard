@@ -3,7 +3,7 @@ import ImgDisplay from './ImgDisplay'
 import LoadingSpinner from './LoadingSpinner'
 import useProfileDetail from '../hooks/useProfileDetail'
 import { useContext } from 'react'
-import { ThemeContext } from '../context/ThemeContext'
+import { ThemeContext } from '../context'
 import classNames from 'classnames'
 import { PROFILE_DETAIL_IMG_SIZE } from '../constants'
 

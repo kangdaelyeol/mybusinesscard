@@ -3,11 +3,12 @@ import ImgDisplay from './ImgDisplay'
 import LoadingSpinner from './LoadingSpinner'
 import classNames from 'classnames'
 import ImageStyling from './ImageStyling'
-import { ThemeContext } from '../context/ThemeContext'
+import { ThemeContext } from '../context'
 import useAccountDetail from '../hooks/useAccountDetail'
 
 export default function AccountDetail() {
     const { theme } = useContext(ThemeContext)
+
     const {
         fileLoading,
         profileOption,
@@ -22,6 +23,7 @@ export default function AccountDetail() {
         deleteAccountModal,
         deleteAccountLoading,
     } = useAccountDetail()
+
     return (
         <div
             className={classNames(

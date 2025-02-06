@@ -9,7 +9,7 @@ import {
     updateUserProfileStyle,
 } from '../store/userSlice'
 import { userFactory } from '../factory'
-import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
+import { EVENT_TYPES, PubSubContext } from '../context'
 import { ToasterMessageContext } from '../context/ToasterMessageContext'
 import { clearCards } from '../store/cardsSlice'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'

@@ -2,8 +2,7 @@ import { authClient } from '../client'
 import { useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { EVENT_TYPES, PubSubContext } from '../context/PubSubContext'
-import { ToasterMessageContext } from '../context/ToasterMessageContext'
+import { ToasterMessageContext, EVENT_TYPES, PubSubContext } from '../context'
 
 const useChangePassword = () => {
     const { publish } = useContext(PubSubContext)

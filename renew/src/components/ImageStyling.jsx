@@ -2,7 +2,7 @@ import SettingBar from './SettingBar'
 import { MAX_SCALE_VALUE } from '../constants'
 import useImageStyling from '../hooks/useImageStyling'
 import { calculateImageSize } from '../utils'
-import { ResponsiveContext } from '../context/ResponsiveContext'
+import { ResponsiveContext } from '../context'
 import { useContext } from 'react'
 
 export default function ImageStyling({ url, style, saveProfileStyle }) {

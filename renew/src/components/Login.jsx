@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import classNames from 'classnames'
 import LoadingSpinner from './LoadingSpinner'
 import useLogin from '../hooks/useLogin'
-import { ThemeContext } from '../context/ThemeContext'
+import { ThemeContext } from '../context'
 export default function Login() {
     const { theme } = useContext(ThemeContext)
     const { loading, handlers, loginInput, errorMessage } = useLogin()

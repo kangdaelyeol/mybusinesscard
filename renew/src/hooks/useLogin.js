@@ -5,7 +5,7 @@ import { initCards } from '../store/cardsSlice'
 import { useNavigate } from 'react-router-dom'
 import { loginUser } from '../store/userSlice'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
-import { ToasterMessageContext } from '../context/ToasterMessageContext'
+import { ToasterMessageContext } from '../context'
 
 export default function useLogin() {
     const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)

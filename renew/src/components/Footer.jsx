@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ThemeContext } from '../context/ThemeContext'
+import { ThemeContext } from '../context'
 import classNames from 'classnames'
 import { GITHUB_URL } from '../constants'
 export default function Footer() {

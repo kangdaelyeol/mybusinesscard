@@ -1,12 +1,15 @@
 import { useContext, useState } from 'react'
-import { CardContext } from '../context/CardContext'
-import { CARD_ACTIONS } from '../reducer/cardReducer'
+import { CARD_ACTIONS } from '../reducer'
 import { cardClient, imageClient } from '../client'
 import { useDispatch, useSelector } from 'react-redux'
 import { createCard } from '../store/cardsSlice'
 import { cardFactory } from '../factory'
-import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
-import { ToasterMessageContext } from '../context/ToasterMessageContext'
+import {
+    CardContext,
+    ToasterMessageContext,
+    PubSubContext,
+    EVENT_TYPES,
+} from '../context'
 
 export default function useCardMaker() {
     const { publish } = useContext(PubSubContext)

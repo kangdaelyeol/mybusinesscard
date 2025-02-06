@@ -11,7 +11,7 @@ export const PubSubContext = createContext({
     unSubscribe: () => {},
 })
 
-export default function PubSubProvider({ children }) {
+export const PubSubProvider = ({ children }) => {
     const [subscribersMap, setSubscribersMap] = useState({})
 
     const subscribe = useCallback(

@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { useContext } from 'react'
-import { ThemeContext } from '../context/ThemeContext'
+import { ThemeContext } from '../context'
 import LoadingSpinner from './LoadingSpinner'
 
 import useChangePassword from '../hooks/useChangePassword'

@@ -10,8 +10,7 @@ import {
 } from '../store/userSlice'
 import { userFactory } from '../factory'
 import { LOCALSTORAGE_TOKEN_NAME } from '../constants'
-import { PubSubContext, EVENT_TYPES } from '../context/PubSubContext'
-import { ToasterMessageContext } from '../context/ToasterMessageContext'
+import { PubSubContext, EVENT_TYPES, ToasterMessageContext } from '../context'
 
 export default function useProfileDetail() {
     const { subscribe, unSubscribe, publish } = useContext(PubSubContext)

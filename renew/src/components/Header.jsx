@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ThemeContext } from '../context/ThemeContext'
+import { ThemeContext } from '../context'
 import classNames from 'classnames'
 import ProfileDetail from './ProfileDetail'
 import ImgDisplay from './ImgDisplay'
@@ -27,7 +27,7 @@ export default function Header() {
                 <div className="absolute h-full flex items-center left-[30px] text-[20px] font-semibold max-small:text-[18px] max-small:left-[15px]">
                     {userState.nickname}
                 </div>
-                
+
                 <span
                     onClick={handleTitleClick}
                     className="inset-0 m-auto font-bold text-[1.8rem] max-small:text-[22px] cursor-pointer"
