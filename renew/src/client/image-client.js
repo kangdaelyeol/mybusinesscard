@@ -4,7 +4,7 @@ import {
     CLOUDINARY_DELETE_REQUEST_URL,
     CLOUDINARY_UPLOAD_REQUEST_URL,
 } from '../constants'
-import generateSignatureSHA1 from '../utils/generateSignatureSHA1'
+import { generateSignatureSHA1 } from '../utils'
 
 export const imageClient = {
     uploadInCloudinary: async (file) => {
