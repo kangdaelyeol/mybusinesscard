@@ -1,4 +1,4 @@
-import { createCard } from '../factory/cardFactory'
+import cardFactory from '../factory/cardFactory'
 
 export const CARD_ACTIONS = Object.freeze({
     UPDATE_NAME: Symbol.for('UPDATE_NAME'),
@@ -9,7 +9,7 @@ export const CARD_ACTIONS = Object.freeze({
     CLEAR_CARD: Symbol.for('CLEAR_CARD'),
 })
 
-const reducer = (state, action) => {
+export const cardReducer = (state, action) => {
     switch (action.type) {
         case CARD_ACTIONS.UPDATE_NAME:
             return {
@@ -32,7 +32,7 @@ const reducer = (state, action) => {
                 theme: action.payload.theme,
             }
         case CARD_ACTIONS.CLEAR_CARD:
-            return createCard()
+            return cardFactory.createCard()
         case CARD_ACTIONS.UPDATE_PROFILE_STYLE:
             return {
                 ...state,
@@ -43,5 +43,3 @@ const reducer = (state, action) => {
             }
     }
 }
-
-export default reducer

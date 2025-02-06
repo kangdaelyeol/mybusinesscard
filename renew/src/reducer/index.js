@@ -1,5 +1,1 @@
-import cardReducer from './cardReducer'
-
-export default {
-    cardReducer,
-}
+export * from './cardReducer'
