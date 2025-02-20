@@ -33,8 +33,9 @@ export default function CardMaker() {
                             },
                         )}
                         value={cardState.name}
-                        onChange={handlers.handleNameChange}
+                        onChange={handlers.nameChange}
                     />
+
                     <select
                         name="color"
                         id="color"
@@ -46,7 +47,7 @@ export default function CardMaker() {
                             },
                         )}
                         value={cardState.theme}
-                        onChange={handlers.handleThemeChange}
+                        onChange={handlers.themeChange}
                     >
                         <option value="black">black</option>
                         <option value="pink">pink</option>
@@ -66,17 +67,18 @@ export default function CardMaker() {
                     rows="3"
                     placeholder="description"
                     value={cardState.description}
-                    onChange={handlers.handleDescriptionChange}
+                    onChange={handlers.descriptionChange}
                 ></textarea>
 
                 <div className="flex w-full gap-[10px]">
                     <input
-                        onChange={handlers.handleFileInput}
+                        onChange={handlers.fileInput}
                         accept="image/*"
                         ref={fileInputRef}
                         type="file"
                         className="hidden"
                     />
+
                     <button
                         onClick={handleFileInputClick}
                         className={classNames(
@@ -89,8 +91,9 @@ export default function CardMaker() {
                     >
                         {fileLoading ? <LoadingSpinner /> : 'File'}
                     </button>
+
                     <button
-                        onClick={handlers.handleCardSave}
+                        onClick={handlers.cardSave}
                         className={classNames(
                             'font-bold px-[15px] py-[10px] rounded-[5px] text-white select-none border-[1px] transition-all',
                             {

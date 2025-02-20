@@ -22,7 +22,7 @@ export default function useCardMaker() {
     const [fileLoading, setFileLoading] = useState(false)
 
     const handlers = {
-        handleDescriptionChange: (e) => {
+        descriptionChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_DESCRIPTION,
@@ -30,7 +30,7 @@ export default function useCardMaker() {
             })
         },
 
-        handleNameChange: (e) => {
+        nameChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_NAME,
@@ -38,7 +38,7 @@ export default function useCardMaker() {
             })
         },
 
-        handleThemeChange: (e) => {
+        themeChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardDispatch({
                 type: CARD_ACTIONS.UPDATE_THEME,
@@ -46,7 +46,7 @@ export default function useCardMaker() {
             })
         },
 
-        handleFileInput: async (e) => {
+        fileInput: async (e) => {
             setFileLoading(true)
 
             const res = await imageClient.uploadInCloudinary(e.target.files[0])
@@ -82,7 +82,7 @@ export default function useCardMaker() {
             setFileLoading(false)
         },
 
-        handleCardSave: async () => {
+        cardSave: async () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
 
             if (fileLoading) return

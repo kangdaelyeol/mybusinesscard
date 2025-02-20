@@ -21,17 +21,17 @@ export default function useSignup() {
     })
 
     const handlers = {
-        handleUsernameChange: (e) => {
+        usernameChange: (e) => {
             setErrorMessage('')
             setSignupInput((prev) => ({ ...prev, username: e.target.value }))
         },
 
-        handlePasswordChange: (e) => {
+        passwordChange: (e) => {
             setErrorMessage('')
             setSignupInput((prev) => ({ ...prev, password: e.target.value }))
         },
 
-        handleConfirmPasswordChange: (e) => {
+        confirmPasswordChange: (e) => {
             setErrorMessage('')
             setSignupInput((prev) => ({
                 ...prev,
@@ -39,12 +39,12 @@ export default function useSignup() {
             }))
         },
 
-        handleNicknameChange: (e) => {
+        nicknameChange: (e) => {
             setErrorMessage('')
             setSignupInput((prev) => ({ ...prev, nickname: e.target.value }))
         },
 
-        handleSignupSubmit: async (e) => {
+        signupSubmit: async (e) => {
             e.preventDefault()
             setLoading(true)
             const { username, password, confirmPassword, nickname } =

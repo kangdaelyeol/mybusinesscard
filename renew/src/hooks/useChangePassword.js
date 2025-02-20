@@ -21,25 +21,25 @@ const useChangePassword = () => {
     const navigate = useNavigate()
 
     const handlers = {
-        handleCurrentPasswordChange: (e) => {
+        currentPasswordChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setErrorMessage('')
             setPasswordState((prev) => ({ ...prev, current: e.target.value }))
         },
 
-        handleNewPasswordChange: (e) => {
+        newPasswordChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setErrorMessage('')
             setPasswordState((prev) => ({ ...prev, new: e.target.value }))
         },
 
-        handleConfirmPasswordChange: (e) => {
+        confirmPasswordChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setErrorMessage('')
             setPasswordState((prev) => ({ ...prev, confirm: e.target.value }))
         },
 
-        handleSaveButtonClick: async () => {
+        saveButtonClick: async () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setSaveLoading(true)
 
@@ -61,7 +61,7 @@ const useChangePassword = () => {
             setToasterMessageTimeOut('Password has been changed successfully!!')
         },
 
-        handleAccountSettingsClick: () => {
+        accountSettingsClick: () => {
             navigate('/account')
         },
     }

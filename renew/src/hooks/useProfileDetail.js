@@ -54,15 +54,15 @@ export default function useProfileDetail() {
     }
 
     const handlers = {
-        handleEditPositionClick: () => {
+        editPositionClick: () => {
             setImageStyling(true)
         },
 
-        handleEditProfileClick: () => {
+        editProfileClick: () => {
             setImageOption((prev) => !prev)
         },
 
-        handleFileInput: async (e) => {
+        fileInput: async (e) => {
             setFileLoading(true)
             const res = await imageClient.uploadInCloudinary(e.target.files[0])
 
@@ -112,16 +112,16 @@ export default function useProfileDetail() {
             setImageStyling(true)
         },
 
-        handleNewFileClick: () => {
+        newFileClick: () => {
             fileInputRef.current.click()
         },
 
-        handleManageAccountClick: () => {
+        manageAccountClick: () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             navigate('/account')
         },
 
-        handleLogoutClick: () => {
+        logoutClick: () => {
             localStorage.removeItem(LOCALSTORAGE_TOKEN_NAME)
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             dispatch(logoutUser())

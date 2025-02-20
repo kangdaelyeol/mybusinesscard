@@ -64,27 +64,27 @@ const useAccountDetail = () => {
     }
 
     const handlers = {
-        handleNicknameChange: (e) => {
+        nicknameChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setErrorMessage('')
             setNickname(e.target.value)
         },
 
-        handleEditProfileClick: () => {
+        editProfileClick: () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setProfileOption((prev) => !prev)
         },
 
-        handleEditPositionClick: () => {
+        editPositionClick: () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setProfileStyling(true)
         },
 
-        handleNewFileClick: () => {
+        newFileClick: () => {
             fileInputRef.current.click()
         },
 
-        handleFileInput: async (e) => {
+        fileInput: async (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setFileLoading(true)
 
@@ -144,7 +144,7 @@ const useAccountDetail = () => {
             setProfileStyling(true)
         },
 
-        handleSaveButtonClick: async () => {
+        saveButtonClick: async () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             setSaveLoading(true)
 
@@ -168,20 +168,20 @@ const useAccountDetail = () => {
             navigate('/')
         },
 
-        handleChangePasswordClick: () => {
+        changePasswordClick: () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             navigate('/change-password')
         },
 
-        handleDeleteAccountClick: () => {
+        deleteAccountClick: () => {
             setDeleteAccountModal(true)
         },
 
-        handleDeleteAccountCancelClick: () => {
+        deleteAccountCancelClick: () => {
             setDeleteAccountModal(false)
         },
 
-        handleDeleteAccountInModalClick: async () => {
+        deleteAccountInModalClick: async () => {
             if (deleteAccountLoading) return
 
             setDeleteAccountLoading(true)

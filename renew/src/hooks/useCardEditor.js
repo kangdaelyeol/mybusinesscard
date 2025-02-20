@@ -21,7 +21,7 @@ export default function useCardEditor(card) {
     const [fileLoading, setFileLoading] = useState(false)
 
     const handlers = {
-        handleProfileChange: async (e) => {
+        profileChange: async (e) => {
             setFileLoading(true)
 
             const cloudinaryRes = await imageClient.uploadInCloudinary(
@@ -70,13 +70,13 @@ export default function useCardEditor(card) {
             setFileLoading(false)
         },
 
-        handleNameChange: (e) => {
+        nameChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardClient.updateName(userState.username, card.id, e.target.value)
             dispatch(updateCardName({ id: card.id, value: e.target.value }))
         },
 
-        handleDescriptionChange: (e) => {
+        descriptionChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardClient.updateDescription(
                 userState.username,
@@ -88,13 +88,13 @@ export default function useCardEditor(card) {
             )
         },
 
-        handleThemeChange: (e) => {
+        themeChange: (e) => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             cardClient.updateTheme(userState.username, card.id, e.target.value)
             dispatch(updateCardTheme({ id: card.id, value: e.target.value }))
         },
 
-        handleCardDelete: () => {
+        cardDelete: () => {
             publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
             if (fileLoading) return
             cardClient.remove(userState.username, card.id)

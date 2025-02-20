@@ -11,7 +11,7 @@ export default function Signup() {
 
     return (
         <form
-            onSubmit={handlers.handleSignupSubmit}
+            onSubmit={handlers.signupSubmit}
             className={classNames(
                 'min-h-[100vh] pt-header-height mb-footer-height',
                 {
@@ -29,7 +29,7 @@ export default function Signup() {
                     type="text"
                     placeholder="Username"
                     value={signupInput.username}
-                    onChange={handlers.handleUsernameChange}
+                    onChange={handlers.usernameChange}
                 />
 
                 <input
@@ -37,7 +37,7 @@ export default function Signup() {
                     type="text"
                     placeholder="Nickname"
                     value={signupInput.nickname}
-                    onChange={handlers.handleNicknameChange}
+                    onChange={handlers.nicknameChange}
                 />
 
                 <input
@@ -45,7 +45,7 @@ export default function Signup() {
                     type="password"
                     placeholder="Password"
                     value={signupInput.password}
-                    onChange={handlers.handlePasswordChange}
+                    onChange={handlers.passwordChange}
                 />
 
                 <input
@@ -53,7 +53,7 @@ export default function Signup() {
                     type="password"
                     placeholder="Confirm Password"
                     value={signupInput.confirmPassword}
-                    onChange={handlers.handleConfirmPasswordChange}
+                    onChange={handlers.confirmPasswordChange}
                 />
 
                 {errorMessage && (

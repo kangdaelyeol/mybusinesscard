@@ -52,7 +52,7 @@ export default function AccountDetail() {
                                 theme === 'light',
                         },
                     )}
-                    onClick={handlers.handleEditProfileClick}
+                    onClick={handlers.editProfileClick}
                 >
                     <span className="material-symbols-outlined text-[20px] text-color-white">
                         edit
@@ -71,7 +71,7 @@ export default function AccountDetail() {
                         )}
                     >
                         <div
-                            onClick={handlers.handleNewFileClick}
+                            onClick={handlers.newFileClick}
                             className={classNames(
                                 'text-center py-[5px] cursor-pointer',
                                 {
@@ -89,7 +89,7 @@ export default function AccountDetail() {
                             ref={fileInputRef}
                             type="file"
                             className="hidden"
-                            onInput={handlers.handleFileInput}
+                            onInput={handlers.fileInput}
                         />
 
                         <div
@@ -102,7 +102,7 @@ export default function AccountDetail() {
                                         theme === 'light',
                                 },
                             )}
-                            onClick={handlers.handleEditPositionClick}
+                            onClick={handlers.editPositionClick}
                         >
                             Position
                         </div>
@@ -131,7 +131,7 @@ export default function AccountDetail() {
                             type="text"
                             id="nickname"
                             value={nickname}
-                            onChange={handlers.handleNicknameChange}
+                            onChange={handlers.nicknameChange}
                             className={classNames(
                                 'grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px] w-full',
                                 {
@@ -144,7 +144,7 @@ export default function AccountDetail() {
 
                     <div
                         className="cursor-pointer mt-[20px] text-color-blue hover:text-color-blue-light"
-                        onClick={handlers.handleChangePasswordClick}
+                        onClick={handlers.changePasswordClick}
                     >
                         Change Password
                     </div>
@@ -159,13 +159,13 @@ export default function AccountDetail() {
                                     theme === 'light',
                             },
                         )}
-                        onClick={handlers.handleSaveButtonClick}
+                        onClick={handlers.saveButtonClick}
                     >
                         {saveLoading ? <LoadingSpinner /> : 'Save'}
                     </div>
 
                     <div
-                        onClick={handlers.handleDeleteAccountClick}
+                        onClick={handlers.deleteAccountClick}
                         className="cursor-pointer text-red-600 hover:text-red-500 mt-[20px]"
                     >
                         Delete Account
@@ -198,7 +198,7 @@ export default function AccountDetail() {
                                 <div className="flex justify-center gap-[30px]">
                                     <div
                                         onClick={
-                                            handlers.handleDeleteAccountInModalClick
+                                            handlers.deleteAccountInModalClick
                                         }
                                         className={classNames(
                                             'px-[15px] py-[10px] rounded-[5px]',
@@ -218,7 +218,7 @@ export default function AccountDetail() {
                                     </div>
                                     <div
                                         onClick={
-                                            handlers.handleDeleteAccountCancelClick
+                                            handlers.deleteAccountCancelClick
                                         }
                                         className={classNames(
                                             ' px-[15px] py-[10px] rounded-[5px]',

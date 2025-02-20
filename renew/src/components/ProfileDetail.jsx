@@ -45,7 +45,7 @@ export default function ProfileDetail() {
                                 theme === 'light',
                         },
                     )}
-                    onClick={handlers.handleEditProfileClick}
+                    onClick={handlers.editProfileClick}
                 >
                     <span className="material-symbols-outlined text-[20px]">
                         edit
@@ -63,7 +63,7 @@ export default function ProfileDetail() {
                         )}
                     >
                         <div
-                            onClick={handlers.handleNewFileClick}
+                            onClick={handlers.newFileClick}
                             className={classNames(
                                 'text-center py-[5px] cursor-pointer',
                                 {
@@ -80,7 +80,7 @@ export default function ProfileDetail() {
                             ref={fileInputRef}
                             type="file"
                             className="hidden"
-                            onInput={handlers.handleFileInput}
+                            onInput={handlers.fileInput}
                         />
                         <div
                             className={classNames(
@@ -92,7 +92,7 @@ export default function ProfileDetail() {
                                         theme === 'light',
                                 },
                             )}
-                            onClick={handlers.handleEditPositionClick}
+                            onClick={handlers.editPositionClick}
                         >
                             Position
                         </div>
@@ -104,7 +104,7 @@ export default function ProfileDetail() {
             </div>
 
             <div
-                onClick={handlers.handleManageAccountClick}
+                onClick={handlers.manageAccountClick}
                 className={classNames(
                     'py-[7px] w-[150px] font-bold text-center border-solid border-[1px] rounded-[9999px] cursor-pointer',
                     {
@@ -119,7 +119,7 @@ export default function ProfileDetail() {
             </div>
 
             <div
-                onClick={handlers.handleLogoutClick}
+                onClick={handlers.logoutClick}
                 className={classNames(
                     'py-[10px] w-[300px] font-bold text-center cursor-pointer rounded-[8px]',
                     {

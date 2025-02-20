@@ -33,7 +33,7 @@ export default function CardEditorForm({ card }) {
                             },
                         )}
                         value={card.name}
-                        onChange={handlers.handleNameChange}
+                        onChange={handlers.nameChange}
                     />
                     <select
                         name="color"
@@ -46,7 +46,7 @@ export default function CardEditorForm({ card }) {
                             },
                         )}
                         value={card.theme}
-                        onChange={handlers.handleThemeChange}
+                        onChange={handlers.themeChange}
                     >
                         <option value="black">black</option>
                         <option value="pink">pink</option>
@@ -66,12 +66,12 @@ export default function CardEditorForm({ card }) {
                     rows="3"
                     placeholder="description"
                     value={card.description}
-                    onChange={handlers.handleDescriptionChange}
+                    onChange={handlers.descriptionChange}
                 ></textarea>
 
                 <div className="flex w-full gap-[10px]">
                     <input
-                        onChange={handlers.handleProfileChange}
+                        onChange={handlers.profileChange}
                         accept="image/*"
                         ref={fileInputRef}
                         type="file"
@@ -90,7 +90,7 @@ export default function CardEditorForm({ card }) {
                         {fileLoading ? <LoadingSpinner /> : 'File'}
                     </button>
                     <button
-                        onClick={handlers.handleCardDelete}
+                        onClick={handlers.cardDelete}
                         className={classNames(
                             'font-bold px-[15px] py-[10px] rounded-[5px] text-white select-none border-[1px] transition-all',
                             {

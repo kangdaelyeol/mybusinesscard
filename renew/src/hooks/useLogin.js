@@ -23,7 +23,7 @@ export default function useLogin() {
     const navigate = useNavigate()
 
     const handlers = {
-        handleUserLogin: async (e) => {
+        userLogin: async (e) => {
             e.preventDefault()
             if (loading) return
 
@@ -48,17 +48,17 @@ export default function useLogin() {
             setLoading(false)
         },
 
-        handleUsernameInput: (e) => {
+        usernameInput: (e) => {
             setErrorMessage('')
             setLoginInput((prev) => ({ ...prev, username: e.target.value }))
         },
 
-        handlePasswordInput: (e) => {
+        passwordInput: (e) => {
             setErrorMessage('')
             setLoginInput((prev) => ({ ...prev, password: e.target.value }))
         },
 
-        handleRememberMeChange: () => {
+        rememberMeChange: () => {
             setLoginInput((prev) => ({ ...prev, remember: !prev.remember }))
         },
     }

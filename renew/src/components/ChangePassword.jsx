@@ -45,7 +45,7 @@ export default function ChangePassword() {
                         id="password-current"
                         type="password"
                         value={passwordState.current}
-                        onChange={handlers.handleCurrentPasswordChange}
+                        onChange={handlers.currentPasswordChange}
                     />
                 </label>
 
@@ -69,7 +69,7 @@ export default function ChangePassword() {
                         value={passwordState.new}
                         id="password-new"
                         type="password"
-                        onChange={handlers.handleNewPasswordChange}
+                        onChange={handlers.newPasswordChange}
                     />
                 </label>
 
@@ -93,13 +93,13 @@ export default function ChangePassword() {
                         value={passwordState.confirm}
                         id="password-confirm"
                         type="password"
-                        onChange={handlers.handleConfirmPasswordChange}
+                        onChange={handlers.confirmPasswordChange}
                     />
                 </label>
 
                 <div
                     className="cursor-pointer mt-[15px] text-color-blue hover:text-color-blue-light"
-                    onClick={handlers.handleAccountSettingsClick}
+                    onClick={handlers.accountSettingsClick}
                 >
                     Account Settings
                 </div>
@@ -114,7 +114,7 @@ export default function ChangePassword() {
                                 theme === 'light',
                         },
                     )}
-                    onClick={handlers.handleSaveButtonClick}
+                    onClick={handlers.saveButtonClick}
                 >
                     {saveLoading ? <LoadingSpinner /> : 'Save'}
                 </div>

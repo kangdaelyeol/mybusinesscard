@@ -11,7 +11,7 @@ export default function Login() {
 
     return (
         <form
-            onSubmit={handlers.handleUserLogin}
+            onSubmit={handlers.userLogin}
             className={classNames(
                 'min-h-[100vh] pt-header-height mb-footer-height',
                 {
@@ -30,7 +30,7 @@ export default function Login() {
                     type="text"
                     placeholder="Username"
                     value={loginInput.username}
-                    onChange={handlers.handleUsernameInput}
+                    onChange={handlers.usernameInput}
                 />
 
                 <input
@@ -38,7 +38,7 @@ export default function Login() {
                     type="password"
                     placeholder="Password"
                     value={loginInput.password}
-                    onChange={handlers.handlePasswordInput}
+                    onChange={handlers.passwordInput}
                 />
 
                 {errorMessage && (
@@ -66,7 +66,7 @@ export default function Login() {
                         id="remember"
                         type="checkbox"
                         className="mr-[5px] border-solid border-gray-300"
-                        onChange={handlers.handleRememberMeChange}
+                        onChange={handlers.rememberMeChange}
                         checked={loginInput.remember}
                     />
 
