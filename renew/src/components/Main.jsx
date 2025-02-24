@@ -1,14 +1,37 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import classNames from 'classnames'
-import { CardProvider, ThemeContext } from '@/context'
+import { FixedSizeList as List } from 'react-window'
+import {
+    ThemeContext,
+    PubSubContext,
+    EVENT_TYPES,
+    ResponsiveContext,
+} from '@/context'
 import CardDisplay from '@/components/CardDisplay'
 import CardEditor from '@/components/CardEditor'
-import CardMaker from '@/components/CardMaker'
+import CreateCard from '@/components/CreateCard'
 
 export default function Main() {
     const { theme } = useContext(ThemeContext)
     const state = useSelector((state) => state.cards)
+
+    const [createCard, setCreateCard] = useState(false)
+
+    const { subscribe, unSubscribe } = useContext(PubSubContext)
+
+    const showCreateCard = () => setCreateCard(true)
+
+    useEffect(() => {
+        const hideCreateCard = () => {
+            setCreateCard(false)
+        }
+        subscribe(EVENT_TYPES.HIDE_CREATE_CARD, hideCreateCard)
+
+        return () => {
+            unSubscribe(EVENT_TYPES.HIDE_CREATE_CARD, hideCreateCard)
+        }
+    }, [])
 
     return (
         <div
@@ -31,13 +54,14 @@ export default function Main() {
                     </div>
                 ))}
 
-                <div className="flex gap-[20px] max-medium:flex-col-reverse">
-                    <CardProvider>
-                        <CardMaker />
-                        <CardDisplay />
-                    </CardProvider>
+                                width={width}
+                                height={height}
+                                itemSize={cardItemHeight}
+                            >
+                                {({ style, index }) => (
                 </div>
             </div>
+            {createCard && <CreateCard />}
         </div>
     )
 }
