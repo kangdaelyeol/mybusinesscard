@@ -83,8 +83,6 @@ export default function useCardMaker() {
         },
 
         cardSave: async () => {
-            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
-
             if (fileLoading) return
 
             const cardID = Date.now()
@@ -103,6 +101,8 @@ export default function useCardMaker() {
             dispatch(createCard({ card: newCard }))
             cardDispatch({ type: CARD_ACTIONS.CLEAR_CARD })
             setToasterMessageTimeOut('New card has been added successfully!!')
+            publish(EVENT_TYPES.HIDE_PROFILE_DETAIL)
+            publish(EVENT_TYPES.HIDE_CREATE_CARD)
         },
     }
 

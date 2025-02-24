@@ -1,10 +1,10 @@
-import { useRef, useContext } from 'react'
+import { useRef, useContext, memo } from 'react'
 import classNames from 'classnames'
 import { ThemeContext } from '@/context'
 import useCardEditor from '@/hooks/useCardEditor'
 import LoadingSpinner from '@/components/LoadingSpinner'
 
-export default function CardEditorForm({ card }) {
+const CardEditor = ({ card }) => {
     const { handlers, fileLoading } = useCardEditor(card)
 
     const { theme } = useContext(ThemeContext)
@@ -21,9 +21,9 @@ export default function CardEditorForm({ card }) {
             <div className="flex flex-col w-editor-lg gap-[10px]">
                 <div className="flex w-full gap-[10px]">
                     <input
+                        autoComplete={card.id}
                         type="text"
                         name="name"
-                        id="name"
                         placeholder="Name"
                         className={classNames(
                             'grow rounded-[5px] px-[10px] py-[5px] outline-none border-[1px]',
@@ -35,9 +35,10 @@ export default function CardEditorForm({ card }) {
                         value={card.name}
                         onChange={handlers.nameChange}
                     />
+
                     <select
+                        autoComplete={card.id}
                         name="color"
-                        id="color"
                         className={classNames(
                             'rounded-[5px] px-[10px] py-[5px] outline-none border-[1px] cursor-pointer',
                             {
@@ -54,6 +55,7 @@ export default function CardEditorForm({ card }) {
                 </div>
 
                 <textarea
+                    autoComplete={card.id}
                     className={classNames(
                         'w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none border-[1px]',
                         {
@@ -62,7 +64,6 @@ export default function CardEditorForm({ card }) {
                         },
                     )}
                     name="description"
-                    id="description"
                     rows="3"
                     placeholder="description"
                     value={card.description}
@@ -71,12 +72,14 @@ export default function CardEditorForm({ card }) {
 
                 <div className="flex w-full gap-[10px]">
                     <input
+                        autoComplete={card.id}
                         onChange={handlers.profileChange}
                         accept="image/*"
                         ref={fileInputRef}
                         type="file"
                         className="hidden"
                     />
+
                     <button
                         onClick={handleFileInputClick}
                         className={classNames(
@@ -89,6 +92,7 @@ export default function CardEditorForm({ card }) {
                     >
                         {fileLoading ? <LoadingSpinner /> : 'File'}
                     </button>
+
                     <button
                         onClick={handlers.cardDelete}
                         className={classNames(
@@ -106,3 +110,7 @@ export default function CardEditorForm({ card }) {
         </div>
     )
 }
+
+const MemoizedCardEditor = memo(CardEditor)
+
+export default MemoizedCardEditor

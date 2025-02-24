@@ -13,6 +13,8 @@ export default function useCardDisplay(card) {
     const [editPicture, setEditPicture] = useState(false)
 
     useEffect(() => {
+        if (card) return
+
         const hideEditPicture = () => {
             setEditPicture(false)
         }
