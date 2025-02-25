@@ -1,36 +1,14 @@
-import { useContext, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useContext } from 'react'
 import classNames from 'classnames'
-import {
-    ThemeContext,
-    PubSubContext,
-    EVENT_TYPES,
-    ResponsiveContext,
-} from '@/context'
+import { ThemeContext } from '@/context'
 import CardDisplay from '@/components/CardDisplay'
 import CardEditor from '@/components/CardEditor'
 import CreateCard from '@/components/CreateCard'
+import useMain from '@/hooks/useMain'
 
 export default function Main() {
     const { theme } = useContext(ThemeContext)
-    const { cards } = useSelector((state) => state.cards)
-
-    const [createCard, setCreateCard] = useState(false)
-
-    const { subscribe, unSubscribe } = useContext(PubSubContext)
-
-    const showCreateCard = () => setCreateCard(true)
-
-    useEffect(() => {
-        const hideCreateCard = () => {
-            setCreateCard(false)
-        }
-        subscribe(EVENT_TYPES.HIDE_CREATE_CARD, hideCreateCard)
-
-        return () => {
-            unSubscribe(EVENT_TYPES.HIDE_CREATE_CARD, hideCreateCard)
-        }
-    }, [])
+    const { cards, createCard, showCreateCard } = useMain()
 
     return (
         <div
@@ -42,6 +20,32 @@ export default function Main() {
                 },
             )}
         >
+            {cards.length === 0 && (
+                <div
+                    className={classNames(
+                        'mx-auto flex h-[500px] mb-[0px] justify-center items-center flex-col text-[30px] font-semibold',
+                        {
+                            'text-color-gray-light': theme === 'dark',
+                            'text-color-black': theme === 'light',
+                        },
+                    )}
+                >
+                    <span>You don't have any cards!🥲</span>
+                    <span className="mt-[10px]">Make your first card!</span>
+                    <button
+                        onClick={showCreateCard}
+                        className={classNames(
+                            'mt-[10px] px-[20px] py-[10px] rounded-[20px]',
+                            {
+                                'btn-dark': theme === 'dark',
+                                'btn-light': theme === 'light',
+                            },
+                        )}
+                    >
+                        Create Card
+                    </button>
+                </div>
+            )}
             <div className="max-w-[1100px] overflow-scroll mx-auto flex flex-col gap-[20px]">
                 {cards.map((card) => (
                     <div
