@@ -3,7 +3,6 @@ import { CARD_IMAGE_SIZE } from '@/constants'
 import useCardDisplay from '@/hooks/useCardDisplay'
 import ImageStyling from '@/components/ImageStyling'
 import ImgDisplay from '@/components/ImgDisplay'
-import { memo } from 'react'
 
 const CardDisplay = ({ card }) => {
     const { data, saveProfileStyle, editPicture, handlePictureEdit } =
@@ -61,6 +60,4 @@ const CardDisplay = ({ card }) => {
     )
 }
 
-const MemoizedCardDisplay = memo(CardDisplay)
-
-export default MemoizedCardDisplay
+export default CardDisplay

@@ -11,11 +11,3 @@ export const RATE_BAR_WIDTH_MEDIUM = 250
 export const CARD_IMAGE_SIZE = 120
 
 export const PROFILE_DETAIL_IMG_SIZE = 100
-
-export const CARD_ITEM_HEIGHT = 230
-
-export const CARD_ITEM_HEIGHT_MEDIUM = 460
-
-export const FOOTER_HEIGHT = 100
-
-export const HEADER_HEIGHT = 70

@@ -1,4 +1,4 @@
-import { useRef, useContext, memo } from 'react'
+import { useRef, useContext } from 'react'
 import classNames from 'classnames'
 import { ThemeContext } from '@/context'
 import useCardEditor from '@/hooks/useCardEditor'
@@ -111,6 +111,4 @@ const CardEditor = ({ card }) => {
     )
 }
 
-const MemoizedCardEditor = memo(CardEditor)
-
-export default MemoizedCardEditor
+export default CardEditor
