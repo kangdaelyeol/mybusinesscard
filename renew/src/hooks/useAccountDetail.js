@@ -19,6 +19,7 @@ const useAccountDetail = () => {
     const { setToasterMessageTimeOut } = useContext(ToasterMessageContext)
 
     const userState = useSelector((state) => state.user)
+    const cards = useSelector((state) => state.cards)
     const dispatch = useDispatch()
 
     const [fileLoading, setFileLoading] = useState(false)
@@ -186,6 +187,16 @@ const useAccountDetail = () => {
 
             setDeleteAccountLoading(true)
             const removeUserRes = await userClient.remove(userState.username)
+
+            await Promise.allSettled(
+                cards.map((card) => {
+                    console.log(card)
+                    return imageClient.deleteInCloudinary(
+                        card.assetId,
+                        card.publicId,
+                    )
+                }),
+            )
 
             if (removeUserRes.status === 200) {
                 localStorage.removeItem(LOCALSTORAGE_TOKEN_NAME)
