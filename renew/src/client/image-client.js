@@ -26,6 +26,8 @@ export const imageClient = {
     },
 
     deleteInCloudinary: async (assetId, publicId) => {
+        if (!assetId) return
+
         const formData = new FormData()
 
         const sigSHA1 = generateSignatureSHA1(
@@ -39,11 +41,7 @@ export const imageClient = {
         formData.append('api_key', import.meta.env.VITE_API_KEY)
         formData.append('signature', sigSHA1)
         try {
-            const res = await axios.post(
-                CLOUDINARY_DELETE_REQUEST_URL,
-                formData,
-            )
-            console.log(res)
+            await axios.post(CLOUDINARY_DELETE_REQUEST_URL, formData)
             return {
                 status: 200,
             }

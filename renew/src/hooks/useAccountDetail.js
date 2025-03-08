@@ -190,7 +190,6 @@ const useAccountDetail = () => {
 
             await Promise.allSettled(
                 cards.map((card) => {
-                    console.log(card)
                     return imageClient.deleteInCloudinary(
                         card.assetId,
                         card.publicId,
