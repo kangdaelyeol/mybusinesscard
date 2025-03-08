@@ -21,7 +21,6 @@ const CardEditor = ({ card }) => {
             <div className="flex flex-col w-editor-lg gap-[10px]">
                 <div className="flex w-full gap-[10px]">
                     <input
-                        autoComplete={card.id}
                         type="text"
                         name="name"
                         placeholder="Name"
@@ -37,7 +36,6 @@ const CardEditor = ({ card }) => {
                     />
 
                     <select
-                        autoComplete={card.id}
                         name="color"
                         className={classNames(
                             'rounded-[5px] px-[10px] py-[5px] outline-none border-[1px] cursor-pointer',
@@ -55,7 +53,6 @@ const CardEditor = ({ card }) => {
                 </div>
 
                 <textarea
-                    autoComplete={card.id}
                     className={classNames(
                         'w-full rounded-[5px] px-[10px] py-[5px] mx-auto resize-none outline-none border-[1px]',
                         {
@@ -72,7 +69,6 @@ const CardEditor = ({ card }) => {
 
                 <div className="flex w-full gap-[10px]">
                     <input
-                        autoComplete={card.id}
                         onChange={handlers.profileChange}
                         accept="image/*"
                         ref={fileInputRef}
