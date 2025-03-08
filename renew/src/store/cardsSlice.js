@@ -2,70 +2,63 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const cardsSlice = createSlice({
     name: 'cards',
-    initialState: {
-        cards: [],
-    },
+    initialState: [],
     reducers: {
-        initCards: (state, action) => {
+        initCards: (_, action) => {
             const { cards } = action.payload
-            state.cards = cards
+            return [...cards]
         },
 
-        clearCards: (state) => {
-            state.cards = []
+        clearCards: () => {
+            return []
         },
 
         updateCardName: (state, action) => {
             const { id, value } = action.payload
-            state.cards = state.cards.map((card) => {
-                if (card.id === id) card.name = value
-                return card
-            })
+
+            const idx = state.findIndex((card) => card.id === id)
+            state[idx].name = value
         },
 
         updateCardDescription: (state, action) => {
             const { id, value } = action.payload
-            state.cards = state.cards.map((card) => {
-                if (card.id === id) card.description = value
-                return card
-            })
+
+            const idx = state.findIndex((card) => card.id === id)
+            state[idx].description = value
         },
 
         updateCardTheme: (state, action) => {
             const { id, value } = action.payload
-            state.cards = state.cards.map((card) => {
-                if (card.id === id) card.theme = value
-                return card
-            })
+
+            const idx = state.findIndex((card) => card.id === id)
+            state[idx].theme = value
         },
 
         updateCardProfile: (state, action) => {
             const { id, value } = action.payload
-            state.cards = state.cards.map((card) => {
-                if (card.id === id) card.profile = value
-                return card
-            })
+
+            const idx = state.findIndex((card) => card.id === id)
+            state[idx].profile = value
         },
 
         updateCardProfileStyle: (state, action) => {
             const { id, value } = action.payload
 
-            state.cards = state.cards.map((card) => {
-                if (card.id === id) {
-                    card.profile.style = { ...card.profile.style, ...value }
-                }
-                return card
-            })
+            const idx = state.findIndex((card) => card.id === id)
+            state[idx].profile.style = { ...state[idx].profile.style, ...value }
         },
 
         deleteCard: (state, action) => {
-            state.cards = state.cards.filter(
-                (card) => card.id !== action.payload.id,
-            )
+            const { id } = action.payload
+
+            const idx = state.findIndex((card) => card.id === id)
+
+            state.splice(idx, 1)
         },
 
         createCard: (state, action) => {
-            state.cards.push(action.payload.card)
+            const { card } = action.payload
+            state.push(card)
         },
     },
 })

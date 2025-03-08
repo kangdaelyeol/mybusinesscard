@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { PubSubContext, EVENT_TYPES } from '@/context'
 
 export default function useMain() {
-    const { cards } = useSelector((state) => state.cards)
+    const cards = useSelector((state) => state.cards)
 
     const [createCard, setCreateCard] = useState(false)
 
