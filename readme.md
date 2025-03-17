@@ -64,7 +64,9 @@
 
 - 여러 컴포넌트에서 해당 훅을 각각 사용할 경우, 각 컴포넌트별로 불필요한 이벤트 리스너가 중복 등록되어 성능 저하가 발생할 우려가 생김.
 
-![useResponse](./document/useResponse.drawio.svg)
+  컴포넌트 다이어그램
+
+  ![useResponse](./document/useResponse.drawio.svg)
 
 **개선 목표**
 
@@ -121,7 +123,9 @@ export default function useResponsive() {
 
 - Context API로 상태를 관리함으로써 전역적으로 공통된 상태를 공유하도록 구조를 변경.
 
-![useResponsive](./document/responsiveContext.drawio.svg)
+  컴포넌트 다이어그램
+
+  ![useResponsive](./document/responsiveContext.drawio.svg)
 
 **개선 후 코드**
 
@@ -208,7 +212,9 @@ export const ResponsiveProvider = ({ children }) => {
 
 - 유저 드롭다운 UI 비활성화 처리를 위한 메서드를 넘길 때 복잡한 Props drilling 구조가 발생.
 
-![DropdownUIPropsDrilling](./document/userDropdownUIProps.drawio.svg)
+  컴포넌트 다이어그램
+
+  ![DropdownUIPropsDrilling](./document/userDropdownUIProps.drawio.svg)
 
 **개선 목표**
 
@@ -218,7 +224,9 @@ export const ResponsiveProvider = ({ children }) => {
 
 - 컨텍스트 API와 발행/구독 패턴(Pubsub Pattern)을 활용하여 컴포넌트간 이벤트를 구독하고 발행함으로써 상호작용할 수 있는 전역 컨텍스트 구현.
 
-![PubsubContext](./document/pubsubContext.drawio.svg)
+  컴포넌트 다이어그램
+
+  ![PubsubContext](./document/pubsubContext.drawio.svg)
 
 **개선 후 코드**
 
@@ -308,3 +316,121 @@ export default function PubSubProvider({ children }) {
   - 범용적인 디자인 패턴을 사용함으로써 다른 개발자와 협업시 더욱 원활한 소통과 빠른 이해을 통해 원활하고 효율적인 협업 가능.
 
 ---
+
+### 컴포넌트 재사용 - Card Maker, Card Editor
+
+**문제점 및 개선 배경**
+
+- 카드를 생성하는 컴포넌트와 카드를 수정하는 컴포넌트의 구조가 같지만 중복된 컴포넌트로 존재.
+
+**개선 목표**
+
+- 중복된 컴포넌트를 통합하여 하나의 컴포넌트를 재사용함으로써 코드 리펙토링 및 재사용성 보장.
+
+**리펙토링 과정**
+
+1. 개선 이전
+
+   - 카드를 생성하기 위한 CardEditor의 상태 정보는 지역적으로 Context API를 통해 관리되며, 생성된 카드의 상태 정보는 Redux Store를 통해 전역적으로 관리 됩니다.
+
+   - CardMaker 컴포넌트의 이벤트 핸들러 액션은 useReducer훅 기반으로 구현되어 있으며, CardEditor 컴포넌트는 Redux Slice 기반으로 구현되어 있습니다.
+
+   컴포넌트 다이어그램
+
+   ![cardMaker](./document/cardMaker.drawio.svg)
+
+1. 컴포넌트 통합
+
+   - 중복된 컴포넌트를 CardEditor 컴포넌트로써 통합하여 조건에 따라 Reducer 또는 Redux를 기반으로한 이벤트핸들러를 반환하고 적용시키는 방법을 사용.
+
+   - 카드 생성을 위한 컴포넌트인지, 카드 수정을 위한 컴포넌트인지 구분하기 위한 조건이 요구됨.
+
+   컴포넌트 다이어그램
+
+   ![cardEditor](./document/cardEditor.drawio.svg)
+
+1. 컨트롤러 훅 통합
+
+   - 하나의 컴포넌트에 두 개의 컨트롤러 훅을 적용하는 것은 하나의 컴포넌트가 두 가지의 책임을 담당하게 되므로 단일 책임 원칙을 위반하며, 이에 따라 유지보수성 및 가독성에도 영향을 미침.
+
+   - 따라서 컨트롤러 훅을 통합하여 조건에 따라 책임에 맞는 핸들러를 전달하는 useCardEditorForm 훅을 구현
+
+   컴포넌트 다이어그램 및 코드
+
+   ![useCardEditorForm](./document/useCardEditorForm.drawio.svg)
+
+   ```js
+   // CardEditorForm.jsx
+
+    // CardEditor에 관한 데이터인 경우, 부모 컴포넌트로부터 Redux Store를 통해 카드 데이터를 props로 받습니다.
+    // CardMaker에 관한 데이터인 경우 카드 데이터를 props로 받지 않습니다.
+    // props로 받는 카드 데이터의 유무를 통해 해당 컴포넌트가 카드 생성을 위한 것인지, 아니면 카드 수정을 위한 것인지 판단합니다.
+   export default function CardEditorForm({ card }) {
+
+   const { handlers, buttonName, cardState, cardModule } =
+       useCardEditorForm(card)
+
+   	return (
+   		// ... JSX
+   	)
+   }
+   ```
+
+   ```js
+   // useCardEditorForm.js
+
+   import useCardEditor from './useCardEditor';
+   import useCardMaker from './useCardMaker';
+
+   const useCardEditorForm = (card) => {
+   	let cardModule;
+   	let handlers;
+   	let buttonName;
+
+   	if (!card) {
+   		cardModule = useCardMaker();
+   		handlers = {
+   			handleNameChange: cardModule.changeName,
+   			handleThemeChange: cardModule.changeTheme,
+   			handleDescriptionChange: cardModule.changeDescription,
+   			handleFileInput: cardModule.uploadFile,
+   			handleButtonClick: cardModule.saveCard,
+   		};
+   		buttonName = 'Save';
+   		card = cardModule.cardState;
+   	} else {
+   		cardModule = useCardEditor();
+   		handlers = {
+   			handleNameChange: (e) => cardModule.updateName(e, card.id),
+   			handleThemeChange: (e) => cardModule.updateTheme(e, card.id),
+   			handleDescriptionChange: (e) =>
+   				cardModule.updateDescription(e, card.id),
+   			handleFileInput: (e) => cardModule.updateProfile(e, card.id),
+   			handleButtonClick: (e) => cardModule.deleteMyCard(e, card.id),
+   		};
+   		buttonName = 'Delete';
+   	}
+
+   	return { handlers, buttonName, cardState: card, cardModule };
+   };
+
+   export default useCardEditorForm;
+   ```
+
+1. 개선된 코드의 문제점
+
+   - 컴포넌트에 요구되는 이벤트 핸들러, 상태 데이터는 같지만 기능 확장, 수정시 모듈을 여러 번 참조 또는 추적해야 하는 상황이 발생.
+
+   - 만약 카드 생성 핸들러를 수정해야 하는 경우 **CardEditorForm.jsx -> useCardEditorForm.jsx -> if 조건문 분석 -> card props 추적 -> useCardMaker.js** 순서로 탐색함으로써 가독성을 해치는 상황이 발생합.
+
+   - 겉보기로 보았을 때 코드가 줄어들어 프로젝트의 구조가 개선되어 보이지만, 코드의 규모를 줄이려는 목적으로 여러 책임을 하나의 컴포넌트로 통합시킨 경우, 코드 규모를 줄이는 데에서 얻는 이점보다 가독성과 추적성 측면에서 불리한 점이 더욱 많음.
+
+1. 최종 수정 결과
+
+   - 중복된 컴포넌트에서 오는 UI 구조가 같더라도, 각 중복된 컴포넌트가 담당한 책임이 명확히 분리된다면, 오히려 이를 통합시키지 않고 중복된 상태로 두어야하는 것이 더욱 옳다고 판단.
+
+   - 결과적으로 기존의 컴포넌트 구조를 복원하여 그대로 적용하여, 개선 이전과 이후를 같은 구조로 유지.
+
+   컴포넌트 다이어그램
+
+   ![cardMaker](./document/cardMaker.drawio.svg)
