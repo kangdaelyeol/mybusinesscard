@@ -2,6 +2,28 @@
 
 ## [Project Demo](https://67cc52def9698d0008bd1a5c--mybusinesscard-rkdeofuf.netlify.app/)
 
+## Table of Contents
+
+- [프로젝트 개요 (Project Overview)](#프로젝트-개요-project-overview)
+
+- [프로젝트 동기 (Motivation)](#프로젝트-동기-motivation)
+
+- [프로젝트 문제 및 목표 (Problems & Goal)](#프로젝트-문제-및-목표-problems--goal)
+
+- [기술 스택 (Technique Stacks)](#기술-스택-technique-stacks)
+
+- [코드 개선 및 리펙토링 (Code Improvement & Refactoring)](#코드-개선-및-리펙토링-code-improvement--refactoring)
+
+  [1. 브라우저 리사이즈 처리 최적화 (useResponse -> responseContext)](#브라우저-리사이즈-처리-최적화-useresponse---responsecontext)
+
+  [2. 유저 드롭다운 UI 처리](#유저-드롭다운-ui-처리)
+
+  [3. 컴포넌트 재사용 (Card Maker, Card Editor)](#컴포넌트-재사용-card-maker-card-editor)
+
+  [4. 리스트 가상화 - React Window](#리스트-가상화---react-window)
+
+  [5. 이벤트 핸들러 네이밍 컨벤션 개선](#이벤트-핸들러-네이밍-컨벤션-개선)
+
 ## 프로젝트 개요 (Project Overview)
 
 - **프로젝트 이름** : My Business Card
@@ -36,7 +58,7 @@
 
 - 수학적 계산을 통한 이미지 표현 범위, 위치 조정 기능 추가.
 
-## 기술 스텍 (Technique Stacks)
+## 기술 스택 (Technique Stacks)
 
 **Front-end**
 
@@ -55,6 +77,18 @@
 - Cloudinary API (이미지 저장)
 
 ## 코드 개선 및 리펙토링 (Code Improvement & Refactoring)
+
+[1. 브라우저 리사이즈 처리 최적화 (useResponse -> responseContext)](#브라우저-리사이즈-처리-최적화-useresponse---responsecontext)
+
+[2. 유저 드롭다운 UI 처리](#유저-드롭다운-ui-처리)
+
+[3. 컴포넌트 재사용 (Card Maker, Card Editor)](#컴포넌트-재사용-card-maker-card-editor)
+
+[4. 리스트 가상화 - React Window](#리스트-가상화---react-window)
+
+[5. 이벤트 핸들러 네이밍 컨벤션 개선](#이벤트-핸들러-네이밍-컨벤션-개선)
+
+---
 
 ### 브라우저 리사이즈 처리 최적화 (useResponse -> responseContext)
 
@@ -317,7 +351,7 @@ export default function PubSubProvider({ children }) {
 
 ---
 
-### 컴포넌트 재사용 - Card Maker, Card Editor
+### 컴포넌트 재사용 (Card Maker, Card Editor)
 
 **문제점 및 개선 배경**
 
@@ -554,6 +588,8 @@ export default function PubSubProvider({ children }) {
 3. 결론
 
 - 즉, 윈도잉을 통해 브라우저의 표현되는 요소는 정적 데이터 표현에 한정된 경우에만 리스트 가상화의 이점을 챙길 수 있음. 따라서 리스트 가상화 처리를 하지 않고 이전 상태로 복원.
+
+---
 
 ### 이벤트 핸들러 네이밍 컨벤션 개선
 
