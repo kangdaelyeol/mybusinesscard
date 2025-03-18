@@ -24,6 +24,12 @@
 
 - [5.5 이벤트 핸들러 네이밍 컨벤션 개선](#이벤트-핸들러-네이밍-컨벤션-개선)
 
+[6. 향후 개선 사항 (Future Plans)](#향후-개선-사항-future-plans)
+
+- [6.1 예외 처리](#예외-처리)
+
+- [6.2 동적 가져오기(Dynamic Import)](#동적-가져오기dynamic-import)
+
 ## 프로젝트 개요 (Project Overview)
 
 - **프로젝트 이름** : My Business Card
@@ -113,14 +119,18 @@
 - `useResponsive` 커스텀 훅은 resize 이벤트를 통해 브라우저 너비에 따라 사진의 크기와 크기를 조절하는 막대(bar)의 크기를 반환함.
 
 ```js
-import { useEffect, useState } from 'react';
+// useResponsive.js
 import {
 	PICTURE_BOX_SIZE,
 	PICTURE_BOX_SIZE_MEDIUM,
 	RATE_BAR_WIDTH,
 	RATE_BAR_WIDTH_MEDIUM,
 } from '../constants';
+
+// resize 이벤트는 매우 빈번히 발생하므로, 성능 저하 방지를 위해 쓰로틀링 처리.
 import { throttle } from 'lodash';
+
+// Imports ...
 
 export default function useResponsive() {
 	const [pictureSize, setPictureSize] = useState(
@@ -167,16 +177,13 @@ export default function useResponsive() {
 
 - 기존 커스텀 훅 기반의 로직을 컨텍스트 API 기반으로 변경.
 
-```js
-import { useEffect, useState, createContext } from 'react';
-import {
-	PICTURE_BOX_SIZE,
-	PICTURE_BOX_SIZE_MEDIUM,
-	RATE_BAR_WIDTH,
-	RATE_BAR_WIDTH_MEDIUM,
-} from '../constants';
+[ResponsiveContext.jsx](./renew/src/context/ResponsiveContext.jsx)
 
-import { throttle } from 'lodash';
+```js
+// ResponsiveContext.jsx
+import { useEffect, useState, createContext } from 'react';
+
+// Imports ...
 
 export const ResponsiveContext = createContext({
 	barWidth: RATE_BAR_WIDTH,
@@ -270,7 +277,10 @@ export const ResponsiveProvider = ({ children }) => {
 
 - [Pubsub 디자인 패턴](https://github.com/kangdaelyeol/til/blob/main/book/js-react-design-pattern.md#%EB%B0%9C%ED%96%89%EA%B5%AC%EB%8F%85-%ED%8C%A8%ED%84%B4)은 도서 `<<JavaScript React Design Pattern>>` 을 참조.
 
+[PubSubContext.jsx](./renew/src/context/PubSubContext.jsx)
+
 ```js
+// PubSubContext.jsx
 import { createContext, useCallback, useState } from 'react';
 
 export const EVENT_TYPES = Object.freeze({
@@ -649,7 +659,7 @@ export default function useSignup() {
 }
 ```
 
-2. 개선된 코드
+2. 개선된 코드 - [useSignup.js](./renew/src/hooks/useSignup.js)
 
 - 이벤트 핸들러들을 handlers 객체로 그룹화함으로써 컨트롤러 훅이 반환하는 객체의 프로퍼티 개수를 줄임.
 
@@ -745,3 +755,83 @@ export default function useSignup() {
   **결론**
 
   - 이벤트 핸들러는 컴포넌트에 관한 여러 로직이 포함된 컨트롤러 훅에 있으므로, 네이밍에 관하여 코드의 동작을 명시하는 것 보다 '이벤트 핸들러'임을 명시함으로써 책임 분리를 명확히 하는 것이 가독성 및 직관성 측면에 더욱 긍정적인 영향을 미칠 것이라 판단.
+
+## 향후 개선 사항 (Future Plans)
+
+### 예외 처리
+
+**문제점**
+
+- 클라우드, 데이터베이스 API를 활용하면서 발생하는 예외 처리에 대한 능력의 부재.
+
+- 백엔드에서 처리되어 보내야 할 **status code** 를 client측에서 임의로 설정하여 보내주고 있음.
+
+  예시 코드 - [user-client.js](./renew/src/client/user-client.js)
+
+  ```js
+  // user-client.js
+  export const userClient = {
+  	// 유저 정보를 받아 새로운 계정을 생성하는 API
+  	create: async (username, nickname, password, confirmPassword) => {
+  		// 각각의 if문을 통해 유저 이름, 닉네임, 패스워드에 대한 유효성을 클라이언트측에서 검사합니다.
+  		if (!/^[A-Za-z0-9_-]{4,20}$/.test(username)) {
+  			return {
+  				status: 400,
+  				reason:
+  					"username should have 4 to 20 characters, shouldn't contain blank(nbsp) and special symbols.",
+  			};
+  		}
+
+  		// Validation ...
+
+  		try {
+  			const userRef = ref(db, `/users/${username}`);
+  			const snapshot = await get(userRef);
+
+  			if (snapshot.exists()) {
+  				return { status: 400, reason: 'username already exists.' };
+  			}
+
+  			const newUser = userFactory.createUser({
+  				username,
+  				nickname,
+  				password,
+  			});
+
+  			await set(userRef, newUser);
+
+  			return {
+  				status: 200,
+  				value: {
+  					...newUser,
+  					cards: [],
+  				},
+  			};
+  		} catch (e) {
+  			return { status: 400, reason: e };
+  		}
+  	},
+
+  	// API ...
+  };
+  ```
+
+**개선 사항**
+
+- 백엔드 개발자와 API 스펙을 통한 소통 및 적절한 시나리오 설계를 통해 개선 가능.
+
+### 동적 가져오기(Dynamic Import)
+
+**컴포넌트 지연 로딩**
+
+- 현재 SSR 기반의 Next.js를 통한 프론트앤드 개발이 유행하지만, 필요에 따라 CSR 기반의 성능 향상이 필요한 경우, 리엑트에서 기본적으로 제공하는 **Lazy, Suspense** 기능을 활용하여 리엑트 번들을 분할해 초기 로딩 시간을 단축할 수 있음.
+
+- 또한 **Lazy, Suspense** 기능을 활용해 번들을 페이지의 경로마다 분할하여 CWV(Core Web vitals) 지표를 최적화 할 수 있음.
+
+- 현재 프로젝트 규모에서는 지연 로딩을 통한 유효한 성능 향상을 파악하기 어려움.
+
+**CSR의 한계**
+
+- CSR 방식은 큰 자바스크립트 번들을 로드하므로 페이지의 FCP, TTI 측면에서 SSR 방식과 비교하여 불리함.
+
+- 또한 JS 번들을 로드한 후 클라이언트 측에서 HTML을 동적으로 생성하므로 크롤러가 HTML을 탐색하지 못할 경우도 있음. 따라서 SEO측면에서도 불리함.
