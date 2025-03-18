@@ -554,3 +554,160 @@ export default function PubSubProvider({ children }) {
 3. 결론
 
 - 즉, 윈도잉을 통해 브라우저의 표현되는 요소는 정적 데이터 표현에 한정된 경우에만 리스트 가상화의 이점을 챙길 수 있음. 따라서 리스트 가상화 처리를 하지 않고 이전 상태로 복원.
+
+### 이벤트 핸들러 네이밍 컨벤션 개선
+
+**문제점 및 개선 배경**
+
+- 컨트롤러 훅에서 컴포넌트로 넘겨주는 값(이벤트 핸들러, 상태 등)의 개수가 많을 경우 코드의 구조가 복잡해져 가독성 저하.
+
+**개선 목표**
+
+- 컨트롤러 훅의 코드 구조 및 네이밍을 최적화함으로써 가독성 및 직관성 향상.
+
+**개선 과정**
+
+1. 기존 코드
+
+- 컨트롤러 훅 안에 여러 개의 이벤트 핸들러와 상태값이 존재하여 코드 구조가 복잡함. 따라서 직관성이 부족하여 오류 발생 및 기능 수정시 코드 구조를 파악하기 어려움.
+
+```js
+export default function useSignup() {
+	const { userDispatch } = useContext(UserContext);
+	const [signupInput, setSignupInput] = useState({
+		// state ...
+	});
+	const [errorMessage, setErrorMessage] = useState('');
+
+	const [loading, setLoading] = useState(false);
+
+	const handleUsernameChange = (e) => {
+		// change username ...
+	};
+
+	const handlePasswordChange = (e) => {
+		// change password ...
+	};
+
+	const handleConfirmPasswordChange = (e) => {
+		// change confirmPassword ...
+	};
+
+	const handleNicknameChange = (e) => {
+		// change name ...
+	};
+
+	const handleSignupSubmit = async (e) => {
+		// signup ...
+	};
+
+	// 8개의 값을 반환 -> 가독성이 떨어짐.
+	return {
+		handleUsernameChange,
+		handlePasswordChange,
+		handleConfirmPasswordChange,
+		handleNicknameChange,
+		handleSignupSubmit,
+		loading,
+		signupInput,
+		errorMessage,
+	};
+}
+```
+
+2. 개선된 코드
+
+- 이벤트 핸들러들을 handlers 객체로 그룹화함으로써 컨트롤러 훅이 반환하는 객체의 프로퍼티 개수를 줄임.
+
+```js
+export default function useSignup() {
+	const { userDispatch } = useContext(UserContext);
+	const [signupInput, setSignupInput] = useState({
+		// state ...
+	});
+	const [errorMessage, setErrorMessage] = useState('');
+
+	const [loading, setLoading] = useState(false);
+
+	const handlers = {
+		usernameChange: (e) => {
+			// change username ...
+		},
+
+		passwordChange: (e) => {
+			// change password ...
+		},
+
+		// handlers ...
+	};
+
+	return {
+		handlers,
+		loading,
+		signupInput,
+		errorMessage,
+	};
+}
+```
+
+**개선 코드의 합리성 및 타당성**
+
+- 메서드 이름 단축
+
+  - 'handlers' 이름은 포함된 메서드들이 '이벤트 핸들러'라는 것을 명시함.
+
+  - 따라서 객체 안에 포함된 이벤트 핸들러에 'handle' 접두사를 포함시키지 않아도 '이벤트 핸들러'라는 사실을 명확히 전달할 수 있음.
+
+- 가독성 및 직관성
+
+  - 'handlers' 이름을 통해 해당 객체는 DOM과 연결된 이벤트 핸들러를 포함한다는 것을 직관적으로 파악할 수 있음. 따라서 코드의 구조를 파악하기 쉬움.
+
+- 책임 분리
+
+  - 최종 개선 이전에 가독성 개선을 위해 다른 방향성을 제시 했었다.
+
+  **기존 코드**
+
+  ```js
+  // Current
+  const handlers = {
+  	usernameChange: (e) => {
+  		// change username ...
+  	},
+  };
+
+  // JSX
+  <input type='text' onChange={handlers.usernameChange} />;
+  ```
+
+  **코드 구조를 보고 파악할 수 있는점**
+
+  - handlers: DOM과 연결된 이벤트 핸들러
+
+  - usernameChange: username 부분에 'change' 이벤트가 발생할 때 수행되는 메서드
+
+  '이벤트 핸들러' 임을 명시하는 네이밍 컨벤션은 DOM 요소에 특정한 이벤트가 발생했을때 수행되는 메서드임을 파악할 수 있지만, **어떠한 동작을 수행하는지는 파악할 수 없다.**
+
+  **대체 코드**
+
+  ```js
+  // Alternate
+  const updateUsername = (e) => {
+  	// change username ...
+  };
+
+  // JSX
+  <input type='text' onChange={updateUsername} />;
+  ```
+
+  **코드 구조를 보고 파악할 수 있는점**
+
+  - updateUsername: username에 관한 정보를 업데이트하는 동작 수행
+
+  메서드의 이름으로부터 해당 메서드가 어떠한 동작을 수행하는지, 즉 로직의 의도를 명확하게 파악할 수 있으므로, 코드의 로직을 빠르게 파악하기 쉽다.
+
+  하지만 코드 구조를 파악하기전 해당 메서드의 이름만 직관적으로 볼 경우, 해당 메서드가 API인지, Util인지, 또는 Middleware에 포함되어있는지, 즉 어떠한 역할에 포함되어있는지 파악할 수 없다.
+
+  **결론**
+
+  - 이벤트 핸들러는 컴포넌트에 관한 여러 로직이 포함된 컨트롤러 훅에 있으므로, 네이밍에 관하여 코드의 동작을 명시하는 것 보다 '이벤트 핸들러'임을 명시함으로써 책임 분리를 명확히 하는 것이 가독성 및 직관성 측면에 더욱 긍정적인 영향을 미칠 것이라 판단.
