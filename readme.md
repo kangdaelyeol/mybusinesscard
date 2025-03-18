@@ -371,7 +371,7 @@ export default function PubSubProvider({ children }) {
        useCardEditorForm(card)
 
    	return (
-   		// ... JSX
+   		// JSX ...
    	)
    }
    ```
@@ -427,10 +427,130 @@ export default function PubSubProvider({ children }) {
 
 1. 최종 수정 결과
 
-   - 중복된 컴포넌트에서 오는 UI 구조가 같더라도, 각 중복된 컴포넌트가 담당한 책임이 명확히 분리된다면, 오히려 이를 통합시키지 않고 중복된 상태로 두어야하는 것이 더욱 옳다고 판단.
+   - 중복된 컴포넌트에서 오는 UI 구조가 같더라도 담당한 책임이 명확히 분리된다면, 오히려 이를 통합시키지 않고 중복된 상태로 두어야하는 것이 더욱 옳다고 판단.
 
    - 결과적으로 기존의 컴포넌트 구조를 복원하여 그대로 적용하여, 개선 이전과 이후를 같은 구조로 유지.
 
    컴포넌트 다이어그램
 
    ![cardMaker](./document/cardMaker.drawio.svg)
+
+---
+
+### 리스트 가상화 - React Window
+
+**문제점 및 개선 배경**
+
+- 카드 정보 리스트의 규모가 커질 경우, 이를 효율적으로 렌더링 하기 위해 윈도잉(windowing) 기법의 필요성을 느낌.
+
+**개선 목표**
+
+- 윈도잉을 통해 대규모 리스트 데이터를 렌더링 지연 없이 원활하게 표현.
+
+**해결 방법**
+
+- **react-window** 라이브러리를 활용하여 리스트 가상화 컴포넌트 구현.
+
+- 리스트 컴포넌트의 크기를 동적으로 유지하기 위해 **react-virtualized-auto-sizer** 라이브러리 활용
+
+**개선 과정**
+
+1. React Window 적용
+
+   - React Window 라이브러리를 활용하여 가상화 리스트 컴포넌트 구현
+
+   기존 코드
+
+   ```js
+   export default function Main() {
+   	// Declare States ....
+   	return (
+   		// JSX ...
+   		<div className="max-w-[1100px] mx-auto flex flex-col gap-[20px] mt-[20px]">
+   			{state.cards.map((card) => (
+   					<div
+   							key={card.id}
+   							className="flex gap-[20px] max-medium:flex-col-reverse"
+   					>
+   					<!-- 하나의 리스트 행(row)에 카드 수정 폼(Editor Form)과 카드 표현(Display) 컴포넌트를 포함. -->
+   							<CardEditor card={card} />
+   							<CardDisplay card={card} />
+   					</div>
+   			))})
+   	}
+
+   ```
+
+   react-window 적용 이후 코드
+
+   ```js
+   import { FixedSizeList as List } from 'react-window';
+   import AutoSizer from 'react-virtualized-auto-sizer';
+   import {
+   	ResponsiveContext,
+   } from '@/context';
+   // Imports ...
+
+   export default function Main() {
+
+   	// ResponsiveContext는 'resize' 이벤트에 따라 컴포넌트의 크기를 동적으로 반환합니다.
+   	const { cardItemHeight, cardListHeight } = useContext(ResponsiveContext);
+
+   	// Hooks ...
+
+   	return (
+   		<div
+   			className={
+   					<!-- Styles ... -->
+   			}
+   		>
+   			<div
+   				className='max-w-[1100px] h-[var(--list-height)] mb-footer-height mx-auto flex flex-col gap-[20px]'
+   				style={{
+   					'--list-height': `${cardListHeight}px`,
+   				}}
+   			>
+   				{state.cards.length > 0 && (
+   					// 윈도잉 리스트의 크기를 부모 컴포넌트의 크기에 따라 동적으로 조절하기 위해 AutoSizer 사용
+   					<AutoSizer>
+   						{({ width, height }) => (
+   							<List
+   								itemCount={state.cards.length}
+   								width={width}
+   								height={height}
+   								itemSize={cardItemHeight}
+   							>
+   								{({ style, index }) => (
+   									<div
+   										key={state.cards[index].id}
+   										style={style}
+   										className='flex gap-[20px] max-medium:flex-col-reverse'
+   									>
+   									<!-- 하나의 리스트 행(row)에 카드 수정 폼(Editor Form)과 카드 표현(Display) 컴포넌트를 포함. -->
+   										<CardEditor card={state.cards[index]} />
+   										<CardDisplay card={state.cards[index]} />
+   									</div>
+   								)}
+   							</List>
+   						)}
+   					</AutoSizer>
+   				)}
+   			<!-- JSX ...  -->
+   		</div>
+   	);
+   }
+   ```
+
+2. 개선된 코드의 문제점
+
+- 윈도잉 기능은 의도대로 작동하나, 윈도잉된 리스트에서 리렌더링이 발생하면 기존에 포커싱 상태였던 Input 요소에서 강제로 언포커싱되는 현상 및 강제 스크롤링 발생.
+
+  시퀀스 다이어그램
+
+  ![reactWindowSequenceDiagram](./document/reactWindowSequenceDiagram.svg)
+
+- 리렌더링에 의한 강제 언포커싱 및 스크롤링 발생에 대한 원인을 찾고 문제를 해 해결하려 했으나, 이는 라이브러리 구현의 한계로 문제 해결이 불가능하다고 판단.
+
+3. 결론
+
+- 즉, 윈도잉을 통해 브라우저의 표현되는 요소는 정적 데이터 표현에 한정된 경우에만 리스트 가상화의 이점을 챙길 수 있음. 따라서 리스트 가상화 처리를 하지 않고 이전 상태로 복원.
