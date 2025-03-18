@@ -491,89 +491,85 @@ export default function PubSubProvider({ children }) {
 
 1. React Window 적용
 
-   - React Window 라이브러리를 활용하여 가상화 리스트 컴포넌트 구현
+- React Window 라이브러리를 활용하여 가상화 리스트 컴포넌트 구현
 
-   기존 코드
+기존 코드
 
-   ```js
-   export default function Main() {
-   	// Declare States ....
-   	return (
-   		// JSX ...
-   		<div className="max-w-[1100px] mx-auto flex flex-col gap-[20px] mt-[20px]">
-   			{state.cards.map((card) => (
-   					<div
-   							key={card.id}
-   							className="flex gap-[20px] max-medium:flex-col-reverse"
-   					>
-   					<!-- 하나의 리스트 행(row)에 카드 수정 폼(Editor Form)과 카드 표현(Display) 컴포넌트를 포함. -->
-   							<CardEditor card={card} />
-   							<CardDisplay card={card} />
-   					</div>
-   			))})
-   	}
+```jsx
+export default function Main() {
+	// Declare States ....
+ 	return (
+ 		// JSX ...
+ 		<div
+ 			<!-- Attrs ... -->
+ 		>
+		{state.cards.map((card) => (
+			<div key={card.id}
+				<!-- Attrs ... -->
+			>
+				<!-- 하나의 리스트 행(row)에 카드 수정 폼(Editor Form)과 카드 표현(Display) 컴포넌트를 포함. -->
+				<CardEditor card={card} />
+				<CardDisplay card={card} />
+			</div>
+ 		))}
+	)
+}
+```
 
-   ```
+react-window 적용 이후 코드
 
-   react-window 적용 이후 코드
+```jsx
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import {
+	ResponsiveContext,
+} from '@/context';
+// Imports ...
 
-   ```js
-   import { FixedSizeList as List } from 'react-window';
-   import AutoSizer from 'react-virtualized-auto-sizer';
-   import {
-   	ResponsiveContext,
-   } from '@/context';
-   // Imports ...
+export default function Main() {
 
-   export default function Main() {
+	// ResponsiveContext는 'resize' 이벤트에 따라 컴포넌트의 크기를 동적으로 반환합니다.
+	const { cardItemHeight, cardListHeight } = useContext(ResponsiveContext);
 
-   	// ResponsiveContext는 'resize' 이벤트에 따라 컴포넌트의 크기를 동적으로 반환합니다.
-   	const { cardItemHeight, cardListHeight } = useContext(ResponsiveContext);
+	// Hooks ...
 
-   	// Hooks ...
-
-   	return (
-   		<div
-   			className={
-   					<!-- Styles ... -->
-   			}
-   		>
-   			<div
-   				className='max-w-[1100px] h-[var(--list-height)] mb-footer-height mx-auto flex flex-col gap-[20px]'
-   				style={{
-   					'--list-height': `${cardListHeight}px`,
-   				}}
-   			>
-   				{state.cards.length > 0 && (
-   					// 윈도잉 리스트의 크기를 부모 컴포넌트의 크기에 따라 동적으로 조절하기 위해 AutoSizer 사용
-   					<AutoSizer>
-   						{({ width, height }) => (
-   							<List
-   								itemCount={state.cards.length}
-   								width={width}
-   								height={height}
-   								itemSize={cardItemHeight}
-   							>
-   								{({ style, index }) => (
-   									<div
-   										key={state.cards[index].id}
-   										style={style}
-   										className='flex gap-[20px] max-medium:flex-col-reverse'
-   									>
-   									<!-- 하나의 리스트 행(row)에 카드 수정 폼(Editor Form)과 카드 표현(Display) 컴포넌트를 포함. -->
-   										<CardEditor card={state.cards[index]} />
-   										<CardDisplay card={state.cards[index]} />
-   									</div>
-   								)}
-   							</List>
-   						)}
-   					</AutoSizer>
-   				)}
-   			<!-- JSX ...  -->
-   		</div>
-   	);
-   }
-   ```
+	return (
+		<div
+			<!-- Attrs ... -->
+		>
+			<div
+				<!-- Attrs ... -->
+			>
+				{state.cards.length > 0 && (
+					// 윈도잉 리스트의 크기를 부모 컴포넌트의 크기에 따라 동적으로 조절하기 위해 AutoSizer 사용
+					<AutoSizer>
+						{({ width, height }) => (
+							<List
+								itemCount={state.cards.length}
+								width={width}
+								height={height}
+								itemSize={cardItemHeight}
+							>
+								{({ style, index }) => (
+									<div
+										key={state.cards[index].id}
+										style={style}
+										<!-- Attrs ... -->
+									>
+									<!-- 하나의 리스트 행(row)에 카드 수정 폼(Editor Form)과 카드 표현(Display) 컴포넌트를 포함. -->
+										<CardEditor card={state.cards[index]} />
+										<CardDisplay card={state.cards[index]} />
+									</div>
+								)}
+							</List>
+						)}
+					</AutoSizer>
+				)}
+			<!-- JSX ...  -->
+		</div>
+	);
+}
+```
 
 2. 개선된 코드의 문제점
 
