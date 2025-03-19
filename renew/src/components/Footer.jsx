@@ -5,7 +5,7 @@ import { GITHUB_URL } from '@/constants'
 
 export default function Footer() {
     const { theme } = useContext(ThemeContext)
-    
+
     return (
         <footer
             className={classNames(

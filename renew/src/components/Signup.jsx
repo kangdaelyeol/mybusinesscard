@@ -13,7 +13,7 @@ export default function Signup() {
         <form
             onSubmit={handlers.signupSubmit}
             className={classNames(
-                'min-h-[100vh] pt-header-height mb-footer-height',
+                'min-h-[100vh] pt-header-height pb-[80px] mb-footer-height',
                 {
                     'bg-color-black-semilight': theme === 'dark',
                     'bg-color-white-light': theme === 'light',
