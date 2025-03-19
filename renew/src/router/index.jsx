@@ -7,6 +7,7 @@ import Main from '@/components/Main'
 import Login from '@/components/Login'
 import AccountDetail from '@/components/AccountDetail'
 import ChangePassword from '@/components/ChangePassword'
+import NotFound from '@/components/NotFound'
 
 export const router = createBrowserRouter([
     {
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
                         <ChangePassword />
                     </LoggedInOnly>
                 ),
+            },
+            {
+                path: '*',
+                element: <NotFound />,
             },
         ],
     },
